@@ -1,0 +1,11 @@
+#!/usr/bin/env Rscript
+
+library("methods")
+library("rt")
+doc = "
+Usage:
+  rcov [<path>]
+"
+rt:::cli.call("rcov", doc, commandArgs(TRUE))
+
+# vim: ft=r
