@@ -5,7 +5,7 @@ cli.call = function(fun, doc, args = commandArgs(TRUE)) {
   tryCatch({
     x = docopt::docopt(doc, args = args, strict = TRUE)
   }, error = function(e) {
-    cat(e$message, "\n")
+    cat(e$message, "\n", file = stderr())
     quit(save = "no", status = 1L)
   })
 
