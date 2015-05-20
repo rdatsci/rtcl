@@ -1,0 +1,10 @@
+\.tar\.gz$
+\.swp$
+^\.gitignore$
+^\.agignore$
+^\.editorconfig$
+^\.travis
+^travis.yml$
+^README.md$
+^man-roxygen
+^appveyor\.yml$

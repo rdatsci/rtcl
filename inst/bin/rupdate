@@ -1,0 +1,12 @@
+#!/usr/bin/env Rscript
+
+library("rt")
+doc = "
+Usage:
+  rupdate [--rebuilt] [<path>]
+Options:
+  --rebuilt  Rebuilt packages which are built against another version of R
+"
+rt:::cli.call("rupdate", doc, commandArgs(TRUE))
+
+# vim: ft=r

@@ -1,0 +1,10 @@
+#!/usr/bin/env Rscript
+
+library("rt")
+doc = "
+Usage:
+  rdoc [<path>]
+"
+rt:::cli.call("rdoc", doc, commandArgs(TRUE))
+
+# vim: ft=r

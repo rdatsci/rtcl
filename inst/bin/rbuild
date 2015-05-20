@@ -1,0 +1,10 @@
+#!/usr/bin/env Rscript
+
+library("rt")
+doc = "
+Usage:
+  rbuild [<path>]
+"
+rt:::cli.call("rbuild", doc, commandArgs(TRUE))
+
+# vim: ft=r

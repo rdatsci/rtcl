@@ -1,0 +1,12 @@
+#!/usr/bin/env Rscript
+
+library("rt")
+doc = "
+Usage:
+  rwinbuild [--devel] [<path>]
+Options:
+  --devel  Build with R-devel instead of R-release
+"
+rt:::cli.call("rupdate", doc, commandArgs(TRUE))
+
+# vim: ft=r

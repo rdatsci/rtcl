@@ -1,0 +1,10 @@
+Package: rtTestPackage
+Type: Package
+Title: Just a test package to test rt
+Version: 1.0
+Date: 2015-05-19
+Author: Michel Lang <michellang@gmail.com>
+Maintainer: Michel Lang <michellang@gmail.com>
+Description: This package does nothing useful at all.
+License: GPL-2
+Suggests: testthat

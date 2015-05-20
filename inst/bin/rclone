@@ -1,0 +1,13 @@
+#!/usr/bin/env Rscript
+
+library("rt")
+doc = "
+Usage:
+  rclone <pkg>
+
+Options:
+  --temp  Clone to temp directory instead of current directory?
+"
+rt:::cli.call("rclone", doc, commandArgs(TRUE))
+
+# vim: ft=r

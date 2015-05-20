@@ -1,0 +1,12 @@
+#!/usr/bin/env Rscript
+
+library("rt")
+doc = "
+Usage:
+  rmake [--deps] [<path>]
+Options:
+  --deps  Also install all dependencies, including suggests
+"
+rt:::cli.call("rmake", doc, commandArgs(TRUE))
+
+# vim: ft=r

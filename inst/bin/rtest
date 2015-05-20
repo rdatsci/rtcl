@@ -1,0 +1,12 @@
+#!/usr/bin/env Rscript
+
+library("rt")
+doc = "
+Usage:
+  rtest [--filter] [<path>]
+Options:
+  --filter  Restict tests to tests with filenames matching this pattern
+"
+rt:::cli.call("rtest", doc, commandArgs(TRUE))
+
+# vim: ft=r

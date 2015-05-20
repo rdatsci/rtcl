@@ -1,0 +1,22 @@
+Package: rt
+Type: Package
+Title: R tools for the command line
+Version: 0.1
+Author: Michel Lang <michellang@gmail.com>
+Maintainer: Michel Lang <michellang@gmail.com>
+Description: Work with R packages from the command line
+License: GPL-2
+ByteCompile: yes
+Depends:
+    methods
+Imports:
+    checkmate,
+    stringi,
+    crayon,
+    docopt,
+    devtools,
+    git2r
+Suggests:
+    testthat,
+    roxygen2,
+    codetools
