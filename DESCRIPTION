@@ -7,8 +7,6 @@ Maintainer: Michel Lang <michellang@gmail.com>
 Description: Work with R packages from the command line
 License: GPL-2
 ByteCompile: yes
-Depends:
-    methods
 Imports:
     checkmate,
     stringi,

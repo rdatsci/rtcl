@@ -21,7 +21,11 @@ Update packages. This includes multiple steps:
      are built under a different R version will be rebuilt with the current.}
   \item{3.}{CRAN packages which are listed in \code{~/.rt/packages} but are not
     found on the system will be installed.}
-  \item{4.}{All packages with a git source will be updated and installed if necessary.}
+  \item{4.}{All packages with a git source listed in \code{~/.rt/packages} will be updated and
+    re-installed if necessary.}
 }
+The collection file \code{~/.rt/packages} expects one package per line specified in a format
+which is parseable by \code{\link{stringToPackage}}. Leading and trailing whitespace characters
+will automatically be trimmed. Empty lines and lines starting with a \dQuote{#} will be ignored.
 }
 
