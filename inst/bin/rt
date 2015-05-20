@@ -1,0 +1,11 @@
+#!/usr/bin/env Rscript
+
+library("methods")
+library("rt")
+doc = "
+Usage:
+  rt (init|cleanup)
+"
+rt:::cli.call("rt", doc, commandArgs(TRUE))
+
+# vim: ft=r

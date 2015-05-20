@@ -19,9 +19,7 @@ addPackagesToCollection = function(pkgs, fn = getConfigPath("packages")) {
   messagef("Adding %i new package%s to '%s'", length(w), ifelse(length(w) > 1L, "s", ""), fn)
 
   if (length(w)) {
-    dn = dirname(fn)
-    if (!dir.exists(dn))
-      dir.create(dn, recursive = TRUE)
+    rt(init = TRUE)
     fp = file(fn, open = "at")
     on.exit(close(fp))
     writeLines(vcapply(pkgs[w], packageToString), con = fp)
