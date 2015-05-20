@@ -16,7 +16,7 @@ rt = function(init = FALSE, cleanup = FALSE) {
     dn = dirname(fn)
     if (!dir.exists(dn)) {
       dir.create(dn, recursive = TRUE)
-      messagef("Created directory %s", dn)
+      messagef("Created directory '%s'", dn)
     }
     if (!file.exists(fn)) {
       writeLines(c("## Uncomment to let rt update itself:", "# rdatsci/rt"), con = fn)
@@ -28,7 +28,7 @@ rt = function(init = FALSE, cleanup = FALSE) {
     pkgs = getCollectionContents(as.packages = TRUE)
     pkgs = extract(pkgs[extract(pkgs, "type") == "git"], "name")
     cached = list.dirs(getConfigPath("git"), recursive = FALSE)
-    obsolete = cached[pkgs %nin% basename(cached)]
+    obsolete = cached[basename(cached) %nin% pkgs]
 
     if (length(obsolete) > 0L) {
       messagef("Removing %i obsolete git repos from disc: %s", length(obsolete), collapse(basename(obsolete)))
