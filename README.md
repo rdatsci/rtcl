@@ -36,10 +36,11 @@ path=(~/.R/library/rt/bin $path)
 ```
 After sourcing this file (or after a re-login) you should be all set to use *rt*.
 
-To keep *rt* updated, you can let it maintain itself via `rupdate` by adding it to your collection file `~/.rt/packages`:
+To keep *rt* updated, you can let it maintain itself via `rupdate` by adding it to your collection file `~/.rt/packages`.
+To do this, first initialize an empty collection with
 ```sh
-mkdir ~/.rt
-echo "rdatsci/rt" >> ~/.rt/packages
+rt init
 ```
+and then uncomment the respective line with your favorite text editor.
 To add more packages to your collection, see `?rupdate` for a format description of this file.
 Note that packages with a git source will be kept in `~/.rt/git` and only reinstalled if the remote repository has been updated.
