@@ -4,9 +4,9 @@ library("methods")
 library("rt")
 doc = "
 Usage:
-  rtest [--filter] [<path>]
+  rtest [--filter=<pattern>] [<path>]
 Options:
-  --filter  Restict tests to tests with filenames matching this pattern
+  --filter=<pattern>  Restict tests to tests with filenames matching this pattern
 "
 rt:::cli.call("rtest", doc, commandArgs(TRUE))
 
