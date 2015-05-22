@@ -22,8 +22,7 @@ This file may also contain git sources to keep you up to date with packages not 
 First, you need to install *rt* itself.
 Using a personal library (e.g., `echo 'R_LIBS_USER=~/.R/library' >> ~/.Renviron`) for all R packages is strongly advised.
 ```splus
-library(devtools)
-install("rdatsci/rt")
+dectools::install_github("rdatsci/rt")
 ```
 The command line scripts are now installed in the subdirectory `rt/bin` of your R library (call `.libPaths()` in R if unsure about its location).
 You need to add this directory to your `PATH` in your `.bashrc` or `.zshrc`:
