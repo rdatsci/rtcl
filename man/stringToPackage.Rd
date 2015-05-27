@@ -15,7 +15,7 @@ This function converts the string to one of the following objects:
 \itemize{
   \item{LocalPackage: }{\code{pkg} points to an existing directory.}
   \item{GitPackage: }{\code{pkg} starts with \dQuote{https://} or \dQuote{git} and ends with \dQuote{.git}.}
-  \item{GitHubPackage: }{\code{pkg} matches the pattern \dQuote{[repo]/[name]}.}
+  \item{GitHubPackage: }{\code{pkg} matches the pattern \dQuote{[user]/[repo]}.}
   \item{CranPackage: }{\code{pkg} is a single string without any special characters except dots ([a-zA-Z0-9.]).}
 }
 }

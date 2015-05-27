@@ -5,7 +5,7 @@
 #' \itemize{
 #'   \item{LocalPackage: }{\code{pkg} points to an existing directory.}
 #'   \item{GitPackage: }{\code{pkg} starts with \dQuote{https://} or \dQuote{git} and ends with \dQuote{.git}.}
-#'   \item{GitHubPackage: }{\code{pkg} matches the pattern \dQuote{[repo]/[name]}.}
+#'   \item{GitHubPackage: }{\code{pkg} matches the pattern \dQuote{[user]/[repo]}.}
 #'   \item{CranPackage: }{\code{pkg} is a single string without any special characters except dots ([a-zA-Z0-9.]).}
 #' }
 #' @param pkg [\code{character(1)} | \code{NULL}]\cr
@@ -52,7 +52,7 @@ asGitPackage = function(xs) {
   matches = tail(drop(stri_match_last_regex(xs, "([[:alnum:]_]+)/([[:alnum:]_]+)\\.git")), -1L)
   if (anyNA(matches) || length(matches) == 0L)
     stop("Malformed Git URI")
-  GitPackage(name = matches[2L], repo = matches[1L], uri = xs)
+  GitPackage(name = matches[2L], repo = sprintf("%s/%s", matches[1L], matches[2L]), uri = xs)
 }
 
 asGitHubPackage = function(xs) {

@@ -13,7 +13,8 @@ Imports:
     crayon,
     docopt,
     devtools,
-    git2r
+    git2r,
+    tools
 Suggests:
     testthat,
     roxygen2,
