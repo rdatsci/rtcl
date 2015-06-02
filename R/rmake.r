@@ -19,6 +19,6 @@ rmake = function(path = getwd(), deps = FALSE) {
   if (deps)
     install_deps(pkg, dependencies = c("Depends", "Imports", "LinkingTo", "Suggests"))
   devtools::install(pkg, reload = !cli)
-  messagef("Package '%s' has been installed to '%s'", pkg$package, lib)
+  messagef("Package '%s' has been installed to '%s'", pkg$package, getLibraryPath())
   invisible(TRUE)
 }
