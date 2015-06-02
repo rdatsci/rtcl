@@ -13,13 +13,12 @@ rmake = function(path = getwd(), deps = FALSE) {
   pkg = devtools::as.package(path)
   assertFlag(deps)
 
-  lib = getLibraryPath()
   cli = getOption("rt.cli", FALSE)
   messagef("Making package '%s' in '%s'", pkg$package, pkg$path)
   devtools::document(pkg)
   if (deps)
     install_deps(pkg, dependencies = c("Depends", "Imports", "LinkingTo", "Suggests"))
-  devtools::install(pkg, reload = !cli, lib = lib)
+  devtools::install(pkg, reload = !cli)
   messagef("Package '%s' has been installed to '%s'", pkg$package, lib)
   invisible(TRUE)
 }

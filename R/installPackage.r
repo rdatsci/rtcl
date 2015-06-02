@@ -23,19 +23,18 @@ installPackage.CranPackage = function(pkg) {
 installPackage.GitPackage = function(pkg) {
   path = normalizePath(file.path("~", ".rt", "git", pkg$name), mustWork = FALSE)
   cli = getOption("rt.cli", FALSE)
-  lib = getLibraryPath()
   if (!dir.exists(path)) {
     messagef("Fetching and installing new git package '%s' ...", pkg$name)
     dir.create(path, recursive = TRUE)
     git2r::clone(pkg$uri, local_path = path, progress = FALSE)
-    devtools::install(path, reload = !cli, quick = TRUE, keep_source = FALSE, lib = lib)
+    devtools::install(path, reload = !cli, quick = TRUE, keep_source = FALSE)
   } else {
     messagef("Updating git package '%s' ...", packageToString(pkg))
     repo = git2r::repository(path)
     fetched = git2r::fetch(repo, "origin")
     if (fetched@total_objects > 0L) {
       git2r::pull(repo)
-      devtools::install(pkg = path, reload = !cli, quick = TRUE, keep_source = FALSE, lib = lib)
+      devtools::install(pkg = path, reload = !cli, quick = TRUE, keep_source = FALSE)
     }
   }
 }

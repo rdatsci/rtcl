@@ -10,8 +10,7 @@
 rcov = function(path = getwd()) {
   pkg = devtools::as.package(path)
   messagef("Checking code coverage of package '%s' ...", pkg$package)
-  lib = getLibraryPath()
-  found = length(find.package("covr", quiet = TRUE, lib = lib)) > 0L
+  found = length(find.package("covr", quiet = TRUE)) > 0L
   if (!found) {
     messagef("Installing missing GitHub package 'covr' ...")
     rinstall("jimhester/covr")
