@@ -1,0 +1,11 @@
+#!/usr/bin/env Rscript
+
+library("methods")
+library("rt")
+doc = "
+Usage:
+  rupdate [<path>]
+"
+rt:::cli.call("rvignettes", doc, commandArgs(TRUE))
+
+# vim: ft=r
