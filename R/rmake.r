@@ -15,9 +15,8 @@ rmake = function(path = getwd(), deps = FALSE) {
 
   cli = getOption("rt.cli", FALSE)
   messagef("Making package '%s' in '%s'", pkg$package, pkg$path)
+  devtools::install_deps(pkg, dependencies = if (deps) TRUE else NA)
   devtools::document(pkg)
-  if (deps)
-    devtools::install_deps(pkg, dependencies = TRUE)
   devtools::install(pkg, reload = !cli)
   messagef("Package '%s' has been installed to '%s'", pkg$package, getLibraryPath())
   invisible(TRUE)
