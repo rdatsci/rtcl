@@ -17,7 +17,7 @@ rmake = function(path = getwd(), deps = FALSE) {
   messagef("Making package '%s' in '%s'", pkg$package, pkg$path)
   devtools::document(pkg)
   if (deps)
-    install_deps(pkg, dependencies = c("Depends", "Imports", "LinkingTo", "Suggests"))
+    devtools::install_deps(pkg, dependencies = c("Depends", "Imports", "LinkingTo", "Suggests"))
   devtools::install(pkg, reload = !cli)
   messagef("Package '%s' has been installed to '%s'", pkg$package, getLibraryPath())
   invisible(TRUE)
