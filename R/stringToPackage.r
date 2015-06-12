@@ -56,7 +56,8 @@ asGitPackage = function(xs) {
 }
 
 asGitHubPackage = function(xs) {
-  GitHubPackage(name = stri_extract_last_words(xs), repo = stri_extract_first_words(xs))
+  parts = stri_split_fixed(xs, pattern = "/", n = 2L)[[1L]]
+  GitHubPackage(name = parts[2L], repo = parts[1L])
 }
 
 asCranPackage = function(xs) {
