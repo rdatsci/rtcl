@@ -24,7 +24,7 @@ rupdate = function(rebuilt = FALSE) {
 
   messagef("Checking for outdated packages ...")
   lib = getLibraryPath()
-  installed = installed.packages(lib.loc = lib)
+  installed = installed.packages()
   old = old.packages(checkBuilt = rebuilt, instPkgs = installed, lib.loc = lib)
   if (!is.null(old)) {
     messagef("Rebuilding %i outdated packages ...", nrow(old))
