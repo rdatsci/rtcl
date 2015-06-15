@@ -24,8 +24,8 @@ rupdate = function(rebuilt = FALSE) {
 
   messagef("Checking for outdated packages ...")
   lib = getLibraryPath()
-  present = installed.packages(lib.loc = lib)
-  old = old.packages(checkBuilt = rebuilt, instPkgs = present, lib.loc = lib)
+  installed = installed.packages(lib.loc = lib)
+  old = old.packages(checkBuilt = rebuilt, instPkgs = installed, lib.loc = lib)
   if (!is.null(old)) {
     messagef("Rebuilding %i outdated packages ...", nrow(old))
     install.packages(old[, "Package"], lib = lib)
@@ -36,7 +36,7 @@ rupdate = function(rebuilt = FALSE) {
 
   if ("cran" %in% levels(pkg.type)) {
     pn = extract(pkgs, "name")
-    w = which(pkg.type == "cran" && pn %nin% present[, "Package"])
+    w = which(pkg.type == "cran" & pn %nin% installed[, "Package"])
     if (length(w)) {
       messagef("Installing %i missing cran packages ...", length(w))
       install.packages(pn[w], lib = lib)
