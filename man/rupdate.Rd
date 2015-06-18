@@ -4,11 +4,11 @@
 \alias{rupdate}
 \title{Update packages}
 \usage{
-rupdate(rebuilt = FALSE)
+rupdate(rebuild = FALSE)
 }
 \arguments{
-\item{rebuilt}{[\code{logical(1)}]\cr
-Rebuilt R packages which are built using a different version of R.}
+\item{rebuild}{[\code{logical(1)}]\cr
+Rebuild R packages which are built using a different version of R.}
 }
 \value{
 Invisibly returns \code{TRUE} on success.
@@ -17,7 +17,7 @@ Invisibly returns \code{TRUE} on success.
 Update packages. This includes multiple steps:
 \itemize{
   \item{1.}{All outdated CRAN packages will be updated.}
-  \item{2.}{If \code{rebuilt} is set to \code{TRUE}, all packages which
+  \item{2.}{If \code{rebuild} is set to \code{TRUE}, all packages which
      are built under a different R version will be rebuilt with the current.}
   \item{3.}{CRAN packages which are listed in \code{~/.rt/packages} but are not
     found on the system will be installed.}

@@ -1,7 +1,7 @@
-#' Built a package
+#' Build a package
 #'
 #' @description
-#' Built a package located in \code{path} using \code{link[devtools]{build}}.
+#' Build a package located in \code{path} using \code{link[devtools]{build}}.
 #'
 #' @template path
 #' @template return-itrue

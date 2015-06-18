@@ -2,7 +2,7 @@
 % Please edit documentation in R/rbuild.r
 \name{rbuild}
 \alias{rbuild}
-\title{Built a package}
+\title{Build a package}
 \usage{
 rbuild(path = getwd())
 }
@@ -15,6 +15,6 @@ the current directory and up to two parent directories.}
 Invisibly returns \code{TRUE} on success.
 }
 \description{
-Built a package located in \code{path} using \code{link[devtools]{build}}.
+Build a package located in \code{path} using \code{link[devtools]{build}}.
 }
 

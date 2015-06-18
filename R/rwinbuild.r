@@ -9,7 +9,7 @@
 #'  Upload to check against the R-devel branch instead of the stable branch.
 #' @template return-itrue
 #' @export
-rwinbuilt = function(path = getwd(), devel = FALSE) {
+rwinbuild = function(path = getwd(), devel = FALSE) {
   pkg = devtools::as.package(path)
   assertFlag(devel)
 

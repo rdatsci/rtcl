@@ -8,6 +8,6 @@ Usage:
 Options:
   --devel  Build with R-devel instead of R-release
 "
-rt:::cli.call("rupdate", doc, commandArgs(TRUE))
+rt:::cli.call("rwinbuild", doc, commandArgs(TRUE))
 
 # vim: ft=r
