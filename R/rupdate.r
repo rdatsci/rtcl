@@ -27,10 +27,10 @@ rupdate = function(rebuild = FALSE) {
 
   fields = c("Package", "LibPath", "Version")
   installed = data.table(installed.packages(fields = fields), key = "Package")[, fields, with = FALSE]
-  installed = installed[data.table(old.packages()[, c("Package", "ReposVer")])]
+  old = installed[data.table(old.packages()[, c("Package", "ReposVer")])]
   # reduce to max installed version
-  installed = installed[, list(Version = max(package_version(Version)), ReposVer = package_version(head(ReposVer, 1L))), by = Package]
-  old = installed[Version < ReposVer, Package]
+  old = old[, list(Version = max(package_version(Version)), ReposVer = package_version(head(ReposVer, 1L))), by = Package]
+  old = old[Version < ReposVer, Package]
   if (length(old)) {
     messagef("Rebuilding %i outdated packages ...", length(old))
     install.packages(old, lib = lib)
