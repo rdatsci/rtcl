@@ -26,15 +26,14 @@ rupdate = function(rebuild = FALSE) {
   lib = getLibraryPath()
 
   fields = c("Package", "LibPath", "Version")
-  pkgs = data.table(installed.packages(fields = fields), key = "Package")
-  pkgs = pkgs[, fields, with = FALSE][data.table(old.packages()[, c("Package", "ReposVer")])]
+  installed = data.table(installed.packages(fields = fields), key = "Package")[, fields, with = FALSE]
+  installed = installed[data.table(old.packages()[, c("Package", "ReposVer")])]
   # reduce to max installed version
-  pkgs = pkgs[, list(Version = max(package_version(Version)), ReposVer = package_version(head(ReposVer, 1L))), by = Package]
-  pkgs = pkgs[Version < ReposVer, Package]
-
-  if (length(pkgs)) {
-    messagef("Rebuilding %i outdated packages ...", length(pkgs))
-    install.packages(pkgs, lib = lib)
+  installed = installed[, list(Version = max(package_version(Version)), ReposVer = package_version(head(ReposVer, 1L))), by = Package]
+  old = installed[Version < ReposVer, Package]
+  if (length(old)) {
+    messagef("Rebuilding %i outdated packages ...", length(old))
+    install.packages(old, lib = lib)
   }
 
   pkgs = getCollectionContents(as.packages = TRUE)
@@ -42,12 +41,13 @@ rupdate = function(rebuild = FALSE) {
 
   if ("cran" %in% levels(pkg.type)) {
     pn = extract(pkgs, "name")
-    w = which(pkg.type == "cran" & pn %nin% installed[, "Package"])
+    w = which(pkg.type == "cran" & pn %nin% installed[, Package])
     if (length(w)) {
       messagef("Installing %i missing cran packages ...", length(w))
       install.packages(pn[w], lib = lib)
     }
   }
+
   if ("git" %in% levels(pkg.type)) {
     lapply(pkgs[pkg.type == "git"], installPackage)
   }
