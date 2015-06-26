@@ -24,11 +24,17 @@ rupdate = function(rebuild = FALSE) {
 
   messagef("Checking for outdated packages ...")
   lib = getLibraryPath()
-  installed = installed.packages()
-  old = old.packages(checkBuilt = rebuild, instPkgs = installed, lib.loc = lib)
-  if (!is.null(old)) {
-    messagef("Rebuilding %i outdated packages ...", nrow(old))
-    install.packages(old[, "Package"], lib = lib)
+
+  fields = c("Package", "LibPath", "Version")
+  pkgs = data.table(installed.packages(fields = fields), key = "Package")
+  pkgs = pkgs[, fields, with = FALSE][data.table(old.packages()[, c("Package", "ReposVer")])]
+  # reduce to max installed version
+  pkgs = pkgs[, list(Version = max(package_version(Version)), ReposVer = package_version(head(ReposVer, 1L))), by = Package]
+  pkgs = pkgs[Version < ReposVer, Package]
+
+  if (length(pkgs)) {
+    messagef("Rebuilding %i outdated packages ...", length(pkgs))
+    install.packages(pkgs, lib = lib)
   }
 
   pkgs = getCollectionContents(as.packages = TRUE)

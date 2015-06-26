@@ -14,6 +14,7 @@ Imports:
     docopt,
     devtools,
     git2r,
+    data.table,
     tools
 Suggests:
     testthat,
