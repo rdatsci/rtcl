@@ -6,7 +6,7 @@ doc = "
 Usage:
   rtest [--filter=<pattern>] [<path>]
 Options:
-  --filter=<pattern>  Restict tests to tests with filenames matching this pattern
+  --filter=<pattern>  Restrict tests to tests with filenames matching this pattern
 "
 rt:::cli.call("rtest", doc, commandArgs(TRUE))
 
