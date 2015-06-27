@@ -17,39 +17,47 @@
 #'
 #' @param rebuild [\code{logical(1)}]\cr
 #'  Rebuild R packages which are built using a different version of R.
+#' @param only.cran [\code{logical(1)}]\cr
+#'  Update CRAN packages only. Default is \code{FALSE}.
+#' @param only.git [\code{logical(1)}]\cr
+#'  Update Git packages only. Default is \code{FALSE}.
+#' @param force [\code{logical(1)}]\cr
+#'  Force installation of Git packages? Default is \code{FALSE}.
 #' @template return-itrue
 #' @export
-rupdate = function(rebuild = FALSE) {
+rupdate = function(rebuild = FALSE, only.cran = FALSE, only.git = FALSE, force = FALSE) {
   assertFlag(rebuild)
 
   messagef("Checking for outdated packages ...")
   lib = getLibraryPath()
-
-  fields = c("Package", "LibPath", "Version")
-  installed = data.table(installed.packages(fields = fields), key = "Package")[, fields, with = FALSE]
-  old = installed[data.table(old.packages()[, c("Package", "ReposVer")])]
-  # reduce to max installed version
-  old = old[, list(Version = max(package_version(Version)), ReposVer = package_version(head(ReposVer, 1L))), by = Package]
-  old = old[Version < ReposVer, Package]
-  if (length(old)) {
-    messagef("Rebuilding %i outdated packages ...", length(old))
-    install.packages(old, lib = lib)
-  }
-
   pkgs = getCollectionContents(as.packages = TRUE)
   pkg.type = factor(extract(pkgs, "type"))
 
-  if ("cran" %in% levels(pkg.type)) {
+
+  if (!only.git) {
+    fields = c("Package", "LibPath", "Version")
+    installed = data.table(installed.packages(fields = fields), key = "Package")[, fields, with = FALSE]
+    old = installed[data.table(old.packages()[, c("Package", "ReposVer")])]
+    # reduce to max installed version
+    old = old[, list(Version = max(package_version(Version)), ReposVer = package_version(head(ReposVer, 1L))), by = Package]
+    old = old[Version < ReposVer, Package]
+    if (length(old)) {
+      messagef("Rebuilding %i outdated packages ...", length(old))
+      install.packages(old, lib = lib)
+    }
+  }
+
+  if (!only.git && "cran" %in% levels(pkg.type)) {
     pn = extract(pkgs, "name")
-    w = which(pkg.type == "cran" & pn %nin% installed[, Package])
+    w = which(pkg.type == "cran" & pn %nin% installed.packages[, "Package"])
     if (length(w)) {
       messagef("Installing %i missing cran packages ...", length(w))
       install.packages(pn[w], lib = lib)
     }
   }
 
-  if ("git" %in% levels(pkg.type)) {
-    lapply(pkgs[pkg.type == "git"], installPackage)
+  if (!only.cran && "git" %in% levels(pkg.type)) {
+    lapply(pkgs[pkg.type == "git"], installPackage, force = force)
   }
   invisible(TRUE)
 }

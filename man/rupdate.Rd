@@ -4,11 +4,21 @@
 \alias{rupdate}
 \title{Update packages}
 \usage{
-rupdate(rebuild = FALSE)
+rupdate(rebuild = FALSE, only.cran = FALSE, only.git = FALSE,
+  force = FALSE)
 }
 \arguments{
 \item{rebuild}{[\code{logical(1)}]\cr
 Rebuild R packages which are built using a different version of R.}
+
+\item{only.cran}{[\code{logical(1)}]\cr
+Update CRAN packages only. Default is \code{FALSE}.}
+
+\item{only.git}{[\code{logical(1)}]\cr
+Update Git packages only. Default is \code{FALSE}.}
+
+\item{force}{[\code{logical(1)}]\cr
+Force installation of Git packages? Default is \code{FALSE}.}
 }
 \value{
 Invisibly returns \code{TRUE} on success.

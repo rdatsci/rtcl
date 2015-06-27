@@ -10,7 +10,8 @@ cli.call = function(fun, doc, args = commandArgs(TRUE)) {
   })
 
   x = x[!vlapply(x, is.null)]
-  names(x) = stri_replace_all_regex(names(x), "[^[:alnum:]/_.]", "")
+  names(x) = stri_replace_first_fixed(names(x), "--", "")
+  names(x) = stri_replace_all_fixed(names(x), "-", ".")
 
   tryCatch({
     do.call(fun, x)
