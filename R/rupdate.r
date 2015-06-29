@@ -49,7 +49,7 @@ rupdate = function(rebuild = FALSE, only.cran = FALSE, only.git = FALSE, force =
 
   if (!only.git && "cran" %in% levels(pkg.type)) {
     pn = extract(pkgs, "name")
-    w = which(pkg.type == "cran" & pn %nin% installed.packages[, "Package"])
+    w = which(pkg.type == "cran" & installed[, pn %nin% Package])
     if (length(w)) {
       messagef("Installing %i missing cran packages ...", length(w))
       install.packages(pn[w], lib = lib)
