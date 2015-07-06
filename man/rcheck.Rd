@@ -10,6 +10,9 @@ rcheck(path = getwd(), nocleanup = FALSE)
 \item{path}{[\code{character}]\cr
 If no path to a DESCRIPTION is given, the package looks for a DESCRIPTION in
 the current directory and up to two parent directories.}
+
+\item{nocleanup}{[\code{logical(1L)}]\cr
+Do not clean up the log directory. Default is \code{FALSE}.}
 }
 \value{
 Invisibly returns \code{TRUE} on success.

@@ -15,6 +15,6 @@ the current directory and up to two parent directories.}
 Invisibly returns \code{TRUE} on success.
 }
 \description{
-Build vignettes of the package located in \code{path} using \code{\link[devtools]{build_vignette}}.
+Build vignettes of the package located in \code{path} using \code{\link[=devtools]{build_vignette}}.
 }
 

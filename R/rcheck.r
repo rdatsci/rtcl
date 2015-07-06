@@ -4,6 +4,8 @@
 #' Check a package located in \code{path} using \code{link[devtools]{check}}..
 #'
 #' @template path
+#' @param nocleanup [\code{logical(1L)}]\cr
+#'   Do not clean up the log directory. Default is \code{FALSE}.
 #' @template return-itrue
 #' @export
 rcheck = function(path = getwd(), nocleanup = FALSE) {

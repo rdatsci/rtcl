@@ -1,7 +1,7 @@
 #' Build vignettes
 #'
 #' @description
-#' Build vignettes of the package located in \code{path} using \code{\link[devtools]{build_vignette}}.
+#' Build vignettes of the package located in \code{path} using \code{\link[=devtools]{build_vignette}}.
 #'
 #' @template path
 #' @template return-itrue
