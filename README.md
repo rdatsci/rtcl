@@ -25,7 +25,10 @@ Using a personal library (e.g., `echo 'R_LIBS_USER=~/.R/library' >> ~/.Renviron`
 devtools::install_github("rdatsci/rt")
 ```
 The command line scripts are now installed in the subdirectory `rt/bin` of your R library (call `.libPaths()` in R if unsure about its location).
-You need to add this directory to your `PATH` in your `.bashrc` or `.zshrc`:
+You need to add this directory to your `PATH`.
+
+### On Linux
+Add this directory to your `PATH` in your `.bashrc` or `.zshrc`:
 ```sh
 # bash
 PATH=~/.R/library/rt/bin:$PATH
@@ -33,6 +36,20 @@ PATH=~/.R/library/rt/bin:$PATH
 # zsh
 path=(~/.R/library/rt/bin $path)
 ```
+
+### On Windows
+
+Add this directory to your `PATH` variable in the system environment via the control panel.
+As an alternative use the admin console command:
+```
+SETX /M PATH "%PATH%;path-to-the-dt-repository"
+```
+(Option `/M` changes the `PATH` in `HKEY_LOCAL_MACHINE` instead of `HKEY_CURRENT_USER`).
+If it does not work for you, try it without the `/M` option.
+In any case you need to open a new windows prompt or terminal windows in order to reload the `PATH` variable.
+
+### Continue for both systems
+
 After sourcing this file (or after a re-login) you should be all set to use *rt*.
 
 To keep *rt* updated, you can let it maintain itself via `rupdate` by adding it to your collection file `~/.rt/packages`.
