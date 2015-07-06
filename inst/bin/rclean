@@ -4,7 +4,7 @@ library("methods")
 library("rt")
 doc = "
 Usage:
-  rcheck [<path>]
+  rclean [<path>]
 "
 rt:::cli.call("rclean", doc, commandArgs(TRUE))
 

@@ -4,7 +4,7 @@ library("methods")
 library("rt")
 doc = "
 Usage:
-  rupdate [<path>]
+  rvignettes [<path>]
 "
 rt:::cli.call("rvignettes", doc, commandArgs(TRUE))
 
