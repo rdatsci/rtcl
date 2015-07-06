@@ -6,9 +6,12 @@
 #' @template path
 #' @template return-itrue
 #' @export
-rcheck = function(path = getwd()) {
+rcheck = function(path = getwd(), nocleanup = FALSE) {
   pkg = devtools::as.package(path)
+  now = strftime(Sys.time(), format = "%Y%m%d-%H%M%S")
+  log.path = file.path(dirname(tempdir()), sprintf("rcheck-%s-%s", pkg$package, now))
+  dir.create(log.path, recursive = TRUE)
   messagef("Checking package '%s' ...", pkg$package)
-  devtools::check(pkg)
+  devtools::check(pkg, check_dir = log.path, cleanup = !nocleanup)
   invisible(TRUE)
 }

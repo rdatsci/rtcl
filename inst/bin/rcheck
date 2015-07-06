@@ -4,7 +4,9 @@ library("methods")
 library("rt")
 doc = "
 Usage:
-  rcheck [<path>]
+  rcheck [--nocleanup] [<path>]
+Options:
+  --nocleanup    Do not cleanup log files in temp directory.
 "
 rt:::cli.call("rcheck", doc, commandArgs(TRUE))
 

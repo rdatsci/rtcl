@@ -4,7 +4,7 @@
 \alias{rcheck}
 \title{Check a package}
 \usage{
-rcheck(path = getwd())
+rcheck(path = getwd(), nocleanup = FALSE)
 }
 \arguments{
 \item{path}{[\code{character}]\cr
