@@ -31,10 +31,10 @@ You need to add this directory to your `PATH`.
 Add this directory to your `PATH` in your `.bashrc` or `.zshrc`:
 ```sh
 # bash
-PATH=~/.R/library/rt/bin:$PATH
+PATH=~/.R/library/rt/inst/bin:$PATH
 
 # zsh
-path=(~/.R/library/rt/bin $path)
+path=(~/.R/library/rt/inst/bin $path)
 ```
 
 ### On Windows
@@ -42,7 +42,7 @@ path=(~/.R/library/rt/bin $path)
 Add this directory to your `PATH` variable in the system environment via the control panel.
 As an alternative use the admin console command:
 ```
-SETX /M PATH "%PATH%;path-to-the-dt-repository"
+SETX /M PATH "%PATH%;path-to-rt-repository/inst/win"
 ```
 (Option `/M` changes the `PATH` in `HKEY_LOCAL_MACHINE` instead of `HKEY_CURRENT_USER`).
 If it does not work for you, try it without the `/M` option.
