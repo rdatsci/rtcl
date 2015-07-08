@@ -20,8 +20,9 @@ installPackage.CranPackage = function(pkg, ...) {
 }
 
 #' @export
-installPackage.GitPackage = function(pkg, force = FALSE) {
-  path = normalizePath(file.path("~", ".rt", "git", pkg$name), mustWork = FALSE)
+installPackage.GitPackage = function(pkg, temp = TRUE, force = FALSE, ...) {
+  path = if (temp) file.path(tempdir(), pkg$name) else file.path("~", ".rt", "git", pkg$name)
+  path = normalizePath(path, mustWork = FALSE)
   cli = getOption("rt.cli", FALSE)
   if (!dir.exists(path)) {
     messagef("Fetching and installing new git package '%s' ...", pkg$name)

@@ -57,7 +57,7 @@ rupdate = function(rebuild = FALSE, only.cran = FALSE, only.git = FALSE, force =
   }
 
   if (!only.cran && "git" %in% levels(pkg.type)) {
-    lapply(pkgs[pkg.type == "git"], installPackage, force = force)
+    lapply(pkgs[pkg.type == "git"], installPackage, temp = FALSE, force = force)
   }
   invisible(TRUE)
 }

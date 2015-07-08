@@ -23,7 +23,7 @@ rinstall = function(pkgs = character(0L), add = FALSE) {
   }
 
   for (pkg in pkgs[!is.cran])
-    installPackage(pkg)
+    installPackage(pkg, temp = !add)
   if (add)
     addPackagesToCollection(pkgs)
   invisible(TRUE)
