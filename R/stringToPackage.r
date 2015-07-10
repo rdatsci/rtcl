@@ -35,7 +35,7 @@ detectPackageType = function(xs) {
     return("local")
   if (any(stri_startswith_fixed(xs, c("https://", "git@"))) && stri_endswith_fixed(xs, ".git"))
     return("git")
-  if (stri_detect_regex(xs, "^[[:alnum:]_-]+/[[:alnum:]_-]+$"))
+  if (stri_detect_regex(xs, "^[[:alnum:]_-]+/[[:alnum:]_.-]+$"))
     return("gh")
   if (stri_detect_regex(xs, "^[[:alnum:].]+$"))
     return("cran")
