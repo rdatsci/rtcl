@@ -4,10 +4,11 @@ library("methods")
 library("rt")
 doc = "
 Usage:
-  rinstall [--add] <pkg>...
+  rinstall [--add] [--noquick] <pkg>...
 
 Options:
-  --add   Add packages to ~/.rt/packages?
+  --add       Add packages to ~/.rt/packages?
+  --noquick   Install docs, all archs, and demos
 "
 rt:::cli.call("rinstall", doc, commandArgs(TRUE))
 
