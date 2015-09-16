@@ -26,5 +26,5 @@ packageToString.GitPackage = function(pkg) {
 
 #' @export
 packageToString.GitHubPackage = function(pkg) {
-  sprintf("%s/%s", pkg$repo, pkg$name)
+  pkg$repo
 }

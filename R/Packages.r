@@ -24,5 +24,5 @@ GitPackage = function(name, repo, uri) {
 }
 
 GitHubPackage = function(name, repo) {
-  addClasses(Package(name = name, repo = repo, type = "git", uri = sprintf("https://github.com/%s/%s.git", repo, name)), c("GitHubPackage", "GitPackage"))
+  addClasses(Package(name = name, repo = repo, type = "git", uri = sprintf("https://github.com/%s.git", repo)), c("GitHubPackage", "GitPackage"))
 }
