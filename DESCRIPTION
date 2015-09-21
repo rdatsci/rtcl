@@ -28,4 +28,5 @@ Imports:
 Suggests:
     testthat,
     roxygen2,
-    codetools
+    codetools,
+    covr
