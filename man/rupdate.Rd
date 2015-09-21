@@ -5,7 +5,7 @@
 \title{Update packages}
 \usage{
 rupdate(rebuild = FALSE, only.cran = FALSE, only.git = FALSE,
-  force = FALSE)
+  force = FALSE, noquick = FALSE)
 }
 \arguments{
 \item{rebuild}{[\code{logical(1)}]\cr
@@ -19,6 +19,11 @@ Update Git packages only. Default is \code{FALSE}.}
 
 \item{force}{[\code{logical(1)}]\cr
 Force installation of Git packages? Default is \code{FALSE}.}
+
+\item{noquick}{[\code{logical(1)}]\cr
+Switch off devtools quick installation for git packages.
+See \code{?devtools::install}.
+Default is \code{FALSE}.}
 }
 \value{
 Invisibly returns \code{TRUE} on success.

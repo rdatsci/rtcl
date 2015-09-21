@@ -4,12 +4,13 @@ library("methods")
 library("rt")
 doc = "
 Usage:
-  rupdate [--rebuild] [--only-cran] [--only-git] [--force] [<path>]
+  rupdate [--rebuild] [--only-cran] [--only-git] [--force] [--noquick] [<path>]
 Options:
   --rebuild    Rebuild packages which are built against an other version of R
   --only-cran  Restict update to CRAN packages only.
   --only-git   Restrict update to Git packages.
   --force      Reinstall git packages even if there is no remote update.
+  --noquick   Install docs, all archs, demos, and vignettes for git packages.
 "
 rt:::cli.call("rupdate", doc, commandArgs(TRUE))
 

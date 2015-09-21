@@ -23,11 +23,17 @@
 #'  Update Git packages only. Default is \code{FALSE}.
 #' @param force [\code{logical(1)}]\cr
 #'  Force installation of Git packages? Default is \code{FALSE}.
+#' @param noquick [\code{logical(1)}]\cr
+#'  Switch off devtools quick installation for git packages.
+#'  See \code{?devtools::install}.
+#'  Default is \code{FALSE}.
 #' @template return-itrue
 #' @export
-rupdate = function(rebuild = FALSE, only.cran = FALSE, only.git = FALSE, force = FALSE) {
+rupdate = function(rebuild = FALSE, only.cran = FALSE, only.git = FALSE
+                   , force = FALSE, noquick = FALSE) {
   assertFlag(rebuild)
-
+  assertFlag(noquick)
+  
   messagef("Checking for outdated packages ...")
   lib = getLibraryPath()
   pkgs = getCollectionContents(as.packages = TRUE)
@@ -57,7 +63,7 @@ rupdate = function(rebuild = FALSE, only.cran = FALSE, only.git = FALSE, force =
   }
 
   if (!only.cran && "git" %in% levels(pkg.type)) {
-    lapply(pkgs[pkg.type == "git"], installPackage, temp = FALSE, force = force)
+    lapply(pkgs[pkg.type == "git"], installPackage, temp = FALSE, force = force, quick = !noquick)
   }
   invisible(TRUE)
 }

@@ -8,7 +8,7 @@ Usage:
 
 Options:
   --add       Add packages to ~/.rt/packages?
-  --noquick   Install docs, all archs, and demos
+  --noquick   Install docs, all archs, demos, and vignettes for git packages.
 "
 rt:::cli.call("rinstall", doc, commandArgs(TRUE))
 

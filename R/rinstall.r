@@ -9,7 +9,8 @@
 #'  Append packages to your \code{~/.rt/packages} file?
 #'  Default is \code{FALSE}.
 #' @param noquick [\code{logical(1)}]\cr
-#'  Switch off default quick installation for git packages.
+#'  Switch off devtools quick installation for git packages.
+#'  See \code{?devtools::install}.
 #'  Default is \code{FALSE}.
 #' @template return-itrue
 #' @export
