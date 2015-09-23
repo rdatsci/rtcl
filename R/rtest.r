@@ -1,7 +1,8 @@
-#' Run unit tests for a package
+#' @title
+#'  Run unit tests for a package
 #'
 #' @description
-#' Tests a package located in \code{path} using \code{\link[devtools]{test}}.
+#'  Tests a package located in \code{path} using \code{\link[devtools]{test}}.
 #'
 #' @template path
 #' @param filter [\code{FALSE} || \code{character(1)}]\cr
@@ -17,4 +18,5 @@ rtest = function(path = getwd(), filter = FALSE) {
     assertString(filter)
   }
   devtools::test(pkg, filter = filter)
+  invisible(TRUE)
 }
