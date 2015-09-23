@@ -16,6 +16,7 @@ rcheck = function(path = getwd(), nocleanup = FALSE) {
   log.path = file.path(dirname(tempdir()), sprintf("rcheck-%s-%s", pkg$package, now))
   dir.create(log.path, recursive = TRUE)
   messagef("Checking package '%s' ...", pkg$package)
-  devtools::check(pkg, check_dir = log.path, cleanup = !nocleanup)
-  invisible(TRUE)
+  res = FALSE
+  res = devtools::check(pkg, check_dir = log.path, cleanup = !nocleanup)
+  invisible(res)
 }

@@ -17,6 +17,10 @@ rtest = function(path = getwd(), filter = FALSE) {
   } else {
     assertString(filter)
   }
-  devtools::test(pkg, filter = filter)
-  invisible(TRUE)
+  res = as.data.frame(devtools::test(pkg, filter = filter))
+  if (sum(res$failed) > 0) {
+    return(invisible(FALSE))
+  } else {
+    return(invisible(TRUE))
+  }
 }
