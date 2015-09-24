@@ -14,6 +14,7 @@ This file may also contain git sources to keep you up to date with packages not 
 * `rinstall` to install a remote package, e.g. a package hosted on CRAN or GitHub.
 * `rmake` to make a local package (document and install).
 * `rtest` to test a local package.
+* `rtstchk` to test and check a local package.
 * `rupdate` to update all CRAN packages on your system, install missing CRAN packages listed in your collection `~/.rt/packages` and update all packages with a git source.
 * `rwinbuild` to upload a local package to the winbuilder service.
 
