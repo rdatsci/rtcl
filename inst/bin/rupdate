@@ -4,7 +4,7 @@ library("methods")
 library("rt")
 doc = "
 Usage:
-  rupdate [--rebuild] [--only-cran] [--only-git] [--force] [--noquick] [<path>]
+  rupdate [--rebuild] [--only-cran] [--only-git] [--force] [--noquick]
 Options:
   --rebuild    Rebuild packages which are built against an other version of R
   --only-cran  Restict update to CRAN packages only.
