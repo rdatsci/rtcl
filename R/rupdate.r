@@ -33,7 +33,7 @@ rupdate = function(rebuild = FALSE, only.cran = FALSE, only.git = FALSE
                    , force = FALSE, noquick = FALSE) {
   assertFlag(rebuild)
   assertFlag(noquick)
-  
+
   messagef("Checking for outdated packages ...")
   lib = getLibraryPath()
   pkgs = getCollectionContents(as.packages = TRUE)

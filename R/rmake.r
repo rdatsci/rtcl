@@ -10,7 +10,7 @@
 #' @template return-itrue
 #' @export
 rmake = function(path = getwd(), deps = FALSE) {
-  pkg = devtools::as.package(path)
+  pkg = devtools::as.package(path, create = FALSE)
   assertFlag(deps)
 
   cli = getOption("rt.cli", FALSE)

@@ -8,7 +8,7 @@
 #' @template return-itrue
 #' @export
 rcov = function(path = getwd()) {
-  pkg = devtools::as.package(path)
+  pkg = devtools::as.package(path, create = FALSE)
   messagef("Checking code coverage of package '%s' ...", pkg$package)
   found = length(find.package("covr", quiet = TRUE)) > 0L
   if (!found) {

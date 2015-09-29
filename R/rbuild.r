@@ -7,7 +7,7 @@
 #' @template return-itrue
 #' @export
 rbuild = function(path = getwd()) {
-  pkg = devtools::as.package(path)
+  pkg = devtools::as.package(path, create = FALSE)
   messagef("Building package '%s' ...", pkg$package)
   loc = devtools::build(pkg)
   messagef("The package has been bundled to '%s'.", normalizePath(loc))

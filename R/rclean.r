@@ -7,7 +7,7 @@
 #' @template return-itrue
 #' @export
 rclean = function(path = getwd()) {
-  pkg = devtools::as.package(path)
+  pkg = devtools::as.package(path, create = FALSE)
   messagef("Cleaning package '%s' ...", pkg$package)
   devtools::clean_dll(pkg)
   invisible(TRUE)

@@ -10,7 +10,7 @@
 #' @template return-itrue
 #' @export
 rwinbuild = function(path = getwd(), devel = FALSE) {
-  pkg = devtools::as.package(path)
+  pkg = devtools::as.package(path, create = FALSE)
   assertFlag(devel)
 
   maintainer = getOption("rt.maintainer", NULL)
@@ -25,7 +25,7 @@ rwinbuild = function(path = getwd(), devel = FALSE) {
     path = tempfile("tmp-package")
     if (!dir.create(path, recursive = TRUE) || !file.copy(pkg$path, path, recursive = TRUE))
       stop(sprintf("Unable to copy package to %s", path))
-    pkg = devtools::as.package(file.path(path, basename(pkg$path)))
+    pkg = devtools::as.package(file.path(path, basename(pkg$path)), create = FALSE)
     write.dcf(desc, file = file.path(pkg$path, "DESCRIPTION"))
   }
 

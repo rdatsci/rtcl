@@ -10,7 +10,7 @@
 #' @template return-itrue
 #' @export
 rtest = function(path = getwd(), filter = FALSE) {
-  pkg = devtools::as.package(path)
+  pkg = devtools::as.package(path, create = FALSE)
   messagef("Testing package '%s' ...", pkg$package)
   if (identical(filter, FALSE)) {
     filter = NULL

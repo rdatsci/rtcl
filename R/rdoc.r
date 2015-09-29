@@ -8,7 +8,7 @@
 #' @template return-itrue
 #' @export
 rdoc = function(path = getwd()) {
-  pkg = devtools::as.package(path)
+  pkg = devtools::as.package(path, create = FALSE)
   messagef("Documenting package '%s' ...", pkg$package)
   devtools::document(pkg)
   invisible(TRUE)
