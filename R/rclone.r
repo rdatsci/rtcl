@@ -18,7 +18,7 @@ rclone = function(pkg, temp = FALSE) {
 
   # retrieve cran packages from github
   if (pkg$type == "cran") {
-    pkg = GitHubPackage(name = pkg$name, repo = "cran")
+    pkg = GitHubPackage(name = pkg$name, repo = sprintf("cran/%s", pkg$name))
   } else if (pkg$type == "local") {
     stop("Cannot clone local repositories")
   }
