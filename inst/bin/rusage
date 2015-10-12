@@ -1,0 +1,11 @@
+#!/usr/bin/env Rscript
+
+library("methods")
+library("rt")
+doc = "
+Usage:
+  rusage [<path>]
+"
+rt:::cli.call("rusage", doc, commandArgs(TRUE))
+
+# vim: ft=r
