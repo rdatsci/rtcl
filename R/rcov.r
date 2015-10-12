@@ -7,15 +7,12 @@
 #' @template path
 #' @template return-itrue
 #' @export
-rcov = function(path = getwd()) {
+rcov = function(path = getwd(), shine = FALSE) {
   pkg = devtools::as.package(path, create = FALSE)
   messagef("Checking code coverage of package '%s' ...", pkg$package)
-  found = length(find.package("covr", quiet = TRUE)) > 0L
-  if (!found) {
-    messagef("Installing missing GitHub package 'covr' ...")
-    rinstall("jimhester/covr")
-  }
-  requireNamespace("covr", quietly = TRUE)
-  print(covr::package_coverage(pkg))
+  coverage = covr::package_coverage(pkg)
+  print(coverage)
+  if (shine)
+    covr::shine(coverage)
   invisible(TRUE)
 }

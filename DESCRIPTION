@@ -23,10 +23,11 @@ Imports:
     docopt,
     devtools,
     git2r,
+    covr,
+    DT,
     data.table,
     tools
 Suggests:
     testthat,
     roxygen2,
-    codetools,
-    covr
+    codetools

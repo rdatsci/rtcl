@@ -4,7 +4,7 @@
 \alias{rcov}
 \title{Test the coverage of a package}
 \usage{
-rcov(path = getwd())
+rcov(path = getwd(), shine = FALSE)
 }
 \arguments{
 \item{path}{[\code{character}]\cr
