@@ -41,15 +41,22 @@ rupdate = function(rebuild = FALSE, only.cran = FALSE, only.git = FALSE
 
 
   if (!only.git) {
-    fields = c("Package", "LibPath", "Version")
+    fields = c("Package", "LibPath", "Version", "Built")
     installed = data.table(installed.packages(fields = fields), key = "Package")[, fields, with = FALSE]
     old = installed[data.table(old.packages()[, c("Package", "ReposVer")])]
     # reduce to max installed version
     old = old[, list(Version = max(package_version(Version)), ReposVer = package_version(head(ReposVer, 1L))), by = Package]
-    old = old[Version < ReposVer, Package]
-    if (length(old)) {
-      messagef("Rebuilding %i outdated packages ...", length(old))
-      install.packages(old, lib = lib)
+    old = old[Version < ReposVer, "Package", with = FALSE]
+    if (nrow(old)) {
+      messagef("Rebuilding %i outdated packages ...", nrow(old))
+      install.packages(old$Package, lib = lib)
+    }
+    if (rebuild) {
+      rebuild = installed[!old][Built < getRversion(), "Package", with = FALSE]
+      if (nrow(rebuild)) {
+        messagef("Rebuilding %i outdated packages ...", nrow(rebuild))
+        install.packages(rebuild$Package, lib = lib)
+      }
     }
   }
 
