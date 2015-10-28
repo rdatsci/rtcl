@@ -1,4 +1,4 @@
-Package: rtTestPackage
+Package: testpkg
 Type: Package
 Title: Just a test package to test rt
 Version: 1.0

@@ -4,11 +4,11 @@
 #' Check a package located in \code{path} using \code{link[devtools]{check}}..
 #'
 #' @template path
-#' @param nocleanup [\code{logical(1L)}]\cr
-#'   Do not clean up the log directory. Default is \code{FALSE}.
+#' @param cleanup [\code{logical(1L)}]\cr
+#'   Clean up the log directory, even if check failed or issued warnings. Default is \code{FALSE}.
 #' @template return-itrue
 #' @export
-rcheck = function(path = getwd(), nocleanup = FALSE) {
+rcheck = function(path = getwd(), cleanup = FALSE) {
   Sys.setenv(R_MAKEVARS_USER = system.file("Makevars-template", package = "rt"))
   on.exit(Sys.unsetenv("R_MAKEVARS_USER"))
   pkg = devtools::as.package(path, create = FALSE)
@@ -17,6 +17,10 @@ rcheck = function(path = getwd(), nocleanup = FALSE) {
   dir.create(log.path, recursive = TRUE)
   messagef("Checking package '%s' ...", pkg$package)
   res = FALSE
-  res = devtools::check(pkg, check_dir = log.path, cleanup = !nocleanup)
+  res = try(devtools::check(pkg, check_dir = log.path, cleanup = cleanup))
+  if (cleanup) {
+    if (file.exists(log.path)) unlink(log.path, recursive = TRUE)
+    messagef("You ran 'rcheck --cleanup'. Logfiles are deleted.")
+  }
   invisible(res)
 }

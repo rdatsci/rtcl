@@ -1,4 +1,3 @@
 library(testthat)
-library(rtTestPackage)
-
-test_check("rtTestPackage")
+library(testpkg)
+test_check("testpkg")
