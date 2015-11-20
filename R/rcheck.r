@@ -9,9 +9,14 @@
 #' @template return-itrue
 #' @export
 rcheck = function(path = getwd(), cleanup = FALSE) {
+  pkg = devtools::as.package(path, create = FALSE)
+  if (!is.null(pkg$roxygennote)) {
+    messagef("Updating documentation for '%s'", pkg$package)
+    devtools::document(pkg)
+  }
+
   Sys.setenv(R_MAKEVARS_USER = system.file("Makevars-template", package = "rt"))
   on.exit(Sys.unsetenv("R_MAKEVARS_USER"))
-  pkg = devtools::as.package(path, create = FALSE)
   now = strftime(Sys.time(), format = "%Y%m%d-%H%M%S")
   log.path = file.path(dirname(tempdir()), sprintf("rcheck-%s-%s", pkg$package, now))
   dir.create(log.path, recursive = TRUE)

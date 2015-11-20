@@ -5,29 +5,27 @@ Version: 0.1
 Author: Michel Lang <michellang@gmail.com>
 Maintainer: Michel Lang <michellang@gmail.com>
 Description: This package ships some command line utilities which
-    simplify working with R packages from the command line.
-    Many commands rt provides are just wrappers around devtools but
-    ensure a valid exit code which is required to use these commands
-    for shell scripting.
-    Furthermore, rt allows you to maintain a collection of you
-    favorite packages in a plain text file which you can add to your
-    dotfiles and share across systems. This file may also contain
-    git sources to keep you up to date with packages not yet
-    released on CRAN.
+    simplify working with R packages from the command line. Many commands rt
+    provides are just wrappers around devtools but ensure a valid exit code
+    which is required to use these commands for shell scripting.
+    Furthermore, rt allows you to maintain a collection of you favorite packages
+    in a plain text file which you can add to your dotfiles and share across
+    systems. This file may also contain git sources to keep you up to date with
+    packages not yet released on CRAN.
 License: GPL-2
 ByteCompile: yes
 Imports:
     checkmate,
-    stringi,
-    crayon,
-    docopt,
-    devtools,
-    git2r,
+    codetools,
     covr,
-    DT,
+    crayon,
     data.table,
+    devtools,
+    docopt,
+    git2r,
+    roxygen2 (>= 5.0.1),
+    stringi,
     tools
 Suggests:
-    testthat,
-    roxygen2,
-    codetools
+    testthat
+RoxygenNote: 5.0.1
