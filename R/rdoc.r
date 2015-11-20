@@ -9,7 +9,7 @@
 #' @export
 rdoc = function(path = getwd()) {
   pkg = devtools::as.package(path, create = FALSE)
-  messagef("Documenting package '%s' ...", pkg$package)
+  messagef("Documenting package '%s' with roxygen2 ...", pkg$package)
   devtools::document(pkg)
   invisible(TRUE)
 }

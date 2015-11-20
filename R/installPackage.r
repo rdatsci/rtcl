@@ -9,8 +9,7 @@ installPackage.default = function(pkg, ...) {
 
 #' @export
 installPackage.LocalPackage = function(pkg, ...) {
-  cli = getOption("rt.cli", FALSE)
-  devtools::install(pkg$uri, reload = !cli)
+  rmake(pkg$uri, deps = TRUE)
 }
 
 #' @export

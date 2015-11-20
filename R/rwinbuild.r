@@ -30,6 +30,9 @@ rwinbuild = function(path = getwd(), devel = FALSE) {
   }
 
   messagef("Building and uploading package '%s' in '%s' to the winbuilder", pkg$package, pkg$path)
-  devtools::document(pkg)
+  if (!is.null(pkg$roxygennote)) {
+    messagef("Updating documentation for '%s'", pkg$package)
+    devtools::document(pkg)
+  }
   devtools::build_win(pkg, version = ifelse(devel, "R-devel", "R-release"))
 }

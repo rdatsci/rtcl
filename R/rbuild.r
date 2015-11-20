@@ -8,6 +8,10 @@
 #' @export
 rbuild = function(path = getwd()) {
   pkg = devtools::as.package(path, create = FALSE)
+  if (!is.null(pkg$roxygennote)) {
+    messagef("Updating documentation for '%s'", pkg$package)
+    devtools::document(pkg)
+  }
   messagef("Building package '%s' ...", pkg$package)
   loc = devtools::build(pkg)
   messagef("The package has been bundled to '%s'.", normalizePath(loc))
