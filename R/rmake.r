@@ -13,14 +13,14 @@ rmake = function(path = getwd(), deps = FALSE) {
   pkg = devtools::as.package(path, create = FALSE)
   assertFlag(deps)
 
-  if (!is.null(pkg$roxygennote)) {
-    messagef("Updating documentation for '%s'", pkg$package)
-    devtools::document(pkg)
-  }
-
   if (deps) {
     messagef("Checking dependencies for '%s' in '%s'", pkg$package, pkg$path)
     devtools::install_deps(pkg, dependencies = if (deps) TRUE else NA)
+  }
+
+  if (!is.null(pkg$roxygennote)) {
+    messagef("Updating documentation for '%s'", pkg$package)
+    devtools::document(pkg)
   }
 
   messagef("Installing package '%s'", pkg$package)

@@ -29,7 +29,7 @@ rwinbuild = function(path = getwd(), devel = FALSE) {
     write.dcf(desc, file = file.path(pkg$path, "DESCRIPTION"))
   }
 
-  messagef("Building and uploading package '%s' in '%s' to the winbuilder", pkg$package, pkg$path)
+  messagef("Building package '%s' in '%s' and uploading to the winbuilder", pkg$package, pkg$path)
   if (!is.null(pkg$roxygennote)) {
     messagef("Updating documentation for '%s'", pkg$package)
     devtools::document(pkg)
