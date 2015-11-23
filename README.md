@@ -5,8 +5,8 @@ Many commands *rt* provides are just wrappers around [devtools](https://github.c
 Furthermore, *rt* allows you to maintain a collection of you favorite packages in a plain text file which you can add to your [dotfiles](https://dotfiles.github.io/) and share across systems.
 This file may also contain git sources to keep you up to date with packages not yet released on CRAN.
 
-## Available commands
 
+## Available commands
 * `rbuild` to bundle a local package.
 * `rcheck` to check a local package.
 * `rclean` to remove `.[o|so]` files from a local package.
@@ -21,12 +21,20 @@ This file may also contain git sources to keep you up to date with packages not 
 
 ## Setup
 First, you need to install *rt* itself.
-Using a personal library (e.g., `echo 'R_LIBS_USER=~/.R/library' >> ~/.Renviron`) for all R packages is strongly advised.
-```splus
+Using a personal library (e.g., `echo 'R_LIBS_USER=~/.R/library' >> ~/.Renviron`) is strongly advised.
+```{splus}
 devtools::install_github("rdatsci/rt")
 ```
-The command line scripts are now installed in the subdirectory `rt/bin` of your R library (call `.libPaths()` in R if unsure about its location).
-You need to add this directory to your `PATH`.
+Alternatively, if you start from scratch and do not have [devtools](https://github.com/hadley/devtools) installed, run the following command in your shell:
+```{sh}
+Rscript -e 'install.packages("devtools", repos = "https://cran.rstudio.com/")'
+Rscript -e 'update.packages(repos = "https://cran.rstudio.com/", ask = FALSE)'
+Rscript -e 'devtools::install_github("rdatsci/rt")'
+```
+
+The *rt* command line scripts are now installed in the subdirectory `rt/bin` of your R library (call `.libPaths()` in R if
+unsure about its location). You need to add this directory to your `PATH`.
+
 
 ### On Linux
 Add this directory to your `PATH` in your `.bashrc` or `.zshrc`:
@@ -38,8 +46,8 @@ PATH=~/.R/library/rt/bin:$PATH
 path=(~/.R/library/rt/bin $path)
 ```
 
-### On Windows
 
+### On Windows
 Add this directory to your `PATH` variable in the system environment via the control panel.
 As an alternative use the admin console command:
 ```
@@ -49,8 +57,8 @@ SETX /M PATH "%PATH%;path-to-rt-repository/win"
 If it does not work for you, try it without the `/M` option.
 In any case you need to open a new windows prompt or terminal windows in order to reload the `PATH` variable.
 
-### Continue for both systems
 
+### Continue for both systems
 After sourcing this file (or after a re-login) you should be all set to use *rt*.
 
 To keep *rt* updated, you can let it maintain itself via `rupdate` by adding it to your collection file `~/.rt/packages`.
