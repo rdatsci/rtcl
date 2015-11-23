@@ -20,7 +20,7 @@ Imports:
     covr,
     crayon,
     data.table,
-    devtools,
+    devtools (>= 1.9.1),
     docopt,
     git2r,
     roxygen2 (>= 5.0.1),
