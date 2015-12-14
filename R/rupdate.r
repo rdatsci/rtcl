@@ -43,7 +43,7 @@ rupdate = function(rebuild = FALSE, only.cran = FALSE, only.git = FALSE
   if (!only.git) {
     fields = c("Package", "LibPath", "Version", "Built")
     installed = data.table(installed.packages(fields = fields), key = "Package")[, fields, with = FALSE]
-    old = installed[data.table(old.packages()[, c("Package", "ReposVer")])]
+    old = installed[as.data.table(old.packages())[, c("Package", "ReposVer"), with = FALSE]]
     # reduce to max installed version
     old = old[, list(Version = max(package_version(Version)), ReposVer = package_version(head(ReposVer, 1L))), by = Package]
     old = old[Version < ReposVer, "Package", with = FALSE]
