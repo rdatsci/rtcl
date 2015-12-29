@@ -1,0 +1,11 @@
+#!/usr/bin/env Rscript
+
+library("methods")
+library("rt")
+doc = "
+Usage:
+  rspell [<path>]
+"
+rt:::cli.call("rspell", doc, commandArgs(TRUE))
+
+# vim: ft=r
