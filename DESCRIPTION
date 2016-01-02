@@ -16,8 +16,6 @@ License: GPL-2
 ByteCompile: yes
 Imports:
     checkmate,
-    codetools,
-    covr,
     crayon,
     data.table,
     devtools (>= 1.9.1),
@@ -27,5 +25,7 @@ Imports:
     stringi,
     tools
 Suggests:
+    codetools,
+    covr,
     testthat
 RoxygenNote: 5.0.1

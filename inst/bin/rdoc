@@ -4,7 +4,9 @@ library("methods")
 library("rt")
 doc = "
 Usage:
-  rdoc [<path>]
+  rdoc [--staticdocs] [<path>]
+Options:
+  --staticdocs  Also run 'staticdocs' on the generated man pages
 "
 rt:::cli.call("rdoc", doc, commandArgs(TRUE))
 

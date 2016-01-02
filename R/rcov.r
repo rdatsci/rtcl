@@ -11,6 +11,10 @@
 #' @export
 rcov = function(path = getwd(), shine = FALSE) {
   pkg = devtools::as.package(path, create = FALSE)
+
+  if (!requireNamespace("covr"))
+    stop("Please install package 'covr'")
+
   messagef("Checking code coverage of package '%s' ...", pkg$package)
   coverage = covr::package_coverage(pkg)
   print(coverage)

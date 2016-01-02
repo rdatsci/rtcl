@@ -4,12 +4,16 @@
 \alias{rdoc}
 \title{Create documentation for a package}
 \usage{
-rdoc(path = getwd())
+rdoc(path = getwd(), staticdocs = FALSE)
 }
 \arguments{
 \item{path}{[\code{character}]\cr
 If no path to a DESCRIPTION is given, the package looks for a DESCRIPTION in
 the current directory and up to two parent directories.}
+
+\item{staticdocs}{[\code{logical(1)}]\cr
+Also run \code{staticdocs} (\url{https://github.com/hadley/staticdocs}) on the
+generated man pages.}
 }
 \value{
 Invisibly returns \code{TRUE} on success.
