@@ -1,0 +1,14 @@
+#!/usr/bin/env Rscript
+
+library("methods")
+library("rt")
+doc = "
+Usage:
+  rcompile <files>...
+
+Options:
+  --html  Convert to HTML (default is PDF)
+"
+rt:::cli.call("rcompile", doc, commandArgs(TRUE))
+
+# vim: ft=r
