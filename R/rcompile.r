@@ -9,10 +9,10 @@
 #' @export
 rcompile = function(files = character(0L), html = FALSE) {
   for (infile in files) {
-    ext = tolower(stri_extract_last_regex(infile, "\\.[a-zA-Z0-9]+"))
+    ext = tolower(stri_extract_last_regex(infile, "\\.[a-zA-Z0-9]+$"))
     ext = substr(ext, 2, nchar(ext))
     if (is.na(ext) || ext %nin% c("rmd", "rnw"))
-      stop(sprintf("File extension '%s' not recognized. Must be either 'Rmd' or 'Rnw'", ext))
+      stop(sprintf("File extension for file '%s' not recognized. Must be either 'Rmd' or 'Rnw'", infile))
 
     if (ext == "rmd") {
       if (!requireNamespace("rmarkdown", quietly = TRUE))

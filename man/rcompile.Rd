@@ -4,7 +4,7 @@
 \alias{rcompile}
 \title{Compile an R markdown or R noweb (Sweave) document}
 \usage{
-rcompile(files = character(0L), html = FALSE)
+rcompile(file = character(0L), html = FALSE)
 }
 \value{
 Invisibly returns \code{TRUE} on success.
