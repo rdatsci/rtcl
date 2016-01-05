@@ -4,7 +4,15 @@
 \alias{rcompile}
 \title{Compile an R markdown or R noweb (Sweave) document}
 \usage{
-rcompile(file = character(0L), html = FALSE)
+rcompile(files = character(0L), html = FALSE)
+}
+\arguments{
+\item{files}{[\code{character}]\cr
+List of Sweave (.Rnw) and Rmarkdown (.Rmd) files to compile.}
+
+\item{html}{[\code{logical(1)}]\cr
+If \code{TRUE}, the function will generate HTML output for Rmarkdown files.
+If \code{FALSE} (default), it generates a PDF.}
 }
 \value{
 Invisibly returns \code{TRUE} on success.

@@ -4,7 +4,11 @@
 #' Uses \code{rmarkdown} or \code{knitr} to compile its input argument
 #' into an HTML or PDF file.
 #'
-#' @param input
+#' @param files [\code{character}]\cr
+#'  List of Sweave (.Rnw) and Rmarkdown (.Rmd) files to compile.
+#' @param html [\code{logical(1)}]\cr
+#'  If \code{TRUE}, the function will generate HTML output for Rmarkdown files.
+#'  If \code{FALSE} (default), it generates a PDF.
 #' @template return-itrue
 #' @export
 rcompile = function(files = character(0L), html = FALSE) {
