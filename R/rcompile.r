@@ -18,7 +18,7 @@ rcompile = function(files = character(0L), html = FALSE) {
       if (!requireNamespace("rmarkdown", quietly = TRUE))
         stop("To compile markdown, please install the package 'rmarkdown'")
       messagef("Compiling %s into %s ...", infile, ifelse(html, "html", "pdf"))
-      rmarkdown::render(infile, output_format = ifelse(html, "html_document", "pdf_document()"))
+      rmarkdown::render(infile, output_format = ifelse(html, "html_document", "pdf_document"))
     } else {
       if (html)
         stop("Conversion from sweave to HTML is not supported")

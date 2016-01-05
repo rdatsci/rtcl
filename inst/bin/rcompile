@@ -4,7 +4,7 @@ library("methods")
 library("rt")
 doc = "
 Usage:
-  rcompile <files>...
+  rcompile [--html] <files>...
 
 Options:
   --html  Convert to HTML (default is PDF)
