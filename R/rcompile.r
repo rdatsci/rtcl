@@ -23,8 +23,9 @@ rcompile = function(files = character(0L), html = FALSE) {
         stop("To compile markdown, please install the package 'rmarkdown'")
       messagef("Compiling %s into %s ...", infile, ifelse(html, "html", "pdf"))
       rmarkdown::render(infile, output_format = ifelse(html,
-          rmarkdown::html_document(dev = "svg"),
-          rmarkdown::pdf_document()
+          # rmarkdown::html_document(dev = "svg"),
+          "html_document",
+          "pdf_document"
       ))
     } else {
       if (html)
