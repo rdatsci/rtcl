@@ -31,7 +31,6 @@ devtools::install_github("rdatsci/rt")
 Alternatively, if you start from scratch and do not have [devtools](https://github.com/hadley/devtools) installed, run the following command in your shell:
 ```{sh}
 Rscript -e 'install.packages("devtools", repos = "https://cran.rstudio.com/")'
-Rscript -e 'update.packages(repos = "https://cran.rstudio.com/", ask = FALSE)'
 Rscript -e 'devtools::install_github("rdatsci/rt")'
 ```
 
