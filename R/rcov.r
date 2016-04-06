@@ -16,7 +16,7 @@ rcov = function(path = getwd(), shine = FALSE) {
     stop("Please install package 'covr'")
 
   messagef("Checking code coverage of package '%s' ...", pkg$package)
-  coverage = covr::package_coverage(pkg)
+  coverage = covr::package_coverage(pkg$path)
   print(coverage)
   if (shine)
     covr::shine(coverage)
