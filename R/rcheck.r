@@ -22,7 +22,7 @@ rcheck = function(path = getwd(), cleanup = FALSE) {
   dir.create(log.path, recursive = TRUE)
   messagef("Checking package '%s' ...", pkg$package)
   res = FALSE
-  res = try(devtools::check(pkg, check_dir = log.path, cleanup = cleanup))
+  res = try(devtools::check(pkg, check_dir = log.path))
   if (cleanup) {
     if (file.exists(log.path)) unlink(log.path, recursive = TRUE)
     messagef("You ran 'rcheck --cleanup'. Logfiles are deleted.")
