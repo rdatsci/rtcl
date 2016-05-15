@@ -12,9 +12,7 @@
 #' @export
 rdoc = function(path = getwd(), staticdocs = FALSE) {
   pkg = devtools::as.package(path, create = FALSE)
-
-  messagef("Documenting package '%s' with roxygen2 ...", pkg$package)
-  devtools::document(pkg)
+  updatePackageAttributes(pkg)
 
   if (staticdocs) {
     if (!requireNamespace("staticdocs"))

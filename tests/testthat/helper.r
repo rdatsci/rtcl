@@ -1,4 +1,4 @@
-if (!exists("SET_TEMP_LIB")) {
+if (FALSE && !exists("SET_TEMP_LIB")) {
   SET_TEMP_LIB <<- TRUE
   lib = tempfile("rtlib")
   dir.create(lib)

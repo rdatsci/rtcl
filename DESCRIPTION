@@ -27,5 +27,6 @@ Imports:
 Suggests:
     codetools,
     covr,
+    Rcpp,
     testthat
 RoxygenNote: 5.0.1

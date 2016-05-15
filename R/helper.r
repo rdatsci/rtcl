@@ -34,3 +34,23 @@ extract = function(li, what) {
 readPackageName = function(path) {
   as.character(read.dcf(file.path(path, "DESCRIPTION"), fields = "Package"))
 }
+
+updatePackageAttributes = function(pkg) {
+  getPackageNames = function(x) {
+    x = pkg$imports
+    x = stri_trim_left(stri_split_fixed(pkg$imports, "\n")[[1]])
+    x = x[nzchar(x)]
+    stri_extract_first_words(x)
+  }
+
+  if (!is.null(pkg$roxygennote)) {
+    messagef("Updating documentation for '%s'", pkg$package)
+    devtools::document(pkg)
+  }
+
+  if (!is.null(pkg$linkingto) && "Rcpp" %in% getPackageNames(pkg$linkingto)) {
+    messagef("Updating Rcpp compile attributes")
+    requireNamespace("Rcpp")
+    Rcpp::compileAttributes(pkg$path, verbose = TRUE)
+  }
+}

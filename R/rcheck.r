@@ -10,10 +10,7 @@
 #' @export
 rcheck = function(path = getwd(), cleanup = FALSE) {
   pkg = devtools::as.package(path, create = FALSE)
-  if (!is.null(pkg$roxygennote)) {
-    messagef("Updating documentation for '%s'", pkg$package)
-    devtools::document(pkg)
-  }
+  updatePackageAttributes(pkg)
 
   Sys.setenv(R_MAKEVARS_USER = system.file("Makevars-template", package = "rt"))
   on.exit(Sys.unsetenv("R_MAKEVARS_USER"))

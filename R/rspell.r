@@ -5,10 +5,7 @@
 #' @export
 rspell = function(path = getwd()) {
   pkg = devtools::as.package(path, create = FALSE)
-  if (!is.null(pkg$roxygennote)) {
-    messagef("Updating documentation for '%s'", pkg$package)
-    devtools::document(pkg)
-  }
+  updatePackageAttributes(pkg)
 
   messagef("Checking spelling for package '%s'", pkg$package)
   if (!requireNamespace("utils"))
