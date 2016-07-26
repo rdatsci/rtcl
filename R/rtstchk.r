@@ -12,9 +12,5 @@ rtstchk = function(path = getwd()) {
     messagef("Unit test(s) failed. Check canceled.")
     return(invisible(FALSE))
   }
-  if (!rcheck(path)) {
-    messagef("Check failed.")
-    return(invisible(FALSE))
-  }
-  invisible(TRUE)
+  invisible(rcheck(path))
 }
