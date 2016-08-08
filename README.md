@@ -46,6 +46,11 @@ PATH=~/.R/library/rt/bin:$PATH
 
 # zsh
 path=(~/.R/library/rt/bin $path)
+
+# fish
+if test -d ~/.R/library/rt
+  set -gx PATH ~/.R/library/rt/bin $PATH
+end
 ```
 
 
