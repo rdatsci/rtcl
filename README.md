@@ -49,7 +49,7 @@ path=(~/.R/library/rt/bin $path)
 
 # fish
 if test -d ~/.R/library/rt
-  set -gx PATH ~/.R/library/rt/bin $PATH
+    set --universal fish_user_paths ~/.R/library/rt/bin $fish_user_paths
 end
 ```
 
