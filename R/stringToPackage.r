@@ -35,7 +35,7 @@ detectPackageType = function(xs) {
     return("local")
   if (any(stri_startswith_fixed(xs, c("https://", "git@"))) && stri_endswith_fixed(xs, ".git"))
     return("git")
-  if (stri_detect_regex(xs, "^[[:alnum:]_-]+/[[:alnum:]_.-]+$"))
+  if (stri_detect_regex(xs, "^[[:alnum:]_-]+/[[:alnum:]_.-]+[[:alnum:]/]*?$"))
     return("gh")
   if (stri_detect_regex(xs, "^[[:alnum:].]+$"))
     return("cran")
@@ -56,8 +56,8 @@ asGitPackage = function(xs) {
 }
 
 asGitHubPackage = function(xs) {
-  parts = stri_split_fixed(xs, pattern = "/", n = 2L)[[1L]]
-  GitHubPackage(name = parts[2L], repo = xs)
+  parts = stri_split_fixed(xs, pattern = "/", n = 3L)[[1L]]
+  GitHubPackage(name = parts[2L], repo = stri_join(parts[1:2], collapse = "/"), subdir = parts[3L])
 }
 
 asCranPackage = function(xs) {
