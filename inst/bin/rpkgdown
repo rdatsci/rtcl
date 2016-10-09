@@ -4,8 +4,8 @@ library("methods")
 library("rt")
 doc = "
 Usage:
-  rdoc [<path>]
+  rpkgdown [<path>]
 "
-rt:::cli.call("rdoc", doc, commandArgs(TRUE))
+rt:::cli.call("rpkgdown", doc, commandArgs(TRUE))
 
 # vim: ft=r
