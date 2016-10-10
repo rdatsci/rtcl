@@ -40,7 +40,7 @@ unsure about its location). You need to add this directory to your `PATH`.
 
 
 ### On Linux
-Add this directory to your `PATH` in your `.bashrc` or `.zshrc`:
+Add this directory to your `PATH` in your `.bashrc`, `.zshrc` or `config.fish`:
 ```sh
 # bash
 PATH=~/.R/library/rt/bin:$PATH
@@ -50,7 +50,7 @@ path=(~/.R/library/rt/bin $path)
 
 # fish
 if test -d ~/.R/library/rt
-    set --universal fish_user_paths ~/.R/library/rt/bin $fish_user_paths
+    set -gx PATH $HOME/.R/library/rt/bin $PATH
 end
 ```
 
