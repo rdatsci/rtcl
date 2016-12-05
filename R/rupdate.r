@@ -49,13 +49,13 @@ rupdate = function(rebuild = FALSE, only.cran = FALSE, only.git = FALSE
     old = old[Version < ReposVer, "Package", with = FALSE]
     if (nrow(old)) {
       messagef("Rebuilding %i outdated packages ...", nrow(old))
-      install.packages(old$Package, lib = lib)
+      install.packages(old$Package, lib = lib, INSTALL_opts = getOption("devtools.install.args"))
     }
     if (rebuild) {
       rebuild = installed[!old][Built < getRversion(), "Package", with = FALSE]
       if (nrow(rebuild)) {
         messagef("Rebuilding %i outdated packages ...", nrow(rebuild))
-        install.packages(rebuild$Package, lib = lib)
+        install.packages(rebuild$Package, lib = lib, INSTALL_opts = getOption("devtools.install.args"))
       }
     }
   }
@@ -65,7 +65,7 @@ rupdate = function(rebuild = FALSE, only.cran = FALSE, only.git = FALSE
     w = which(pkg.type == "cran" & installed[, pn %nin% Package])
     if (length(w)) {
       messagef("Installing %i missing cran packages ...", length(w))
-      install.packages(pn[w], lib = lib)
+      install.packages(pn[w], lib = lib, INSTALL_opts = getOption("devtools.install.args"))
     }
   }
 
