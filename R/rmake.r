@@ -12,12 +12,12 @@
 rmake = function(path = getwd(), deps = FALSE) {
   pkg = devtools::as.package(path, create = FALSE)
   assertFlag(deps)
-  updatePackageAttributes(pkg)
 
   if (deps) {
     messagef("Checking dependencies for '%s' in '%s'", pkg$package, pkg$path)
     devtools::install_deps(pkg, lib = getLibraryPath())
   }
+  updatePackageAttributes(pkg)
 
   messagef("Installing package '%s'", pkg$package)
   devtools::install(pkg, reload = !getOption("rt.cli", FALSE))
