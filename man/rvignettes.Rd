@@ -17,4 +17,3 @@ Invisibly returns \code{TRUE} on success.
 \description{
 Build vignettes of the package located in \code{path} using \code{\link[=devtools]{build_vignette}}.
 }
-

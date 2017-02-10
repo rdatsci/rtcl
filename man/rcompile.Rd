@@ -21,4 +21,3 @@ Invisibly returns \code{TRUE} on success.
 Uses \code{rmarkdown} or \code{knitr} to compile its input argument
 into an HTML or PDF file.
 }
-

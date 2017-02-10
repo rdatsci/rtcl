@@ -21,4 +21,3 @@ Invisibly returns \code{TRUE} on success.
 \description{
 Maintainace operations for rt
 }
-

@@ -18,4 +18,3 @@ Invisibly returns \code{TRUE} on success.
 Documents a package located in \code{path} using \code{\link[roxygen2]{roxygen-package}}
 or rather \code{link[devtools]{document}}.
 }
-

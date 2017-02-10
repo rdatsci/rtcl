@@ -17,4 +17,3 @@ Invisibly returns \code{TRUE} on success.
 \description{
 Checks the package using \code{link[codetools]{checkUsagePackage}}
 }
-

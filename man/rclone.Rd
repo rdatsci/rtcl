@@ -22,4 +22,3 @@ Clones a package from GitHub.
 Also works for CRAN packages (CRAN mirror is used in this case, \url{http://cran.github.io/}).
 Great to have a quick peek with your favorite editor or to grep package sources.
 }
-

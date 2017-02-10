@@ -19,4 +19,3 @@ This function converts the string to one of the following objects:
   \item{CranPackage: }{\code{pkg} is a single string without any special characters except dots ([a-zA-Z0-9.]).}
 }
 }
-

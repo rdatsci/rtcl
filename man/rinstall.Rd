@@ -25,4 +25,3 @@ Invisibly returns \code{TRUE} on success.
 \description{
 Installs R packages from local directory, CRAN or Git.
 }
-

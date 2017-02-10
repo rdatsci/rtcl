@@ -17,4 +17,3 @@ Invisibly returns \code{TRUE} on success.
 \description{
 Build a package located in \code{path} using \code{link[devtools]{build}}.
 }
-

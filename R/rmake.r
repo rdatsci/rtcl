@@ -16,7 +16,7 @@ rmake = function(path = getwd(), deps = FALSE) {
 
   if (deps) {
     messagef("Checking dependencies for '%s' in '%s'", pkg$package, pkg$path)
-    devtools::install_deps(pkg, dependencies = TRUE, lib = getLibraryPath())
+    devtools::install_deps(pkg, lib = getLibraryPath())
   }
 
   messagef("Installing package '%s'", pkg$package)

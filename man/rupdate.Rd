@@ -43,4 +43,3 @@ The collection file \code{~/.rt/packages} expects one package per line specified
 which is parseable by \code{\link{stringToPackage}}. Leading and trailing whitespace characters
 will automatically be trimmed. Empty lines and lines starting with a \dQuote{#} will be ignored.
 }
-

@@ -20,4 +20,3 @@ Invisibly returns \code{TRUE} on success.
 \description{
 Tests a package located in \code{path} using \code{\link[devtools]{test}}.
 }
-

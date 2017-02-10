@@ -17,4 +17,3 @@ Invisibly returns \code{TRUE} on success.
 \description{
 Check spelling in generated Rd files
 }
-

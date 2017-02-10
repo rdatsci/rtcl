@@ -18,4 +18,3 @@ Invisibly returns \code{TRUE} on success.
 Build static documentation with \url{https://github.com/hadley/pkgdown} in the
 \dQuote{doc} subdirectory of the package root.
 }
-

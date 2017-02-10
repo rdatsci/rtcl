@@ -21,4 +21,3 @@ Invisibly returns \code{TRUE} on success.
 Uploads a package located in \code{path} to the winbuilder service. Uses
 \code{\link[devtools]{build_win}} internally.
 }
-

@@ -21,4 +21,3 @@ Invisibly returns \code{TRUE} on success.
 Uses the \code{covr} package (\url{https://github.com/jimhester/covr}) to
 test the code coverage.
 }
-

@@ -21,4 +21,3 @@ Invisibly returns \code{TRUE} on success.
 Updates the documentation and then installs the package located at \code{path}, using
 \code{link[devtools]{document}}, \code{link[devtools]{install_deps}} and \code{link[devtools]{install}}.
 }
-

@@ -18,4 +18,3 @@ Invisibly returns \code{TRUE} on success.
 First test than check a package located in \code{path}
  using \code{\link[devtools]{test}} and \code{link[devtools]{check}}.
 }
-

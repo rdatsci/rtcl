@@ -17,4 +17,3 @@ Invisibly returns \code{TRUE} on success.
 \description{
 Cleanup temporary files for a package located in \code{path} using \code{link[devtools]{check}}.
 }
-
