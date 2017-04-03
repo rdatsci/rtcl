@@ -11,6 +11,7 @@ rbuild = function(path = getwd()) {
   updatePackageAttributes(pkg)
 
   messagef("Building package '%s' ...", pkg$package)
+  devtools::clean_vignettes(pkg)
   loc = devtools::build(pkg)
   messagef("The package has been bundled to '%s'.", normalizePath(loc))
   invisible(TRUE)

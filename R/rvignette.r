@@ -9,6 +9,7 @@
 rvignettes = function(path = getwd()) {
   pkg = devtools::as.package(path, create = FALSE)
   messagef("Building vignettes for package '%s' ...", pkg$package)
+  devtools::clean_vignettes(pkg)
   devtools::build_vignettes(pkg)
   invisible(TRUE)
 }
