@@ -4,12 +4,17 @@
 \alias{rbuild}
 \title{Build a package}
 \usage{
-rbuild(path = getwd())
+rbuild(path = getwd(), cran.license = FALSE)
 }
 \arguments{
 \item{path}{[\code{character}]\cr
 If no path to a DESCRIPTION is given, the package looks for a DESCRIPTION in
 the current directory and up to two parent directories.}
+
+\item{cran.license}{[\code{logical(1L)}]\cr
+Replace the LICENSE File with a CRAN compatible version containing only: \cr
+\code{YEAR: (current year)} \cr
+\code{COPYRIGHT HOLDER: (first author found in the DESCRIPTION)}}
 }
 \value{
 Invisibly returns \code{TRUE} on success.
