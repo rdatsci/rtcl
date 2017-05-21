@@ -15,7 +15,8 @@ rbuild = function(path = getwd(), cran.license = FALSE) {
   updatePackageAttributes(pkg)
 
   messagef("Building package '%s' ...", pkg$package)
-  devtools::clean_vignettes(pkg)
+  if (dir.exists(file.path(pkg$path, "inst", "doc")))
+    devtools::clean_vignettes(pkg)
 
   if (cran.license) {
     year = format(Sys.Date(), "%Y")
