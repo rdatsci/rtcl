@@ -15,6 +15,7 @@ Description: This package ships some command line utilities which
 License: GPL-2
 ByteCompile: yes
 Imports:
+    backports,
     checkmate,
     crayon,
     data.table,
