@@ -54,3 +54,10 @@ updatePackageAttributes = function(pkg) {
     Rcpp::compileAttributes(pkg$path, verbose = TRUE)
   }
 }
+
+oldpackages = function() {
+  x = old.packages()
+  if (is.null(x))
+    return(data.table(Package = character(0), LibPath = character(0), Installed = character(0), Built = character(0), ReposVer = character(0), Repository = character(0)))
+  return(as.data.table(x))
+}
