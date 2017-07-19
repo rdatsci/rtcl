@@ -36,7 +36,7 @@ Rscript -e 'devtools::install_github("rdatsci/rt")'
 ```
 
 The *rt* command line scripts are now installed in the subdirectory `rt/bin` of your R library (call `.libPaths()` in R if
-unsure about its location). You need to add this directory to your `PATH`.
+unsure about its location). You need to add this directory to your `PATH` variable, see the section below that applies to you.
 
 
 ### On Linux
