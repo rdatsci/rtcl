@@ -1,0 +1,11 @@
+#!/usr/bin/env Rscript
+
+library("methods")
+library("rt")
+doc = "
+Usage:
+  rremove <pkg>...
+"
+rt:::cli.call("rremove", doc, commandArgs(TRUE))
+
+# vim: ft=r
