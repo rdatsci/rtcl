@@ -1,5 +1,5 @@
-Package = function(name, repo, type, uri, subdir = NA_character_) {
-  x = list(name = name, repo = repo, type = type, uri = uri, subdir = subdir)
+Package = function(name, repo, type, uri, subdir = NA_character_, tag = NA_character_) {
+  x = list(name = name, repo = repo, type = type, uri = uri, subdir = subdir, tag = tag)
   class(x) = "Package"
   return(x)
 }
@@ -23,6 +23,6 @@ GitPackage = function(name, repo, uri) {
   addClasses(Package(name = name, repo = repo, type = "git", uri = uri), "GitPackage")
 }
 
-GitHubPackage = function(name, repo, subdir = NA_character_) {
-  addClasses(Package(name = name, repo = repo, type = "git", uri = sprintf("https://github.com/%s.git", repo), subdir = subdir), c("GitHubPackage", "GitPackage"))
+GitHubPackage = function(name, repo, subdir = NA_character_, tag = NA_character_) {
+  addClasses(Package(name = name, repo = repo, type = "git", uri = sprintf("https://github.com/%s.git", repo), subdir = subdir, tag = tag), c("GitHubPackage", "GitPackage"))
 }

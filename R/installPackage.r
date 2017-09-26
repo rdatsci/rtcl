@@ -27,7 +27,8 @@ installPackage.GitPackage = function(pkg, temp = TRUE, force = FALSE, quick = TR
   if (!dir.exists(path)) {
     messagef("Fetching and installing new git package '%s' ...", pkg$name)
     dir.create(path, recursive = TRUE)
-    git2r::clone(pkg$uri, local_path = path, progress = FALSE)
+    branch = if (!is.na(pkg$tag)) pkg$tag else NULL
+    git2r::clone(pkg$uri, local_path = path, progress = FALSE, branch = branch)
     devtools::install(pkg.path, reload = !cli, quick = quick, keep_source = FALSE)
   } else {
     messagef("Updating git package '%s' ...", packageToString(pkg))

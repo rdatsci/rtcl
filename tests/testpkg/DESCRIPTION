@@ -9,4 +9,4 @@ Description: This package does nothing useful at all.
 License: GPL-2
 Suggests:
     testthat
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
