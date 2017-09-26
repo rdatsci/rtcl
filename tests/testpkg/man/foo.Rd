@@ -16,4 +16,3 @@ Squared numbers.
 \description{
 A dummy square function
 }
-

@@ -26,5 +26,12 @@ packageToString.GitPackage = function(pkg) {
 
 #' @export
 packageToString.GitHubPackage = function(pkg) {
-  pkg$repo
+  str = pkg$repo
+  if (!is.na(pkg$tag)) {
+    str = sprintf("%s@%s", str, pkg$tag)
+  }
+  if (!is.na(pkg$subdir)) {
+    str = sprintf("%s/%s", str, pkg$subdir)
+  }
+  str
 }
