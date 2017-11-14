@@ -38,5 +38,5 @@ rbuild = function(path = getwd(), cran.license = FALSE) {
     file.remove(tempfile)
   }
   messagef("The package has been bundled to '%s'.", normalizePath(loc))
-  invisible(TRUE)
+  invisible(loc)
 }
