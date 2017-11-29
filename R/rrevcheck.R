@@ -36,11 +36,11 @@ rrevcheck = function(path = getwd(), check.logs = NULL) {
     messagef("Removing path (if exists): %s", tmppath)
     unlink(tmppath, recursive = TRUE)
     rclone(p, temp = TRUE)
-    loc = rbuild(tmppath)
     messagef("Making sure dependencies are avail for: %s", p)
     devtools::install_deps(tmppath)
+    system2("R", c("CMD", "build", tmppath))
     check.logoption = sprintf("-o %s", check.logs)
-    system2("R", c("CMD", "check", "--as-cran", "--no-clean", check.logoption, loc))
+    system2("R", c("CMD", "check", "--as-cran", "--no-clean", check.logoption, paste0(p, "*.tar.gz")))
   }
 }
 
