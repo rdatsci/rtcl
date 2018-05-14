@@ -4,7 +4,7 @@ library("methods")
 library("rt")
 doc = "
 Usage:
-  rmarkdown [<file>]
+  rmarkdown <file>
 "
 rt:::cli.call("rmarkdown", doc, commandArgs(TRUE))
 
