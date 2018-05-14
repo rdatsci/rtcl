@@ -28,8 +28,9 @@ Imports:
 Suggests:
     codetools,
     covr,
+    knitr,
     Rcpp,
-    shiny,
     rmarkdown,
+    shiny,
     testthat
 RoxygenNote: 6.0.1
