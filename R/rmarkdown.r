@@ -10,11 +10,10 @@
 rmarkdown = function(file) {
   assertFileExists(file, extension = "Rmd", access = "r")
   if (!requireNamespace("rmarkdown"))
-    stop("Please install package 'rmarkdown")
+    stop("Please install package 'rmarkdown'")
 
   messagef("Rendering '%s'...", file)
   rmarkdown::render(file)
 
   invisible(TRUE)
 }
-
