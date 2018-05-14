@@ -15,6 +15,6 @@ the current directory and up to two parent directories.}
 Invisibly returns \code{TRUE} on success.
 }
 \description{
-Documents a package located in \code{path} using \code{\link[roxygen2]{roxygen-package}}
+Documents a package located in \code{path} using \code{\link[roxygen2]{roxygen2-package}}
 or rather \code{link[devtools]{document}}.
 }

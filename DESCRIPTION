@@ -29,7 +29,9 @@ Suggests:
     codetools,
     covr,
     knitr,
+    pkgdown,
     Rcpp,
+    rhub,
     rmarkdown,
     shiny,
     testthat
