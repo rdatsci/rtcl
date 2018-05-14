@@ -4,19 +4,22 @@
 \alias{rhub}
 \title{Upload package to rhub}
 \usage{
-rhub(path = getwd(), platform = NULL)
+rhub(platform = NULL, checkforcran = FALSE, path = getwd())
 }
 \arguments{
+\item{platform}{[\code{character(1)}]\cr
+Check on the platform specified here.}
+
+\item{checkforcran}{[\code{logical(1L)}]\cr
+Use \code{link[rhub]{check_for_cran}} instead.}
+
 \item{path}{[\code{character}]\cr
 If no path to a DESCRIPTION is given, the package looks for a DESCRIPTION in
 the current directory and up to two parent directories.}
-
-\item{platform}{[\code{character(1)}]\cr
-Check on the platform specified here.}
 }
 \value{
 Invisibly returns \code{TRUE} on success.
 }
 \description{
-Uploads a package located in \code{path} to the rhub service.
+Uploads a package located in \code{path} to the rhub service via \code{link[rhub]{check}}.
 }
