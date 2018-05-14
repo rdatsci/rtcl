@@ -4,7 +4,7 @@ library("methods")
 library("rt")
 doc = "
 Usage:
-  rhub --platform=<platform> [<path>]
+  rhub [--platform=<platform>] [<path>]
 Options:
   --platform=<platform>  Name of the platform to check on
 "

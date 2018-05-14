@@ -8,7 +8,7 @@
 #'  Check on the platform specified here.
 #' @template return-itrue
 #' @export
-rhub = function(path = getwd(), platform) {
+rhub = function(path = getwd(), platform = NULL) {
   if (!requireNamespace("rhub"))
     stop("Install 'rhub' to use rhub")
   pkg = devtools::as.package(path, create = FALSE)

@@ -4,7 +4,7 @@
 \alias{rhub}
 \title{Upload package to rhub}
 \usage{
-rhub(path = getwd(), platform)
+rhub(path = getwd(), platform = NULL)
 }
 \arguments{
 \item{path}{[\code{character}]\cr
