@@ -31,5 +31,9 @@ rwinbuild = function(path = getwd(), devel = FALSE) {
 
   messagef("Building package '%s' in '%s' and uploading to the winbuilder", pkg$package, pkg$path)
   updatePackageAttributes(pkg)
-  devtools::build_win(pkg, version = ifelse(devel, "R-devel", "R-release"))
+  if (devel) {
+    devtools::check_win_devel(pkg)
+  } else {
+    devtools::check_win_release(pkg)
+  }
 }
