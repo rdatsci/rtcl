@@ -4,11 +4,15 @@
 \alias{rknit}
 \title{Knit a document with knitr}
 \usage{
-rknit(file)
+rknit(file, html = FALSE)
 }
 \arguments{
 \item{file}{[\code{character(1)}]\cr
 Document to knit.}
+
+\item{html}{[\code{logical(1)}]\cr
+\code{FALSE} (default), it generates a PDF.
+\code{TRUE}, the function will generate HTML output.}
 }
 \value{
 Invisibly returns \code{TRUE} on success.

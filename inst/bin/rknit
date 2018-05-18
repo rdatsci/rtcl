@@ -4,7 +4,10 @@ library("methods")
 library("rt")
 doc = "
 Usage:
-  rknit <file>
+  rknit [--html] <file>
+
+Options:
+  --html  Convert to HTML (default is PDF)
 "
 rt:::cli.call("rknit", doc, commandArgs(TRUE))
 

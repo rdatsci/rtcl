@@ -4,11 +4,15 @@
 \alias{rmarkdown}
 \title{Render a markdown document with rmarkdown}
 \usage{
-rmarkdown(file)
+rmarkdown(file, html = FALSE)
 }
 \arguments{
 \item{file}{[\code{character(1)}]\cr
 Document to render.}
+
+\item{html}{[\code{logical(1)}]\cr
+\code{FALSE} (default), it generates a PDF.
+\code{TRUE}, the function will generate HTML output.}
 }
 \value{
 Invisibly returns \code{TRUE} on success.
