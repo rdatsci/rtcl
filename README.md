@@ -20,6 +20,7 @@ This file may also contain git sources to keep you up to date with packages not 
 * `rmake` to make a local package (document and install).
 * `rmarkdown` to render a Rmarkdown (.Rmd) file.
 * `rpkgdown` to build static HTML documentation with [pkgdown](https://github.com/hadley/pkgdown).
+* `rrelease` to release a local package to CRAN.
 * `rremove` to remove (uninstall) R packages.
 * `rshine` to run a shiny app.
 * `rspell` to check spelling in generated .Rd files.
