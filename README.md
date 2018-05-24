@@ -1,4 +1,4 @@
-# rt: R tools for the command line
+# rt: R Tools for the Command Line
 
 This package ships some command line utilities which simplify working with R packages from the command line.
 Many commands *rt* provides are just wrappers around [devtools](https://github.com/hadley/devtools) but ensure a valid exit code which is required to use these commands for shell scripting.
@@ -6,7 +6,7 @@ Furthermore, *rt* allows you to maintain a collection of you favorite packages i
 This file may also contain git sources to keep you up to date with packages not yet released on CRAN.
 
 
-## Available commands
+## Available Commands
 * `rbuild` to bundle a local package.
 * `rcheck` to check a local package.
 * `rclean` to remove `.[o|so]` files from a local package.
@@ -78,7 +78,7 @@ If it does not work for you, try it without the `/M` option.
 In any case you need to open a new windows prompt or terminal windows in order to reload the `PATH` variable.
 
 
-### Continue for both systems
+### Continue for both Systems
 After sourcing this file (or after a re-login) you should be all set to use *rt*.
 
 To keep *rt* updated, you can let it maintain itself via `rupdate` by adding it to your collection file `~/.rt/packages`.

@@ -5,7 +5,7 @@ library("rt")
 doc = "
 Usage:
   rt (init|cleanup)
-Commands Available:
+Available Commands:
   - 'rbuild' to bundle a local package.
   - 'rcheck' to check a local package.
   - 'rclean' to remove '.[o|so]' files from a local package.
