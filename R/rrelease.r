@@ -35,16 +35,16 @@ rrelease = function(path = getwd(), directsubmit = FALSE) {
     }
     messagef("Have you updated 'NEWS.md' and 'DESCRIPTION' file?")
     if (dir.exists("docs/")) {
-      messagef("Have you updated website in 'docs/'?")
+      messagef("Have you updated websites in 'docs/'?")
     }
     
     # Pause
-    messagef("\nRelease proceed in 10 seconds, automatically. Press 'Ctrl-C' to interrupt.\n")
+    messagef("\nRelease proceeds automatically in 10 seconds. Press 'Ctrl-C' to interrupt.\n")
     Sys.sleep(10)
   }
   
   # submit to CRAN (following 'devtools::submit_cran()')
-  messagef("Submit to CRAN.")
+  messagef("Submitting now to CRAN:")
   built_path = devtools:::build_cran(pkg, args = NULL)
   devtools:::upload_cran(pkg, built_path)
   messagef("Package '%s' has been released to CRAN.", pkg$package)
