@@ -1,6 +1,6 @@
 Package: rt
 Type: Package
-Title: R tools for the command line
+Title: R Tools for the Command Line
 Version: 0.1
 Authors@R: c(
     person("Michel", "Lang", NULL, "michellang@gmail.com",
@@ -8,14 +8,12 @@ Authors@R: c(
     person("Dirk", "Surmann", NULL, "surmann@statistik.tu-dortmund.de", 
       role = "ctb", comment = c(ORCID = "0000-0003-0873-137X"))
     )
-Author: Michel Lang <michellang@gmail.com>
-Maintainer: Michel Lang <michellang@gmail.com>
-Description: This package ships some command line utilities which
+Description: Shipping some command line utilities which
     simplify working with R packages from the command line. Many commands rt
-    provides are just wrappers around devtools but ensure a valid exit code
+    provides are just wrappers around 'devtools' but ensure a valid exit code
     which is required to use these commands for shell scripting.
     Furthermore, rt allows you to maintain a collection of you favorite packages
-    in a plain text file which you can add to your dotfiles and share across
+    in a plain text file which you can add to your dot-files and share across
     systems. This file may also contain git sources to keep you up to date with
     packages not yet released on CRAN.
 License: GPL-2
@@ -30,7 +28,8 @@ Imports:
     git2r,
     roxygen2 (>= 5.0.1),
     stringi,
-    tools
+    tools,
+    utils
 Suggests:
     codetools,
     covr,
