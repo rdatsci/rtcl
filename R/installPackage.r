@@ -22,7 +22,7 @@ installPackage.CranPackage = function(pkg, ...) {
 installPackage.GitPackage = function(pkg, temp = TRUE, force = FALSE, quick = TRUE, ...) {
   cli = getOption("rt.cli", FALSE)
   if (temp) {
-    pkg = stringToPackage("r-lib/withr")
+    pkg = stringToPackage(pkg)
     devtools::install_git(stri_replace_first_regex(pkg$uri, "^https://", "git://"), reload = !cli, quick = quick, keep_source = FALSE)
   } else {
     path = normalizePath(file.path("~", ".rt", "git", pkg$name), mustWork = FALSE)
