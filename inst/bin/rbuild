@@ -4,11 +4,7 @@ library("methods")
 library("rt")
 doc = "
 Usage:
-  rbuild [--cran.license] [<path>]
-Options:
-  --cran.license    Replace the LICENSE File with a CRAN compatible version containing only:
-                    YEAR: (current year)
-                    COPYRIGHT HOLDER: (first author found in the DESCRIPTION)
+  rbuild [<path>]
 "
 rt:::cli.call("rbuild", doc, commandArgs(TRUE))
 
