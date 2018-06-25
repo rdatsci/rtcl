@@ -7,11 +7,17 @@
 #' @template path
 #' @param devel [\code{logical(1)}]\cr
 #'  Upload to check against the R-devel branch instead of the stable branch.
+#' @param oldrelease [\code{logical(1)}]\cr
+#'  Upload to check against the R-oldrelease branch instead of the stable branch.
 #' @template return-itrue
 #' @export
-rwinbuild = function(path = getwd(), devel = FALSE) {
+rwinbuild = function(path = getwd(), devel = FALSE, oldrelease = FALSE) {
   pkg = devtools::as.package(path, create = FALSE)
   assertFlag(devel)
+  assertFlag(oldrelease)
+  if (devel && oldrelease) {
+    stop("Just enable devel OR oldrelease at the same time.")
+  }
 
   maintainer = getOption("rt.maintainer", NULL)
   if (!is.null(maintainer)) {
@@ -33,6 +39,8 @@ rwinbuild = function(path = getwd(), devel = FALSE) {
   updatePackageAttributes(pkg)
   if (devel) {
     devtools::check_win_devel(pkg)
+  } else if (oldrelease) {
+    devtools::check_win_oldrelease(pkg)
   } else {
     devtools::check_win_release(pkg)
   }
