@@ -37,7 +37,7 @@ installPackage.GitPackage = function(pkg, temp = TRUE, force = FALSE, quick = TR
       messagef("Updating git package '%s' ...", packageToString(pkg))
       repo = git2r::repository(path)
       fetched = git2r::fetch(repo, "origin")
-      if (force || fetched@total_objects > 0L) {
+      if (force || fetched$total_objects > 0L) {
         git2r::pull(repo)
         devtools::install(pkg = pkg.path, reload = !cli, quick = quick, keep_source = FALSE)
       }
