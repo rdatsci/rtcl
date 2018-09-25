@@ -18,5 +18,5 @@ Clean up the log directory, even if check failed or issued warnings. Default is 
 Invisibly returns \code{TRUE} on success.
 }
 \description{
-Check a package located in \code{path} using \code{link[devtools]{check}}..
+Check a package located in \code{path} using \code{link[rcmdcheck]{rcmdcheck}}..
 }

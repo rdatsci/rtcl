@@ -27,6 +27,8 @@ Imports:
     devtools (>= 1.9.1),
     docopt,
     git2r,
+    pkgload,
+    rcmdcheck,
     roxygen2 (>= 5.0.1),
     stringi,
     tools,
