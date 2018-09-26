@@ -10,7 +10,6 @@
 #' @export
 rcheck = function(path = getwd(), cleanup = FALSE) {
   updatePackageAttributes(path = path)
-  
   pkgname = pkgload::pkg_name(path = path)
   
   Sys.setenv(R_MAKEVARS_USER = system.file("Makevars-template", package = "rt"))
@@ -18,7 +17,7 @@ rcheck = function(path = getwd(), cleanup = FALSE) {
   now = strftime(Sys.time(), format = "%Y%m%d-%H%M%S")
   log.path = file.path(dirname(tempdir()), sprintf("rcheck-%s-%s", pkgname, now))
   dir.create(log.path, recursive = TRUE)
-  messagef("Checking package '%s' ...", pkgname)
+  messagef("Checking package '%s':", pkgname)
   res = FALSE
   res = try(rcmdcheck::rcmdcheck(path = path, check_dir = log.path))
   if (cleanup) {
