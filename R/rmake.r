@@ -2,7 +2,7 @@
 #'
 #' @description
 #' Updates the documentation and then installs the package located at \code{path}, using
-#' \code{link[devtools]{document}}, \code{link[devtools]{install_deps}} and \code{link[devtools]{install}}.
+#' \code{link[roxygen2]{roxygenize}}, \code{link[remotes]{install_deps}} and \code{link[remotes]{install_local}}.
 #'
 #' @template path
 #' @param deps [\code{logical(1)}]\cr
@@ -10,7 +10,6 @@
 #' @template return-itrue
 #' @export
 rmake = function(path = getwd(), deps = FALSE) {
-  # pkg = devtools::as.package(path, create = FALSE)
   assertFlag(deps)
 
   pkgname = pkgload::pkg_name(path = path)

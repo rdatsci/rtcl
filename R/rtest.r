@@ -2,7 +2,8 @@
 #'  Run unit tests for a package
 #'
 #' @description
-#'  Tests a package located in \code{path} using \code{\link[devtools]{test}}.
+#'  Tests a package located in \code{path} using tests in \code{tests/testthat} via 
+#'  \code{\link[testthat]{test_dir}}.
 #'
 #' @template path
 #' @param filter [\code{FALSE} || \code{character(1)}]\cr
