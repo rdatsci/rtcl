@@ -13,7 +13,7 @@ rtest = function(path = getwd(), filter = FALSE) {
   updatePackageAttributes(path = path)
   pkgname = pkgload::pkg_name(path = path)
   
-  messagef("Testing package '%s':", pkgname)
+  messagef("Testing package '%s'", pkgname)
   if (identical(filter, FALSE)) {
     filter = NULL
   } else {

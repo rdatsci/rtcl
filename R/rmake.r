@@ -10,17 +10,19 @@
 #' @template return-itrue
 #' @export
 rmake = function(path = getwd(), deps = FALSE) {
-  pkg = devtools::as.package(path, create = FALSE)
+  # pkg = devtools::as.package(path, create = FALSE)
   assertFlag(deps)
 
+  pkgname = pkgload::pkg_name(path = path)
+  
   if (deps) {
-    messagef("Checking dependencies for '%s' in '%s'", pkg$package, pkg$path)
-    devtools::install_deps(pkg, dependencies = TRUE, lib = getLibraryPath())
+    messagef("Checking dependencies for '%s' in '%s'", pkgname, pkgload::pkg_path(path = path))
+    remotes::install_deps(pkgdir = path, dependencies = TRUE, lib = getLibraryPath())
   }
-  updatePackageAttributes(pkg)
-
-  messagef("Installing package '%s'", pkg$package)
-  devtools::install(pkg, reload = !getOption("rt.cli", FALSE))
-  messagef("Package '%s' has been installed to '%s'", pkg$package, getLibraryPath())
+  updatePackageAttributes(path = path)
+  
+  messagef("Installing package '%s'", pkgname)
+  remotes::install_local(path = path)
+  messagef("Package '%s' has been installed to '%s'", pkgname, getLibraryPath())
   invisible(TRUE)
 }

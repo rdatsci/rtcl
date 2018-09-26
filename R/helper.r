@@ -41,7 +41,7 @@ updatePackageAttributes = function(path = ".") {
   desc = pkgload::pkg_desc(path = path)
 
   if (!is.na(desc$get("RoxygenNote"))) {
-    messagef("Updating documentation for '%s'.", pkgload::pkg_name(path = path))
+    messagef("Updating documentation for '%s'", pkgload::pkg_name(path = path))
     roxygen2::roxygenize(package.dir = path)
   }
   
