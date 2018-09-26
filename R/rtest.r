@@ -10,16 +10,17 @@
 #' @template return-itrue
 #' @export
 rtest = function(path = getwd(), filter = FALSE) {
-  pkg = devtools::as.package(path, create = FALSE)
-  updatePackageAttributes(pkg)
-
-  messagef("Testing package '%s' ...", pkg$package)
+  updatePackageAttributes(path = path)
+  pkgname = pkgload::pkg_name(path = path)
+  
+  messagef("Testing package '%s':", pkgname)
   if (identical(filter, FALSE)) {
     filter = NULL
   } else {
     assertString(filter)
   }
-  res = as.data.frame(devtools::test(pkg, filter = filter))
+  testpath = file.path(path, "tests", "testthat")
+  res = as.data.frame(testthat::test_dir(path = testpath, filter = filter))
   if (sum(res$failed) > 0) {
     return(invisible(FALSE))
   } else {
