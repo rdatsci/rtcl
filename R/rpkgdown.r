@@ -8,21 +8,15 @@
 #' @template return-itrue
 #' @export
 rpkgdown = function(path = getwd()) {
-  pkg = devtools::as.package(path, create = FALSE)
-  updatePackageAttributes(pkg)
-  dest = file.path(pkg$path, "docs")
+  dest = file.path(pkgload::pkg_path(path = path), "docs")
 
-
-  if (!requireNamespace("pkgdown"))
-    stop("Please install package 'hadley/pkgdown'")
-
-  messagef("Removing old docs in '%s'...", dest)
+  messagef("Removing old docs in '%s'", dest)
   if (dir.exists(dest))
     unlink(dest, recursive = TRUE)
   dir.create(dest)
 
-  messagef("Generating static docs in '%s'...", dest)
-  pkgdown::build_site(pkg$path, preview = FALSE)
+  messagef("Generating static docs in '%s'", dest)
+  pkgdown::build_site(pkg = path, preview = FALSE)
 
   invisible(TRUE)
 }
