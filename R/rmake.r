@@ -21,7 +21,7 @@ rmake = function(path = getwd(), deps = FALSE) {
   updatePackageAttributes(path = path)
   
   messagef("Installing package '%s'", pkgname)
-  remotes::install_local(path = path)
+  remotes::install_local(path = path, force = TRUE)
   messagef("Package '%s' has been installed to '%s'", pkgname, getLibraryPath())
   invisible(TRUE)
 }
