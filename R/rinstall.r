@@ -19,7 +19,7 @@ rinstall = function(pkgs = character(0L), add = FALSE) {
   is.cran = extract(pkgs, "type") == "cran"
   if (any(is.cran)) {
     messagef("Installing %i packages from CRAN: %s", sum(is.cran), collapse(pn[is.cran]))
-    install.packages(pn[is.cran], lib = lib, INSTALL_opts = getOption("devtools.install.args"))
+    install.packages(pn[is.cran], lib = lib, INSTALL_opts = getOption("rt.install.args"))
   }
 
   for (pkg in pkgs[!is.cran])
