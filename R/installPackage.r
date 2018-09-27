@@ -19,11 +19,10 @@ installPackage.CranPackage = function(pkg, ...) {
 }
 
 #' @export
-installPackage.GitPackage = function(pkg, temp = TRUE, force = FALSE, quick = TRUE, ...) {
-  cli = getOption("rt.cli", FALSE)
+installPackage.GitPackage = function(pkg, temp = TRUE, force = FALSE, ...) {
   if (temp) {
     pkg = stringToPackage(pkg)
-    devtools::install_git(stri_replace_first_regex(pkg$uri, "^https://", "git://"), reload = !cli, quick = quick, keep_source = FALSE)
+    remotes::install_git(url = stri_replace_first_regex(pkg$uri, "^https://", "git://"))
   } else {
     path = normalizePath(file.path("~", ".rt", "git", pkg$name), mustWork = FALSE)
     pkg.path = if (is.na(pkg$subdir)) path else file.path(path, pkg$subdir)
@@ -32,14 +31,14 @@ installPackage.GitPackage = function(pkg, temp = TRUE, force = FALSE, quick = TR
       dir.create(path, recursive = TRUE)
       branch = if (!is.na(pkg$tag)) pkg$tag else NULL
       git2r::clone(pkg$uri, local_path = path, progress = FALSE, branch = branch)
-      devtools::install(pkg.path, reload = !cli, quick = quick, keep_source = FALSE)
+      remotes::install_local(path = pkg.path, force = TRUE)
     } else {
       messagef("Updating git package '%s' ...", packageToString(pkg))
       repo = git2r::repository(path)
       fetched = git2r::fetch(repo, "origin")
       if (force || fetched$total_objects > 0L) {
         git2r::pull(repo)
-        devtools::install(pkg = pkg.path, reload = !cli, quick = quick, keep_source = FALSE)
+        remotes::install_local(path = pkg.path, force = TRUE)
       }
     }
   }

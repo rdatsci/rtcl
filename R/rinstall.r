@@ -8,16 +8,11 @@
 #' @param add [\code{logical(1)}]\cr
 #'  Append packages to your \code{~/.rt/packages} file?
 #'  Default is \code{FALSE}.
-#' @param noquick [\code{logical(1)}]\cr
-#'  Switch off devtools quick installation for git packages.
-#'  See \code{?devtools::install}.
-#'  Default is \code{FALSE}.
 #' @template return-itrue
 #' @export
-rinstall = function(pkgs = character(0L), add = FALSE, noquick = FALSE) {
+rinstall = function(pkgs = character(0L), add = FALSE) {
   pkgs = lapply(pkgs, stringToPackage)
   assertFlag(add)
-  assertFlag(noquick)
   lib = getLibraryPath()
 
   pn = extract(pkgs, "name")
@@ -28,7 +23,7 @@ rinstall = function(pkgs = character(0L), add = FALSE, noquick = FALSE) {
   }
 
   for (pkg in pkgs[!is.cran])
-    installPackage(pkg, temp = !add, quick = !noquick)
+    installPackage(pkg, temp = !add)
   if (add)
     addPackagesToCollection(pkgs)
   invisible(TRUE)

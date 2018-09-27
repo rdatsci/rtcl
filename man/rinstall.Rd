@@ -4,7 +4,7 @@
 \alias{rinstall}
 \title{Installs R packages}
 \usage{
-rinstall(pkgs = character(0L), add = FALSE, noquick = FALSE)
+rinstall(pkgs = character(0L), add = FALSE)
 }
 \arguments{
 \item{pkgs}{[\code{character}]\cr
@@ -12,11 +12,6 @@ Strings convertible by \code{\link{stringToPackage}}.}
 
 \item{add}{[\code{logical(1)}]\cr
 Append packages to your \code{~/.rt/packages} file?
-Default is \code{FALSE}.}
-
-\item{noquick}{[\code{logical(1)}]\cr
-Switch off devtools quick installation for git packages.
-See \code{?devtools::install}.
 Default is \code{FALSE}.}
 }
 \value{
