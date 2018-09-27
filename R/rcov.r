@@ -10,17 +10,17 @@
 #' @template return-itrue
 #' @export
 rcov = function(path = getwd(), shine = FALSE) {
-  pkg = devtools::as.package(path, create = FALSE)
-
+  pkgname = pkgload::pkg_name(path = path)
+  
   if (!requireNamespace("covr"))
     stop("Please install package 'covr'")
 
-  messagef("Checking code coverage of package '%s' ...", pkg$package)
-  coverage = covr::package_coverage(pkg$path)
+  messagef("Checking code coverage of package '%s'", pkgname)
+  coverage = covr::package_coverage(pkgload::pkg_path(path = path))
   print(coverage)
   if (shine) {
     covr::report(coverage,
-      file = file.path(dirname(tempdir()), paste0(pkg$package, "-report.html")),
+      file = file.path(dirname(tempdir()), paste0(pkgname, "-report.html")),
       browse = TRUE)
   }
   invisible(TRUE)
