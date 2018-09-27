@@ -14,12 +14,12 @@ rhub = function(platform = NULL, checkforcran = FALSE, path = getwd()) {
   if (!requireNamespace("rhub"))
     stop("Install 'rhub' to use rhub")
   assertFlag(checkforcran)
-  pkg = devtools::as.package(path, create = FALSE)
   assertSubset(platform, rhub::platforms()$name)
   
+  pkgpath = pkgload::pkg_path(path = path)
   if (checkforcran) {
-    rhub::check_for_cran(pkg$path, platform = platform)
+    rhub::check_for_cran(pkgpath, platform = platform)
   } else {
-    rhub::check(pkg$path, platform = platform)
+    rhub::check(pkgpath, platform = platform)
   }
 }
