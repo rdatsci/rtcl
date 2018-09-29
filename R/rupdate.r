@@ -23,10 +23,6 @@
 #'  Update Git packages only. Default is \code{FALSE}.
 #' @param force [\code{logical(1)}]\cr
 #'  Force installation of Git packages? Default is \code{FALSE}.
-#' @param noquick [\code{logical(1)}]\cr
-#'  Switch off devtools quick installation for git packages.
-#'  See \code{?devtools::install}.
-#'  Default is \code{FALSE}.
 #' @template return-itrue
 #' @export
 rupdate = function(rebuild = FALSE, only.cran = FALSE, only.git = FALSE
@@ -70,7 +66,7 @@ rupdate = function(rebuild = FALSE, only.cran = FALSE, only.git = FALSE
   }
 
   if (!only.cran && "git" %in% levels(pkg.type)) {
-    lapply(pkgs[pkg.type == "git"], installPackage, temp = FALSE, force = force, quick = !noquick)
+    lapply(pkgs[pkg.type == "git"], installPackage, temp = FALSE, force = force)
   }
   invisible(TRUE)
 }
