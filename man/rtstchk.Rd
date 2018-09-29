@@ -16,5 +16,5 @@ Invisibly returns \code{TRUE} on success.
 }
 \description{
 First test than check a package located in \code{path}
- using \code{\link[devtools]{test}} and \code{link[devtools]{check}}.
+ using \code{\link[testthat]{test}} and \code{link[rcmdcheck]{rcmdcheck}}.
 }
