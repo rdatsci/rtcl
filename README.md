@@ -1,7 +1,9 @@
 # rt: R Tools for the Command Line
 
 This package ships some command line utilities which simplify working with R packages from the command line.
-Many commands *rt* provides are just wrappers around [devtools](https://github.com/hadley/devtools) but ensure a valid exit code which is required to use these commands for shell scripting.
+Many commands *rt* provides are just wrappers around , e.g. [remotes](https://github.com/r-lib/remotes) and [testthat](https://github.com/r-lib/testthat).
+They ensure a valid exit code which is required to use these commands for shell scripting.
+You find additional packages via [R infrastructure](https://github.com/r-lib).
 Furthermore, *rt* allows you to maintain a collection of you favorite packages in a plain text file which you can add to your [dotfiles](https://dotfiles.github.io/) and share across systems.
 This file may also contain git sources to keep you up to date with packages not yet released on CRAN.
 
@@ -38,13 +40,14 @@ All commands are also available as regular R functions, using the same names.
 ## Setup
 First, you need to install *rt* itself.
 Using a personal library (e.g., `echo 'R_LIBS_USER=~/.R/library' >> ~/.Renviron`) is strongly advised.
-```{splus}
-devtools::install_github("rdatsci/rt")
+```r
+install.packages("remotes")
+remotes::install_github("rdatsci/rt")
 ```
-Alternatively, if you start from scratch and do not have [devtools](https://github.com/hadley/devtools) installed, run the following command in your shell:
+Alternatively, if you start from scratch and do not have [remotes](https://github.com/r-lib/remotes) installed, run the following command in your shell:
 ```{sh}
-Rscript -e 'install.packages("devtools", repos = "http://cloud.r-project.org/")'
-Rscript -e 'devtools::install_github("rdatsci/rt")'
+Rscript -e 'install.packages("remotes", repos = "http://cloud.r-project.org/")'
+Rscript -e 'remotes::install_github("rdatsci/rt")'
 ```
 
 The *rt* command line scripts are now installed in the subdirectory `rt/bin` of your R library (call `.libPaths()` in R if
