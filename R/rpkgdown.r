@@ -16,11 +16,6 @@ rpkgdown = function(path = getwd()) {
   if (!requireNamespace("pkgdown"))
     stop("Please install package 'hadley/pkgdown'")
 
-  messagef("Removing old docs in '%s'...", dest)
-  if (dir.exists(dest))
-    unlink(dest, recursive = TRUE)
-  dir.create(dest)
-
   messagef("Generating static docs in '%s'...", dest)
   pkgdown::build_site(pkg$path, preview = FALSE)
 
