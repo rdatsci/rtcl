@@ -27,28 +27,21 @@ rupdate = function(rebuild = FALSE) {
   pkgs = getCollectionContents(as.packages = TRUE)
   pkg.type = factor(extract(pkgs, "type"))
 
-  fields = c("Package", "LibPath", "Version", "Built")
-  installed = data.table(installed.packages(fields = fields), key = "Package")[, fields, with = FALSE]
-  old = installed[as.data.table(oldpackages())[, c("Package", "ReposVer"), with = FALSE]]
-  # reduce to max installed version
-  old = old[, list(Version = max(package_version(Version)), ReposVer = package_version(head(ReposVer, 1L))), by = Package]
-  old = old[Version < ReposVer, "Package", with = FALSE]
-  if (nrow(old)) {
-    messagef("Rebuilding %i outdated packages ...", nrow(old))
-    remotes::install_cran(old$Package, lib = lib, upgrade = "always")
-  }
+  messagef("Updating packages ...")
+  remotes::update_packages(dependencies = TRUE, upgrade = "always")
 
   if (rebuild) {
-    rebuild = installed[!old][Built < getRversion(), "Package", with = FALSE]
-    if (nrow(rebuild)) {
-      messagef("Rebuilding %i outdated packages ...", nrow(rebuild))
-      remotes::install_cran(rebuild$Package, lib = lib)
+    built = installed.packages()[, "Built"]
+    pn = names(which(built < getRversion()))
+    if (length(pn)) {
+      messagef("Rebuilding %i outdated packages ...", length(pn))
+      remotes::install_cran(pn, lib = lib)
     }
   }
 
   if ("cran" %in% levels(pkg.type)) {
     pn = extract(pkgs, "name")
-    w = which(pkg.type == "cran" & installed[, pn %nin% Package])
+    w = which(pkg.type == "cran" & pn %nin% rownames(installed.packages()))
     if (length(w)) {
       messagef("Installing %i missing cran packages ...", length(w))
       remotes::install_cran(pn[w], lib = lib)
