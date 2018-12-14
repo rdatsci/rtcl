@@ -42,7 +42,7 @@ rupdate = function(rebuild = FALSE) {
     rebuild = installed[!old][Built < getRversion(), "Package", with = FALSE]
     if (nrow(rebuild)) {
       messagef("Rebuilding %i outdated packages ...", nrow(rebuild))
-      install.packages(rebuild$Package, lib = lib)
+      remotes::install_cran(rebuild$Package, lib = lib)
     }
   }
 
@@ -51,7 +51,7 @@ rupdate = function(rebuild = FALSE) {
     w = which(pkg.type == "cran" & installed[, pn %nin% Package])
     if (length(w)) {
       messagef("Installing %i missing cran packages ...", length(w))
-      install.packages(pn[w], lib = lib)
+      remotes::install_cran(pn[w], lib = lib)
     }
   }
 

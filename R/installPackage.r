@@ -15,7 +15,7 @@ installPackage.LocalPackage = function(pkg, ...) {
 #' @export
 installPackage.CranPackage = function(pkg, ...) {
   messagef("Installing cran package '%s' ...", pkg$name)
-  install.packages(pkg$name, lib = getLibraryPath())
+  remotes::install_cran(pkg$name, lib = getLibraryPath())
 }
 
 #' @export
