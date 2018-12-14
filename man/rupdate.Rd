@@ -4,14 +4,11 @@
 \alias{rupdate}
 \title{Update packages}
 \usage{
-rupdate(rebuild = FALSE, force = FALSE, noquick = FALSE)
+rupdate(rebuild = FALSE)
 }
 \arguments{
 \item{rebuild}{[\code{logical(1)}]\cr
 Rebuild R packages which are built using a different version of R.}
-
-\item{force}{[\code{logical(1)}]\cr
-Force installation of Git packages? Default is \code{FALSE}.}
 }
 \value{
 Invisibly returns \code{TRUE} on success.

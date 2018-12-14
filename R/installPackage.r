@@ -15,7 +15,7 @@ installPackage.LocalPackage = function(pkg, ...) {
 #' @export
 installPackage.CranPackage = function(pkg, ...) {
   messagef("Installing cran package '%s' ...", pkg$name)
-  install.packages(pkg$name, lib = getLibraryPath(), INSTALL_opts = getOption("rt.install.args"))
+  install.packages(pkg$name, lib = getLibraryPath())
 }
 
 #' @export

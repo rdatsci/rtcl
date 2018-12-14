@@ -17,19 +17,15 @@
 #'
 #' @param rebuild [\code{logical(1)}]\cr
 #'  Rebuild R packages which are built using a different version of R.
-#' @param force [\code{logical(1)}]\cr
-#'  Force installation of Git packages? Default is \code{FALSE}.
 #' @template return-itrue
 #' @export
-rupdate = function(rebuild = FALSE, force = FALSE, noquick = FALSE) {
+rupdate = function(rebuild = FALSE) {
   assertFlag(rebuild)
-  assertFlag(noquick)
 
   messagef("Checking for outdated packages ...")
   lib = getLibraryPath()
   pkgs = getCollectionContents(as.packages = TRUE)
   pkg.type = factor(extract(pkgs, "type"))
-
 
   fields = c("Package", "LibPath", "Version", "Built")
   installed = data.table(installed.packages(fields = fields), key = "Package")[, fields, with = FALSE]
@@ -39,13 +35,14 @@ rupdate = function(rebuild = FALSE, force = FALSE, noquick = FALSE) {
   old = old[Version < ReposVer, "Package", with = FALSE]
   if (nrow(old)) {
     messagef("Rebuilding %i outdated packages ...", nrow(old))
-    install.packages(old$Package, lib = lib, INSTALL_opts = getOption("rt.install.args"))
+    remotes::install_cran(old$Package, lib = lib, upgrade = "always")
   }
+
   if (rebuild) {
     rebuild = installed[!old][Built < getRversion(), "Package", with = FALSE]
     if (nrow(rebuild)) {
       messagef("Rebuilding %i outdated packages ...", nrow(rebuild))
-      install.packages(rebuild$Package, lib = lib, INSTALL_opts = getOption("rt.install.args"))
+      install.packages(rebuild$Package, lib = lib)
     }
   }
 
@@ -54,12 +51,12 @@ rupdate = function(rebuild = FALSE, force = FALSE, noquick = FALSE) {
     w = which(pkg.type == "cran" & installed[, pn %nin% Package])
     if (length(w)) {
       messagef("Installing %i missing cran packages ...", length(w))
-      install.packages(pn[w], lib = lib, INSTALL_opts = getOption("rt.install.args"))
+      install.packages(pn[w], lib = lib)
     }
   }
 
   if ("git" %in% levels(pkg.type)) {
-    lapply(pkgs[pkg.type == "git"], installPackage, temp = FALSE, force = force)
+    lapply(pkgs[pkg.type == "git"], installPackage, temp = FALSE)
   }
 
   invisible(TRUE)

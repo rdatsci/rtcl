@@ -29,6 +29,7 @@ Imports:
     git2r,
     pkgload,
     rcmdcheck,
+    remotes,
     roxygen2 (>= 5.0.1),
     stringi,
     tools,
