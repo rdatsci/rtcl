@@ -19,14 +19,11 @@
 #'  Rebuild R packages which are built using a different version of R.
 #' @param only.cran [\code{logical(1)}]\cr
 #'  Update CRAN packages only. Default is \code{FALSE}.
-#' @param only.git [\code{logical(1)}]\cr
-#'  Update Git packages only. Default is \code{FALSE}.
 #' @param force [\code{logical(1)}]\cr
 #'  Force installation of Git packages? Default is \code{FALSE}.
 #' @template return-itrue
 #' @export
-rupdate = function(rebuild = FALSE, only.cran = FALSE, only.git = FALSE
-                   , force = FALSE, noquick = FALSE) {
+rupdate = function(rebuild = FALSE, only.cran = FALSE, force = FALSE, noquick = FALSE) {
   assertFlag(rebuild)
   assertFlag(noquick)
 
@@ -36,27 +33,25 @@ rupdate = function(rebuild = FALSE, only.cran = FALSE, only.git = FALSE
   pkg.type = factor(extract(pkgs, "type"))
 
 
-  if (!only.git) {
-    fields = c("Package", "LibPath", "Version", "Built")
-    installed = data.table(installed.packages(fields = fields), key = "Package")[, fields, with = FALSE]
-    old = installed[as.data.table(oldpackages())[, c("Package", "ReposVer"), with = FALSE]]
-    # reduce to max installed version
-    old = old[, list(Version = max(package_version(Version)), ReposVer = package_version(head(ReposVer, 1L))), by = Package]
-    old = old[Version < ReposVer, "Package", with = FALSE]
-    if (nrow(old)) {
-      messagef("Rebuilding %i outdated packages ...", nrow(old))
-      install.packages(old$Package, lib = lib, INSTALL_opts = getOption("rt.install.args"))
-    }
-    if (rebuild) {
-      rebuild = installed[!old][Built < getRversion(), "Package", with = FALSE]
-      if (nrow(rebuild)) {
-        messagef("Rebuilding %i outdated packages ...", nrow(rebuild))
-        install.packages(rebuild$Package, lib = lib, INSTALL_opts = getOption("rt.install.args"))
-      }
+  fields = c("Package", "LibPath", "Version", "Built")
+  installed = data.table(installed.packages(fields = fields), key = "Package")[, fields, with = FALSE]
+  old = installed[as.data.table(oldpackages())[, c("Package", "ReposVer"), with = FALSE]]
+  # reduce to max installed version
+  old = old[, list(Version = max(package_version(Version)), ReposVer = package_version(head(ReposVer, 1L))), by = Package]
+  old = old[Version < ReposVer, "Package", with = FALSE]
+  if (nrow(old)) {
+    messagef("Rebuilding %i outdated packages ...", nrow(old))
+    install.packages(old$Package, lib = lib, INSTALL_opts = getOption("rt.install.args"))
+  }
+  if (rebuild) {
+    rebuild = installed[!old][Built < getRversion(), "Package", with = FALSE]
+    if (nrow(rebuild)) {
+      messagef("Rebuilding %i outdated packages ...", nrow(rebuild))
+      install.packages(rebuild$Package, lib = lib, INSTALL_opts = getOption("rt.install.args"))
     }
   }
 
-  if (!only.git && "cran" %in% levels(pkg.type)) {
+  if ("cran" %in% levels(pkg.type)) {
     pn = extract(pkgs, "name")
     w = which(pkg.type == "cran" & installed[, pn %nin% Package])
     if (length(w)) {
