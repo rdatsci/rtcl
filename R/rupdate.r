@@ -17,13 +17,11 @@
 #'
 #' @param rebuild [\code{logical(1)}]\cr
 #'  Rebuild R packages which are built using a different version of R.
-#' @param only.cran [\code{logical(1)}]\cr
-#'  Update CRAN packages only. Default is \code{FALSE}.
 #' @param force [\code{logical(1)}]\cr
 #'  Force installation of Git packages? Default is \code{FALSE}.
 #' @template return-itrue
 #' @export
-rupdate = function(rebuild = FALSE, only.cran = FALSE, force = FALSE, noquick = FALSE) {
+rupdate = function(rebuild = FALSE, force = FALSE, noquick = FALSE) {
   assertFlag(rebuild)
   assertFlag(noquick)
 
@@ -60,8 +58,9 @@ rupdate = function(rebuild = FALSE, only.cran = FALSE, force = FALSE, noquick = 
     }
   }
 
-  if (!only.cran && "git" %in% levels(pkg.type)) {
+  if ("git" %in% levels(pkg.type)) {
     lapply(pkgs[pkg.type == "git"], installPackage, temp = FALSE, force = force)
   }
+
   invisible(TRUE)
 }
