@@ -4,14 +4,13 @@
 #' @template return-itrue
 #' @export
 rspell = function(path = getwd()) {
-  pkg = devtools::as.package(path, create = FALSE)
-  updatePackageAttributes(pkg)
+  updatePackageAttributes(path = path)
 
-  messagef("Checking spelling for package '%s'", pkg$package)
+  messagef("Checking spelling for package '%s'", pkgload::pkg_name(path = path))
   if (!requireNamespace("utils"))
     stop("Package utils not installed")
   ctrl = "-d en_US" # --extra-dicts=en_GB"
-  res = utils::aspell_package_Rd_files(pkg$path, control = ctrl)
+  res = utils::aspell_package_Rd_files(dir = pkgload::pkg_path(path = path), control = ctrl)
   print(res)
   invisible(TRUE)
 }

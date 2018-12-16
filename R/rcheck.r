@@ -1,7 +1,7 @@
 #' Check a package
 #'
 #' @description
-#' Check a package located in \code{path} using \code{link[devtools]{check}}..
+#' Check a package located in \code{path} using \code{link[rcmdcheck]{rcmdcheck}}..
 #'
 #' @template path
 #' @param cleanup [\code{logical(1L)}]\cr
@@ -9,17 +9,17 @@
 #' @template return-itrue
 #' @export
 rcheck = function(path = getwd(), cleanup = FALSE) {
-  pkg = devtools::as.package(path, create = FALSE)
-  updatePackageAttributes(pkg)
-
+  updatePackageAttributes(path = path)
+  pkgname = pkgload::pkg_name(path = path)
+  
   Sys.setenv(R_MAKEVARS_USER = system.file("Makevars-template", package = "rt"))
   on.exit(Sys.unsetenv("R_MAKEVARS_USER"))
   now = strftime(Sys.time(), format = "%Y%m%d-%H%M%S")
-  log.path = file.path(dirname(tempdir()), sprintf("rcheck-%s-%s", pkg$package, now))
+  log.path = file.path(dirname(tempdir()), sprintf("rcheck-%s-%s", pkgname, now))
   dir.create(log.path, recursive = TRUE)
-  messagef("Checking package '%s' ...", pkg$package)
+  messagef("Checking package '%s':", pkgname)
   res = FALSE
-  res = try(devtools::check(pkg, check_dir = log.path))
+  res = try(rcmdcheck::rcmdcheck(path = path, check_dir = log.path))
   if (cleanup) {
     if (file.exists(log.path)) unlink(log.path, recursive = TRUE)
     messagef("You ran 'rcheck --cleanup'. Logfiles are deleted.")

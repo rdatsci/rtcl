@@ -33,11 +33,11 @@ stringToPackage = function(pkg) {
 detectPackageType = function(xs) {
   if (dir.exists(xs))
     return("local")
-  if (any(stri_startswith_fixed(xs, c("https://", "git@"))) && stri_endswith_fixed(xs, ".git"))
+  if (any(startsWith(xs, c("https://", "git@"))) && endsWith(xs, ".git"))
     return("git")
-  if (stri_detect_regex(xs, "^[[:alnum:]_-]+/[[:alnum:]_.-]+(@[[:alnum:]._-]+)?[[:alnum:]/]*?$"))
+  if (grepl("^[[:alnum:]_-]+/[[:alnum:]_.-]+(@[[:alnum:]._-]+)?[[:alnum:]/]*?$", xs))
     return("gh")
-  if (stri_detect_regex(xs, "^[[:alnum:].]+$"))
+  if (grepl("^[[:alnum:].]+$", xs))
     return("cran")
   stop("Unknown package type: ", xs)
 }

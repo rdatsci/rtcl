@@ -18,5 +18,6 @@ Filter tests (on a file name basis) using this pattern.}
 Invisibly returns \code{TRUE} on success.
 }
 \description{
-Tests a package located in \code{path} using \code{\link[devtools]{test}}.
+Tests a package located in \code{path} using tests in \code{tests/testthat} via 
+ \code{\link[testthat]{test_dir}}.
 }

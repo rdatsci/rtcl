@@ -6,8 +6,8 @@ getCollectionContents = function(as.packages = FALSE, fn = getConfigPath("packag
   assertFlag(as.packages)
   if (!file.exists(fn))
     return(character(0L))
-  pkgs = stri_trim_both(readLines(fn))
-  pkgs = pkgs[nzchar(pkgs) & !stri_startswith_fixed(pkgs, "#")]
+  pkgs = trimws(readLines(fn))
+  pkgs = pkgs[nzchar(pkgs) & !startsWith(pkgs, "#")]
   if (as.packages)
     pkgs = lapply(pkgs, stringToPackage)
   return(pkgs)

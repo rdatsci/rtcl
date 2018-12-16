@@ -7,8 +7,7 @@
 #' @template return-itrue
 #' @export
 rusage = function(path = getwd()) {
-  pkg = devtools::as.package(path, create = FALSE)
-  devtools::load_all(pkg)
+  pkgload::load_all(path = path)
 
   if (!requireNamespace("codetools"))
     stop("Please install package 'codetools'")

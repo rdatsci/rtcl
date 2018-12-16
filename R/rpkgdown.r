@@ -8,10 +8,7 @@
 #' @template return-itrue
 #' @export
 rpkgdown = function(path = getwd()) {
-  pkg = devtools::as.package(path, create = FALSE)
-  updatePackageAttributes(pkg)
-  dest = file.path(pkg$path, "docs")
-
+  dest = file.path(pkgload::pkg_path(path = path), "docs")
 
   if (!requireNamespace("pkgdown"))
     stop("Please install package 'hadley/pkgdown'")

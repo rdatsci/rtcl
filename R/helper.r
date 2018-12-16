@@ -35,29 +35,19 @@ readPackageName = function(path) {
   as.character(read.dcf(file.path(path, "DESCRIPTION"), fields = "Package"))
 }
 
-updatePackageAttributes = function(pkg) {
-  getPackageNames = function(x) {
-    x = pkg$imports
-    x = stri_trim_left(stri_split_fixed(pkg$imports, "\n")[[1]])
-    x = x[nzchar(x)]
-    stri_extract_first_words(x)
+updatePackageAttributes = function(path = ".") {
+  assertString(path)
+
+  desc = pkgload::pkg_desc(path = path)
+
+  if (!is.na(desc$get("RoxygenNote"))) {
+    messagef("Updating documentation for '%s'", pkgload::pkg_name(path = path))
+    roxygen2::roxygenize(package.dir = path)
   }
 
-  if (!is.null(pkg$roxygennote)) {
-    messagef("Updating documentation for '%s'", pkg$package)
-    devtools::document(pkg)
-  }
-
-  if (!is.null(pkg$linkingto) && "Rcpp" %in% getPackageNames(pkg$linkingto)) {
+  if (!is.na(desc$get("LinkingTo")) && "Rcpp" %in% desc$get_deps()$package) {
     messagef("Updating Rcpp compile attributes")
     requireNamespace("Rcpp")
-    Rcpp::compileAttributes(pkg$path, verbose = TRUE)
+    Rcpp::compileAttributes(pkgload::pkg_path(path = path), verbose = TRUE)
   }
-}
-
-oldpackages = function() {
-  x = old.packages()
-  if (is.null(x))
-    return(data.table(Package = character(0), LibPath = character(0), Installed = character(0), Built = character(0), ReposVer = character(0), Repository = character(0)))
-  return(as.data.table(x))
 }

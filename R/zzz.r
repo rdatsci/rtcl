@@ -1,6 +1,5 @@
 #' @import checkmate
 #' @import stringi
-#' @import data.table
 #' @import utils
 NULL
 

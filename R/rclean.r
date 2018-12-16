@@ -1,14 +1,13 @@
 #' Remove temporary files from a package
 #'
 #' @description
-#' Cleanup temporary files for a package located in \code{path} using \code{link[devtools]{check}}.
+#' Cleanup temporary files for a package located in \code{path} using \code{link[pkgbuild]{clean_dll}}.
 #'
 #' @template path
 #' @template return-itrue
 #' @export
 rclean = function(path = getwd()) {
-  pkg = devtools::as.package(path, create = FALSE)
-  messagef("Cleaning package '%s' ...", pkg$package)
-  devtools::clean_dll(pkg)
+  messagef("Cleaning package '%s'", pkgload::pkg_name(path = path))
+  pkgbuild::clean_dll(pkg)
   invisible(TRUE)
 }
