@@ -10,13 +10,11 @@
 rpkgdown = function(path = getwd()) {
   dest = file.path(pkgload::pkg_path(path = path), "docs")
 
-  messagef("Removing old docs in '%s'", dest)
-  if (dir.exists(dest))
-    unlink(dest, recursive = TRUE)
-  dir.create(dest)
+  if (!requireNamespace("pkgdown"))
+    stop("Please install package 'hadley/pkgdown'")
 
-  messagef("Generating static docs in '%s'", dest)
-  pkgdown::build_site(pkg = path, preview = FALSE)
+  messagef("Generating static docs in '%s'...", dest)
+  pkgdown::build_site(pkg$path, preview = FALSE)
 
   invisible(TRUE)
 }
