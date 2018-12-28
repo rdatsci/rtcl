@@ -13,13 +13,13 @@ rmake = function(path = getwd(), deps = FALSE) {
   assertFlag(deps)
 
   pkgname = pkgload::pkg_name(path = path)
-  
+
   if (deps) {
     messagef("Checking dependencies for '%s' in '%s'", pkgname, pkgload::pkg_path(path = path))
     remotes::install_deps(pkgdir = path, dependencies = TRUE, lib = getLibraryPath())
   }
   updatePackageAttributes(path = path)
-  
+
   messagef("Installing package '%s'", pkgname)
   remotes::install_local(path = path, force = TRUE)
   messagef("Package '%s' has been installed to '%s'", pkgname, getLibraryPath())

@@ -8,13 +8,13 @@
 #' @template return-itrue
 #' @export
 rpkgdown = function(path = getwd()) {
-  dest = file.path(pkgload::pkg_path(path = path), "docs")
+  path = pkgload::pkg_path(path = path)
 
   if (!requireNamespace("pkgdown"))
     stop("Please install package 'hadley/pkgdown'")
 
-  messagef("Generating static docs in '%s'...", dest)
-  pkgdown::build_site(pkg$path, preview = FALSE)
+  messagef("Generating static docs in '%s'...", file.path(path, "docs"))
+  pkgdown::build_site(pkgload::pkg_path(path), preview = FALSE)
 
   invisible(TRUE)
 }
