@@ -42,7 +42,7 @@ updatePackageAttributes = function(path = ".") {
 
   if (!is.na(desc$get("RoxygenNote"))) {
     messagef("Updating documentation for '%s'", pkgload::pkg_name(path = path))
-    roxygen2::roxygenize(package.dir = path)
+    roxygen2::roxygenize(package.dir = pkgload::pkg_path(path = path))
   }
 
   if (!is.na(desc$get("LinkingTo")) && "Rcpp" %in% desc$get_deps()$package) {
