@@ -22,12 +22,10 @@ This file may also contain git sources to keep you up to date with packages not 
 * `rmake` to make a local package (document and install).
 * `rmarkdown` to render a Rmarkdown (.Rmd) file.
 * `rpkgdown` to build static HTML documentation with [pkgdown](https://github.com/hadley/pkgdown).
-* `rrelease` to release a local package to CRAN.
 * `rremove` to remove (uninstall) R packages.
 * `rshine` to run a shiny app.
 * `rspell` to check spelling in generated .Rd files.
 * `rtest` to test a local package.
-* `rtstchk` to test and check a local package.
 * `rupdate` to update all CRAN packages on your system, install missing CRAN packages listed in your collection `~/.rt/packages` and update all packages with a git source.
 * `rusage` to check variable usage.
 * `rvignette` to build vignettes.
