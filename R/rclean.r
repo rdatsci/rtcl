@@ -8,6 +8,6 @@
 #' @export
 rclean = function(path = getwd()) {
   messagef("Cleaning package '%s'", pkgload::pkg_name(path = path))
-  pkgbuild::clean_dll(pkg)
+  pkgbuild::clean_dll(path)
   invisible(TRUE)
 }
