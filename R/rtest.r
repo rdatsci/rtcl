@@ -2,7 +2,7 @@
 #'  Run unit tests for a package
 #'
 #' @description
-#'  Tests a package located in \code{path} using tests in \code{tests/testthat} via 
+#'  Tests a package located in \code{path} using tests in \code{tests/testthat} via
 #'  \code{\link[testthat]{test_dir}}.
 #'
 #' @template path
@@ -11,9 +11,10 @@
 #' @template return-itrue
 #' @export
 rtest = function(path = getwd(), filter = FALSE) {
+  path = pkgload::pkg_path(path)
+  pkgname = pkgload::pkg_name(path)
   updatePackageAttributes(path = path)
-  pkgname = pkgload::pkg_name(path = path)
-  
+
   messagef("Testing package '%s'", pkgname)
   if (identical(filter, FALSE)) {
     filter = NULL
