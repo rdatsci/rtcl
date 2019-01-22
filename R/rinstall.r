@@ -15,6 +15,7 @@ rinstall = function(pkgs = character(0L), add = FALSE) {
   assertFlag(add)
   lib = getLibraryPath()
 
+  # TODO: cleanup code here
   pn = extract(pkgs, "name")
   is.cran = extract(pkgs, "type") == "cran"
   if (any(is.cran)) {
@@ -23,7 +24,8 @@ rinstall = function(pkgs = character(0L), add = FALSE) {
   }
 
   for (pkg in pkgs[!is.cran])
-    installPackage(pkg, temp = !add)
+    installPackage(pkg)
+
   if (add)
     addPackagesToCollection(pkgs)
   invisible(TRUE)

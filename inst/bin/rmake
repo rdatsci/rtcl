@@ -4,9 +4,7 @@ library("methods")
 library("rt")
 doc = "
 Usage:
-  rmake [--deps] [<path>]
-Options:
-  --deps  Also install all dependencies, including suggests
+  rmake [<path>]
 "
 rt:::cli.call("rmake", doc, commandArgs(TRUE))
 

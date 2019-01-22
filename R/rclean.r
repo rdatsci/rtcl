@@ -7,6 +7,7 @@
 #' @template return-itrue
 #' @export
 rclean = function(path = getwd()) {
+  # FIXME: Also clean other files, such as vignette leftovers
   messagef("Cleaning package '%s'", pkgload::pkg_name(path = path))
   pkgbuild::clean_dll(path)
   invisible(TRUE)

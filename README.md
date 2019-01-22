@@ -12,7 +12,6 @@ This file may also contain git sources to keep you up to date with packages not 
 * `rbuild` to bundle a local package.
 * `rcheck` to check a local package.
 * `rclean` to remove `.[o|so]` files from a local package.
-* `rclone` to clone a GitHub package to your system
 * `rcompile` to compile Sweave (.Rnw) and Rmarkdown (.Rmd) files to HTML or PDF.
 * `rcov` to test the coverage of a local package.
 * `rdoc` to document a local package using roxygen.
@@ -28,7 +27,6 @@ This file may also contain git sources to keep you up to date with packages not 
 * `rtest` to test a local package.
 * `rupdate` to update all CRAN packages on your system, install missing CRAN packages listed in your collection `~/.rt/packages` and update all packages with a git source.
 * `rusage` to check variable usage.
-* `rvignette` to build vignettes.
 * `rwinbuild` to upload a local package to the winbuilder service.
 
 Call the respective command with `--help` to list available command line arguments.

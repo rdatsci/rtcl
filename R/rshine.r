@@ -9,8 +9,8 @@
 #' @template return-itrue
 #' @export
 rshine = function(path = ".", port = 0L) {
-  if (!requireNamespace("shiny"))
-    stop("Install 'shiny' to use rshine")
+  requireNamespace("shiny")
+
   if (!is.integer(port))
     port = as.integer(port)
 

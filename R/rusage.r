@@ -8,11 +8,9 @@
 #' @export
 rusage = function(path = getwd()) {
   pkgload::load_all(path = path)
+  requireNamespace("codetools")
 
-  if (!requireNamespace("codetools"))
-    stop("Please install package 'codetools'")
-
-  messagef("Checking usage for package '%s' ...", pkg$package)
-  codetools::checkUsagePackage(pkg$package)
+  messagef("Checking usage for package '%s' ...", pkgload::pkg_name(path))
+  codetools::checkUsagePackage(pkgload::pkg_name(path))
   invisible(TRUE)
 }

@@ -49,7 +49,7 @@ rupdate = function(rebuild = FALSE) {
   }
 
   if ("git" %in% levels(pkg.type)) {
-    lapply(pkgs[pkg.type == "git"], installPackage, temp = FALSE)
+    lapply(pkgs[pkg.type == "git"], installPackage)
   }
 
   invisible(TRUE)

@@ -9,9 +9,7 @@
 #' @export
 rpkgdown = function(path = getwd()) {
   path = pkgload::pkg_path(path = path)
-
-  if (!requireNamespace("pkgdown"))
-    stop("Please install package 'hadley/pkgdown'")
+  requireNamespace("pkgdown")
 
   messagef("Generating static docs in '%s'...", file.path(path, "docs"))
   pkgdown::build_site(pkgload::pkg_path(path), preview = FALSE)
