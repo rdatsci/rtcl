@@ -36,8 +36,10 @@ readPackageName = function(path) {
 }
 
 updatePackageAttributes = function(path = ".") {
-  assertString(path)
+  assertDirectoryExists(path)
+  path = pkgload::pkg_path(path)
 
+  pkgload::load_all(path)
   desc = pkgload::pkg_desc(path = path)
 
   if (!is.na(desc$get("RoxygenNote"))) {
@@ -48,6 +50,6 @@ updatePackageAttributes = function(path = ".") {
   if (!is.na(desc$get("LinkingTo")) && "Rcpp" %in% desc$get_deps()$package) {
     messagef("Updating Rcpp compile attributes")
     requireNamespace("Rcpp")
-    Rcpp::compileAttributes(pkgload::pkg_path(path = path), verbose = TRUE)
+    Rcpp::compileAttributes(path = path, verbose = TRUE)
   }
 }
