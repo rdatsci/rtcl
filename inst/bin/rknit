@@ -4,10 +4,12 @@ library("methods")
 library("rt")
 doc = "
 Usage:
-  rknit [--html] <file>
+  rknit [--output=<format>] <file>
 
 Options:
-  --html  Convert to HTML (default is PDF)
+  --output=<format>  Output format (pdf*, html**, word)
+                     * always used for Rnw files
+                     ** default for Rmd files
 "
 rt:::cli.call("rknit", doc, commandArgs(TRUE))
 
