@@ -12,14 +12,12 @@ This file may also contain git sources to keep you up to date with packages not 
 * `rbuild` to bundle a local package.
 * `rcheck` to check a local package.
 * `rclean` to remove `.[o|so]` files from a local package.
-* `rcompile` to compile Sweave (.Rnw) and Rmarkdown (.Rmd) files to HTML or PDF.
 * `rcov` to test the coverage of a local package.
 * `rdoc` to document a local package using roxygen.
 * `rhub` to upload a local package to rhub service.
 * `rinstall` to install a remote package, e.g. a package hosted on CRAN or GitHub.
-* `rknit` to knit a knitr document (.Rnw, .Rrst) to PDF.
+* `rknit` to knit a document (.Rnw, .Rmd, ...) via rknit.
 * `rmake` to make a local package (document and install).
-* `rmarkdown` to render a Rmarkdown (.Rmd) file.
 * `rpkgdown` to build static HTML documentation with [pkgdown](https://github.com/hadley/pkgdown).
 * `rremove` to remove (uninstall) R packages.
 * `rshine` to run a shiny app.
