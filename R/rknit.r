@@ -23,6 +23,8 @@ rknit = function(file, output = NULL) {
     if (length(output_format)!=1) {
       stop(sprintf("Output format %s ambiguous. Supported are the following: %s", output, stringi::stri_join(supported_formats, collapse = ", ")))
     }
+  } else {
+    output_format = output
   }
   requireNamespace("knitr")
 
