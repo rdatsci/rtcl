@@ -31,8 +31,7 @@ rknit = function(file, output = NULL) {
   file_type = stringi::stri_trans_tolower(file_ext(file))
 
   if (file_type == "rnw") {
-    knitr_file = knitr::knit(file)
-    system(sprintf("pdflatex %s", knitr_file))
+    knitr_file = knitr::knit2pdf(file)
   } else if (file_type == "rmd") {
     rmarkdown::render(file, output_format = output_format)
   } else {
