@@ -7,7 +7,7 @@
 #' @template path
 #' @template return-itrue
 #' @export
-rmake = function(path = getwd()) {
+rmake = function(path = getwd(), ...) {
   pkgname = pkgload::pkg_name(path = path)
 
   updatePackageAttributes(path = path)
@@ -17,7 +17,7 @@ rmake = function(path = getwd()) {
 
 
   messagef("Installing package '%s'", pkgname)
-  remotes::install_local(path = path, force = TRUE)
+  remotes::install_local(path = path, force = TRUE, ...)
   messagef("Package '%s' has been installed to '%s'", pkgname, getLibraryPath())
   invisible(TRUE)
 }

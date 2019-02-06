@@ -16,52 +16,96 @@ stringToPackage = function(pkg) {
     return(pkg)
   assertString(pkg)
 
-  parts = stri_split_fixed(pkg, "::", n = 2L, tokens_only = TRUE)[[1L]]
-  if (length(parts) == 1L)
-    parts = c(detectPackageType(parts), parts)
+  funs = list(
+    Cran = isPackageCran,
+    Local = isPackageLocal,
+    Git = isPackageGit,
+    GitHub = isPackageGitHub,
+    GitLab = isPackageGitLab
+  )
 
+  check_res = vapply(funs, function(x) x(pkg), logical(1))
 
-  switch(parts[1L],
-    "local" = asLocalPackage(parts[2L]),
-    "cran" = asCranPackage(parts[2L]),
-    "git"  = asGitPackage(parts[2L]),
-    "gh"  = asGitHubPackage(parts[2L]),
+  if (sum(check_res) > 1L) {
+    stop(sprintf("Package String '%s' is ambigous!", pkg))
+  } else if (sum(check_res) == 0L) {
+    stop(sprintf("Type for Package String '%s' is unknown!", pkg))
+  }
+
+  switch(names(which(check_res)),
+    "Local" = asPackageLocal(pkg),
+    "Cran" = asPackageCran(pkg),
+    "Git"  = asPackageGit(pkg),
+    "GitHub"  = asPackageGitHub(pkg),
+    "GitLab"  = asPackageGitLab(pkg),
     stop("Unknown package type: ", parts[1L])
   )
 }
 
-detectPackageType = function(xs) {
-  if (dir.exists(xs))
-    return("local")
-  if (any(startsWith(xs, c("https://", "git@"))) && endsWith(xs, ".git"))
-    return("git")
-  if (grepl("^[[:alnum:]_-]+/[[:alnum:]_.-]+(@[[:alnum:]._-]+)?[[:alnum:]/]*?$", xs))
-    return("gh")
-  if (grepl("^[[:alnum:].]+$", xs))
-    return("cran")
-  stop("Unknown package type: ", xs)
+# functions have to work vectorized
+isPackageCran = function(xs) {
+  stri_detect_regex(xs, "^[[:alnum:].]+$")
 }
 
-asLocalPackage = function(xs) {
+isPackageLocal = function(xs) {
+  # FIXME: Windows?
+  stri_detect_regex(xs, "^(\\/|\\.\\/|~\\/|[A-Z]:/).+$") & dir.exists(xs)
+}
+
+isPackageGit = function(xs) {
+  stri_detect_regex(xs, "^(git@|http(s)?://).+\\.git(@[[:alnum:]._-]+)?[[:alnum:]/]*?$")
+}
+
+isPackageGitHub = function(xs) {
+  stri_detect_regex(xs, "^(github:)?[[:alnum:]_-]+/[[:alnum:]_.-]+(@[[:alnum:]._-]+)?[[:alnum:]/]*?$")
+}
+
+isPackageGitLab = function(xs) {
+  stri_detect_regex(xs, "^gitlab:(\\([[:alnum:]_.-]+\\):)?[[:alnum:]_-]+/[[:alnum:]_.-]+(@[[:alnum:]._-]+)?[[:alnum:]/]*?$")
+}
+
+asPackageCran = function(xs) {
+  PackageCran(xs)
+}
+
+asPackageLocal = function(xs) {
   if (!dir.exists(xs))
     stop(sprintf("'%s' must point to an existing directory for a local package", xs))
-  LocalPackage(name = readPackageName(xs), uri = xs)
+  PackageLocal(name = readPackageName(xs), file_path = xs)
 }
 
-asGitPackage = function(xs) {
-  matches = tail(drop(stri_match_last_regex(xs, "([[:alnum:]_]+)/([[:alnum:]_]+)\\.git")), -1L)
-  if (anyNA(matches) || length(matches) == 0L)
-    stop("Malformed Git URI")
-  GitPackage(name = matches[2L], repo = sprintf("%s/%s", matches[1L], matches[2L]), uri = xs)
+asPackageGit = function(xs) {
+  matches = stri_match_all_regex(xs, "^(.+\\.git)@?([[:alnum:]._-]+)?([[:alnum:]/]+)?$")[[1]]
+  repo = matches[1,2]
+  repo_name = stri_match_all_regex(repo, "[[:alnum:]._-]+(?=\\.git$)")[[1]][[1]]
+  ref = stri_sub(matches[1,3], 2) #removes @
+  subdir = stri_sub(matches[1,4], 2) #removes /
+  name = ifelse(!is.na(subdir) & subdir != "R", subdir, repo_name)
+
+  PackageGit(
+    name = name,
+    repo = repo,
+    ref = ref,
+    subdir = subdir
+  )
 }
 
-asGitHubPackage = function(xs) {
-  parts = stri_split_fixed(xs, pattern = "/", n = 3L)[[1L]]
-  repotag = stri_split_fixed(parts[2], pattern = "@", n = 2)[[1L]]
-  parts[2L] = repotag[1L]
-  GitHubPackage(name = parts[2L], repo = stri_join(parts[1:2], collapse = "/"), subdir = parts[3L], tag = repotag[2L])
+asPackageGitHub = function(xs) {
+  xs = stri_replace_all_regex(xs, "^github:", "")
+  matches = stri_match_all_regex(xs, "(?<=/)[[:alnum:]._-]{2,}")[[1]] #one letter matches are likely R subfolders that we do not want to match
+  name = tail(matches, 1)[[1]]
+  PackageGitHub(name = name, handle = xs)
 }
 
-asCranPackage = function(xs) {
-  CranPackage(xs)
+asPackageGitLab = function(xs) {
+  xs = "gitlab:(gitlab.com):keks/blub@master/baems"
+  xs = "gitlab:keks/blub@master/baems"
+  xs = stri_replace_all_regex(xs, "^gitlab:", "")
+  matches = stri_match_all_regex(xs, "^\\(([[:alnum:]_.-]+)\\):")[[1]]
+  host = matches[1,2]
+  matches = stri_match_all_regex(xs, "(?<=/)[[:alnum:]._-]{2,}")[[1]] #one letter matches are likely R subfolders that we do not want to match
+  name = tail(matches, 1)[[1]]
+  PackageGitHub(name = name, handle = xs, host = host)
 }
+
+

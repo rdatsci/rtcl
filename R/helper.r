@@ -53,3 +53,11 @@ updatePackageAttributes = function(path = ".") {
     Rcpp::compileAttributes(path = path, verbose = TRUE)
   }
 }
+
+na2null = function(x) {
+  if (is.na(x)) {
+    NULL
+  } else {
+    x
+  }
+}

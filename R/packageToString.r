@@ -10,28 +10,29 @@ packageToString.default = function(pkg) {
 }
 
 #' @export
-packageToString.LocalPackage = function(pkg) {
-  pkg$uri
-}
-
-#' @export
-packageToString.CranPackage = function(pkg) {
+packageToString.PackageCran = function(pkg) {
   pkg$name
 }
 
 #' @export
-packageToString.GitPackage = function(pkg) {
-  pkg$uri
+packageToString.PackageLocale = function(pkg) {
+  pkg$file_path
 }
 
 #' @export
-packageToString.GitHubPackage = function(pkg) {
-  str = pkg$repo
-  if (!is.na(pkg$tag)) {
-    str = sprintf("%s@%s", str, pkg$tag)
-  }
-  if (!is.na(pkg$subdir)) {
-    str = sprintf("%s/%s", str, pkg$subdir)
-  }
-  str
+packageToString.PackageGit = function(pkg) {
+  subdir = ifelse(is.na(pkg$subdir), "", pkg$subdir)
+  ref = ifelse(is.na(pkg$ref), "", paste0("@", pkg$ref))
+  paste0(pkg$repo, pkg$ref, pkg$subdir)
+}
+
+#' @export
+packageToString.PackageGitHub = function(pkg) {
+  paste0("github:", pkg$handle)
+}
+
+#' @export
+packageToString.PackageGitLab = function(pkg) {
+  host = ifelse(is.na(pkg$host), "", sprintf("(%s):", pgk$host))
+  paste0("gitlab:", host, pkg$handle)
 }
