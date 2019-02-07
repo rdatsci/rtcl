@@ -13,9 +13,28 @@ String to convert to an object of class Package.}
 \description{
 This function converts the string to one of the following objects:
 \itemize{
-  \item{LocalPackage: }{\code{pkg} points to an existing directory.}
-  \item{GitPackage: }{\code{pkg} starts with \dQuote{https://} or \dQuote{git} and ends with \dQuote{.git}.}
-  \item{GitHubPackage: }{\code{pkg} matches the pattern \dQuote{[user]/[repo]}.}
-  \item{CranPackage: }{\code{pkg} is a single string without any special characters except dots ([a-zA-Z0-9.]).}
+  \item{PackageCran: }{
+    \code{pkg} is a single string without any special characters except dots.
+  }
+  \item{PackageLocal: }{
+    \code{pkg} points to an existing directory.
+    Has to start with \dQuote{./}, \dQuote{~/}, \dQuote{/} or \dQuote{X:/}.
+  }
+  \item{PackageGit: }{
+    \code{pkg} starts with \dQuote{http(s)://} or \dQuote{git@} and ends with \dQuote{.git}.
+    Additionally a reference (branch, tag or SHA reference) can be specivied with the prefix \dQuote{@}.
+    If the package resides in a subdirectory it can be specified with the prefix \dQuote{/}.
+    Example: \dQuote{http://gitserver.domain/repo.git@branch/subfolder}
+  }
+  \item{PackageGitHub: }{
+    \code{pkg} matches the pattern \dQuote{[user]/[repo]}.
+    Additional prefixes can be given as for GitPackage (see above).
+    Example: \dQuote{user/repo@branch/subfolder}
+  }
+  \item{PackageGitLab: }{
+    \code{pkg} matches the pattern \dQuote{gitlab:[user]/[repo]}.
+    Additional prefixes can be given as for GitPackage (see above).
+    Example: \dQuote{gitlab:user/repo@branch/subfolder}
+  }
 }
 }
