@@ -4,7 +4,7 @@
 \alias{rmake}
 \title{Make and install a package}
 \usage{
-rmake(path = getwd())
+rmake(path = getwd(), ...)
 }
 \arguments{
 \item{path}{[\code{character}]\cr

@@ -18,8 +18,8 @@ rknit = function(file, output = NULL) {
   assertString(output, null.ok = TRUE)
   supported_formats = c("pdf_document", "html_document", "word_document")
   if (!is.null(output)) {
-    output = stringi::stri_trans_tolower(output)
-    output_format = supported_formats[stringi::stri_startswith_fixed(output, supported_formats)]
+    output = tolower(output)
+    output_format = supported_formats[pmatch(output, supported_formats)]
     if (length(output_format)!=1) {
       stop(sprintf("Output format %s ambiguous. Supported are the following: %s", output, stringi::stri_join(supported_formats, collapse = ", ")))
     }
@@ -28,7 +28,7 @@ rknit = function(file, output = NULL) {
   }
   requireNamespace("knitr")
 
-  file_type = stringi::stri_trans_tolower(file_ext(file))
+  file_type = tolower(file_ext(file))
 
   if (file_type == "rnw") {
     knitr_file = knitr::knit2pdf(file)

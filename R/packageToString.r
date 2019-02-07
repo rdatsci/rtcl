@@ -21,9 +21,9 @@ packageToString.PackageLocale = function(pkg) {
 
 #' @export
 packageToString.PackageGit = function(pkg) {
-  subdir = ifelse(is.na(pkg$subdir), "", pkg$subdir)
-  ref = ifelse(is.na(pkg$ref), "", paste0("@", pkg$ref))
-  paste0(pkg$repo, pkg$ref, pkg$subdir)
+  subdir = ifelse(!nzchar(pkg$subdir), "", paste0("/", pkg$subdir))
+  ref = ifelse(!nzchar(pkg$ref), "", paste0("@", pkg$ref))
+  paste0(pkg$repo, ref, subdir)
 }
 
 #' @export
