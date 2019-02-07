@@ -1,6 +1,6 @@
 Package: testpkg
 Type: Package
-Title: Just a test package to test rt
+Title: Just a Test Package to Test Rt
 Version: 1.0
 Date: 2015-05-19
 Author: Michel Lang <michellang@gmail.com>
