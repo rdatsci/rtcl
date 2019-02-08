@@ -8,6 +8,8 @@
 #' @param add [\code{logical(1)}]\cr
 #'  Append packages to your \code{~/.rt/packages} file?
 #'  Default is \code{FALSE}.
+#' @param ... [\code{any}]\cr
+#'   Passed to \code{remotes::install_*()}.
 #' @template return-itrue
 #' @export
 rinstall = function(pkgs = character(0L), add = FALSE, ...) {

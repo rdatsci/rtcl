@@ -5,6 +5,8 @@
 #' \code{link[roxygen2]{roxygenize}}, \code{link[remotes]{install_deps}} and \code{link[remotes]{install_local}}.
 #'
 #' @template path
+#' @param ... [\code{any}]\cr
+#'   Passed to \code{link[remotes]{install_local}}.
 #' @template return-itrue
 #' @export
 rmake = function(path = getwd(), ...) {
