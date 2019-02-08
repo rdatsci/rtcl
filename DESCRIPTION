@@ -36,6 +36,7 @@ Suggests:
     covr,
     knitr,
     pkgdown,
+    pkgbuild,
     Rcpp,
     rhub,
     rmarkdown,
