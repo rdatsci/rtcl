@@ -12,13 +12,12 @@
 rcov = function(path = getwd(), report = FALSE) {
   pkgname = pkgload::pkg_name(path = path)
 
-  if (!requireNamespace("covr"))
-    stop("Please install package 'covr'")
+  requireNamespace("covr")
 
   messagef("Checking code coverage of package '%s'", pkgname)
   coverage = covr::package_coverage(pkgload::pkg_path(path = path))
   print(coverage)
-  if (shine) {
+  if (report) {
     covr::report(coverage,
       file = file.path(dirname(tempdir()), paste0(pkgname, "-report.html")),
       browse = TRUE)
