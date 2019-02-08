@@ -17,7 +17,7 @@ rcov = function(path = getwd(), report = FALSE) {
   messagef("Checking code coverage of package '%s'", pkgname)
   coverage = covr::package_coverage(pkgload::pkg_path(path = path))
   print(coverage)
-  if (shine) {
+  if (report) {
     covr::report(coverage,
       file = file.path(dirname(tempdir()), paste0(pkgname, "-report.html")),
       browse = TRUE)
