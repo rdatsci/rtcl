@@ -18,7 +18,7 @@ This function converts the string to one of the following objects:
   }
   \item{PackageLocal: }{
     \code{pkg} points to an existing directory.
-    Has to start with \dQuote{./}, \dQuote{~/}, \dQuote{/} or \dQuote{X:/}.
+    Has to start with \dQuote{./}, \dQuote{../}, \dQuote{~/}, \dQuote{/} or \dQuote{X:/}.
   }
   \item{PackageGit: }{
     \code{pkg} starts with \dQuote{http(s)://} or \dQuote{git@} and ends with \dQuote{.git}.
