@@ -80,7 +80,7 @@ isPackageGitHub = function(xs) {
 }
 
 isPackageGitLab = function(xs) {
-  grepl(pattern = "^gitlab:(\\([[:alnum:]_.-]+\\):)?[[:alnum:]_-]+/[[:alnum:]_.-]+[[:alnum:]/]*(@[[:alnum:]._-]+)?$", x = xs)
+  grepl(pattern = "^gitlab:(\\([[:alnum:]_.-/]+\\):)?[[:alnum:]_-]+/[[:alnum:]_.-]+[[:alnum:]/]*(@[[:alnum:]._-]+)?$", x = xs)
 }
 
 asPackageCran = function(xs) {
@@ -111,9 +111,9 @@ asPackageGitHub = function(xs) {
 
 asPackageGitLab = function(xs) {
   xs = gsub("^gitlab:", "", x = xs)
-  host = matchRegex(xs, "(?<=\\()[[:alnum:]_.-]+(?=\\):)")[[1]]
-  matches = matchRegex(xs, "(?<=/)[[:alnum:]._-]+")[[1]]
-  PackageGitLab(name = matches[1], handle = xs, host = host)
+  host = matchRegexGroups(xs, "(?<=\\()[[:alnum:]_.-/]+(?=\\):)")[[1]]
+  matches =  matchRegexGroups(xs, "([[:alnum:]_-]+/([[:alnum:]_.-]+))([[:alnum:]/]*)(@[[:alnum:]._-]+)?$")[[1]]
+  PackageGitLab(name = matches[3], handle = matches[1], host = host)
 }
 
 

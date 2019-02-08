@@ -64,7 +64,7 @@ PackageGitLab = function(name, handle, host = NA_character_) {
   pkg = Package(name)
   pkg$handle = handle #orga/repo/subdir@ref
   pkg$host = host #gitlab.com or can run on any domain *.*
-  addClasses(pkg, "PackageGitHub")
+  addClasses(pkg, "PackageGitLab")
 }
 
 print.PackageGitLab = function(x, ...) {
