@@ -3,3 +3,9 @@
 language: R
 sudo: false
 cache: packages
+
+addons:
+  apt:
+    packages:
+      - aspell
+      - aspell-en
