@@ -4,7 +4,7 @@
 \alias{rwinbuild}
 \title{Upload package to winbuilder}
 \usage{
-rwinbuild(path = getwd(), devel = FALSE, oldrelease = FALSE)
+rwinbuild(path = getwd(), devel = FALSE, oldrel = FALSE)
 }
 \arguments{
 \item{path}{[\code{character}]\cr
@@ -14,7 +14,7 @@ the current directory and up to two parent directories.}
 \item{devel}{[\code{logical(1)}]\cr
 Upload to check against the R-devel branch instead of the stable branch.}
 
-\item{oldrelease}{[\code{logical(1)}]\cr
+\item{oldrel}{[\code{logical(1)}]\cr
 Upload to check against the R-oldrelease branch instead of the stable branch.}
 }
 \value{
