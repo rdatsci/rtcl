@@ -9,3 +9,6 @@ addons:
     packages:
       - aspell
       - aspell-en
+
+after_success:
+  - Rscript -e 'covr::coveralls()'
