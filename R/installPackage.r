@@ -15,12 +15,12 @@ installPackage.PackageLocal = function(pkg, ...) {
 #' @export
 installPackage.PackageCran = function(pkg, ...) {
   messagef("Installing cran package '%s' ...", pkg$name)
-  remotes::install_cran(pkg$name, lib = getLibraryPath(), ...)
+  remotes::install_cran(pkg$name, ...)
 }
 
 #' @export
 installPackage.PackageGit = function(pkg, ...) {
-  remotes::install_git(url = pkg$repo, ref = na2null(pkg$ref), subdir = na2null(pkg$subdir))
+  remotes::install_git(url = pkg$repo, ref = nanz2null(pkg$ref), subdir = nanz2null(pkg$subdir))
 }
 
 #' @export
@@ -30,5 +30,5 @@ installPackage.PackageGitHub = function(pkg, ...) {
 
 #' @export
 installPackage.PackageGitLab = function(pkg, ...) {
-  remotes::install_gitlab(repo = pkg$handle, host = pgk$host, ...)
+  remotes::install_gitlab(repo = pkg$handle, host = pkg$host, ...)
 }

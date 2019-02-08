@@ -4,7 +4,7 @@
 \alias{rinstall}
 \title{Installs R packages}
 \usage{
-rinstall(pkgs = character(0L), add = FALSE)
+rinstall(pkgs = character(0L), add = FALSE, ...)
 }
 \arguments{
 \item{pkgs}{[\code{character}]\cr

@@ -72,15 +72,15 @@ isPackageLocal = function(xs) {
 }
 
 isPackageGit = function(xs) {
-  grepl(pattern = "^(git@|http(s)?://).+\\.git(@[[:alnum:]._-]+)?[[:alnum:]/]*?$", x = xs)
+  grepl(pattern = "^(git@|http(s)?://).+\\.git[[:alnum:]/]*(@[[:alnum:]._-]+)?$", x = xs)
 }
 
 isPackageGitHub = function(xs) {
-  grepl(pattern = "^(github:)?[[:alnum:]_-]+/[[:alnum:]_.-]+(@[[:alnum:]._-]+)?[[:alnum:]/]*?$", x = xs)
+  grepl(pattern = "^(github:)?[[:alnum:]_-]+/[[:alnum:]_.-]+[[:alnum:]/]*(@[[:alnum:]._-]+)?$", x = xs)
 }
 
 isPackageGitLab = function(xs) {
-  grepl(pattern = "^gitlab:(\\([[:alnum:]_.-]+\\):)?[[:alnum:]_-]+/[[:alnum:]_.-]+(@[[:alnum:]._-]+)?[[:alnum:]/]*?$", x = xs)
+  grepl(pattern = "^gitlab:(\\([[:alnum:]_.-]+\\):)?[[:alnum:]_-]+/[[:alnum:]_.-]+[[:alnum:]/]*(@[[:alnum:]._-]+)?$", x = xs)
 }
 
 asPackageCran = function(xs) {
@@ -94,12 +94,12 @@ asPackageLocal = function(xs) {
 }
 
 asPackageGit = function(xs) {
-  matches = matchRegexGroups(xs, "^(.+\\.git)@?([[:alnum:]._-]+)?/?([[:alnum:]/]+)?$")[[1]]
+  matches = matchRegexGroups(xs, "^(.+\\.git)/?([[:alnum:]/]+)?@?([[:alnum:]._-]+)?$")[[1]]
   PackageGit(
     name =  matchRegex(matches[2], "[[:alnum:]._-]+(?=\\.git$)")[[1]],
     repo =  matches[2],
-    ref = matches[3],
-    subdir = matches[4]
+    subdir = matches[3],
+    ref = matches[4]
   )
 }
 

@@ -8,7 +8,7 @@ Package = function(name) {
 
 #' @export
 print.Package = function(x, ...) {
-  cat("Package: ", x$name, "\n")
+  cat(class(x)[1], ": ", x$name, "\n", sep = "")
 }
 
 ## Cran Package
@@ -27,7 +27,7 @@ PackageLocal = function(name, file_path) {
 #' @export
 print.PackageLocal = function(x, ...) {
   NextMethod()
-  cat("File Path: ", x$file_path, "\n")
+  cat("File Path:", x$file_path, "\n")
 }
 
 ## Git Package
@@ -42,9 +42,9 @@ PackageGit = function(name, repo, ref = NA_character_, subdir = NA_character_) {
 
 print.PackageGit = function(x, ...) {
   NextMethod()
-  cat("Repository: ", x$repo, "\n")
-  cat("Ref: ", x$ref, "\n")
-  cat("Subdir: ", x$subdir, "\n")
+  cat("Repository:", x$repo, "\n")
+  cat("Ref:", x$ref, "\n")
+  cat("Subdir:", x$subdir, "\n")
 }
 
 ## GitHub Package
@@ -56,7 +56,7 @@ PackageGitHub = function(name, handle) {
 
 print.PackageGitHub = function(x, ...) {
   NextMethod()
-  cat("GitHub Handle: ", x$handle, "\n")
+  cat("Handle:", x$handle, "\n")
 }
 
 ## GitLab Package
@@ -69,6 +69,6 @@ PackageGitLab = function(name, handle, host = NA_character_) {
 
 print.PackageGitLab = function(x, ...) {
   NextMethod()
-  cat("GitLab URL: ", x$host, "\n")
-  cat("GitLab Handle: ", x$handle, "\n")
+  cat("Host:", x$host, "\n")
+  cat("Handle:", x$handle, "\n")
 }

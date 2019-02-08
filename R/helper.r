@@ -55,7 +55,7 @@ updatePackageAttributes = function(path = ".") {
 }
 
 nanz2null = function(x) {
-  if (is.null(x) || is.na(x) || all(nzchar(x))) {
+  if (is.null(x) || is.na(x) || all(!nzchar(x))) {
     NULL
   } else {
     x

@@ -24,11 +24,11 @@ test_that("packageToString and vice versa", {
   expect_equal(p$name, "checkmate")
   expect_equal(packageToString(p), s)
 
-  s = "github:mllg/checkmate@v1.8.4/somewhere/deep"
+  s = "github:mllg/checkmate/somewhere/deep@v1.8.4"
   p = stringToPackage(s)
   expect_is(p, "Package")
   expect_is(p, "PackageGitHub")
-  expect_equal(p$handle, "mllg/checkmate@v1.8.4/somewhere/deep")
+  expect_equal(p$handle, "mllg/checkmate/somewhere/deep@v1.8.4")
   expect_equal(p$name, "checkmate")
   expect_equal(packageToString(p), s)
 
@@ -51,7 +51,7 @@ test_that("packageToString and vice versa", {
   expect_equal(p$subdir, "")
   expect_equal(packageToString(p), s)
 
-  s = "https://github.com/mllg/checkmate.git@v1.8.4/somewhere/deep"
+  s = "https://github.com/mllg/checkmate.git/somewhere/deep@v1.8.4"
   p = stringToPackage(s)
   expect_is(p, "Package")
   expect_is(p, "PackageGit")
