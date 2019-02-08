@@ -21,7 +21,7 @@ rknit = function(file, output_format = NULL) {
     output = tolower(output)
     output_format = supported_formats[pmatch(output, supported_formats)]
     if (length(output_format)!=1) {
-      stop(sprintf("Output format %s ambiguous. Supported are the following: %s", output_format, stringi::stri_join(supported_formats, collapse = ", ")))
+      stop(sprintf("Output format %s ambiguous. Supported are the following: %s", output_format, paste(supported_formats, collapse = ", ")))
     }
   }
   requireNamespace("knitr")
