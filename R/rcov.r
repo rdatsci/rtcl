@@ -5,11 +5,11 @@
 #' test the code coverage.
 #'
 #' @template path
-#' @param shine [\code{logical(1)}]\cr
-#'  Use the function \code{link[covr]{shine}} to display the coverage information.
+#' @param report [\code{logical(1)}]\cr
+#'  Use the function \code{link[covr]{report}} to display the coverage information in a browser.
 #' @template return-itrue
 #' @export
-rcov = function(path = getwd(), shine = FALSE) {
+rcov = function(path = getwd(), report = FALSE) {
   pkgname = pkgload::pkg_name(path = path)
 
   requireNamespace("covr")

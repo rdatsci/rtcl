@@ -4,15 +4,15 @@
 \alias{rcov}
 \title{Test the coverage of a package}
 \usage{
-rcov(path = getwd(), shine = FALSE)
+rcov(path = getwd(), report = FALSE)
 }
 \arguments{
 \item{path}{[\code{character}]\cr
 If no path to a DESCRIPTION is given, the package looks for a DESCRIPTION in
 the current directory and up to two parent directories.}
 
-\item{shine}{[\code{logical(1)}]\cr
-Use the function \code{link[covr]{shine}} to display the coverage information.}
+\item{report}{[\code{logical(1)}]\cr
+Use the function \code{link[covr]{report}} to display the coverage information in a browser.}
 }
 \value{
 Invisibly returns \code{TRUE} on success.

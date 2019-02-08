@@ -4,10 +4,10 @@ library("methods")
 library("rt")
 doc = "
 Usage:
-  rcov [--shine] [<path>]
+  rcov [--report] [<path>]
 
 Options:
-  --shine   Start shiny server?
+  --report   Show report in browser?
 "
 rt:::cli.call("rcov", doc, commandArgs(TRUE))
 
