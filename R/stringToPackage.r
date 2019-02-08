@@ -8,7 +8,7 @@
 #'   }
 #'   \item{PackageLocal: }{
 #'     \code{pkg} points to an existing directory.
-#'     Has to start with \dQuote{./}, \dQuote{~/}, \dQuote{/} or \dQuote{X:/}.
+#'     Has to start with \dQuote{./}, \dQuote{../}, \dQuote{~/}, \dQuote{/} or \dQuote{X:/}.
 #'   }
 #'   \item{PackageGit: }{
 #'     \code{pkg} starts with \dQuote{http(s)://} or \dQuote{git@} and ends with \dQuote{.git}.
@@ -68,7 +68,7 @@ isPackageCran = function(xs) {
 
 isPackageLocal = function(xs) {
   # FIXME: Windows?
-  grepl(pattern = "^(\\/|\\.\\/|~\\/|[A-Z]:/).+$", x = xs) & dir.exists(xs)
+  grepl(pattern = "^(\\/|\\.{1,2}\\/|~\\/|[A-Z]:/).+$", x = xs) & dir.exists(xs)
 }
 
 isPackageGit = function(xs) {

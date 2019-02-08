@@ -4,15 +4,16 @@
 \alias{rtest}
 \title{Run unit tests for a package}
 \usage{
-rtest(path = getwd(), filter = FALSE)
+rtest(path = getwd(), filter = NULL)
 }
 \arguments{
 \item{path}{[\code{character}]\cr
 If no path to a DESCRIPTION is given, the package looks for a DESCRIPTION in
 the current directory and up to two parent directories.}
 
-\item{filter}{[\code{FALSE} || \code{character(1)}]\cr
-Filter tests (on a file name basis) using this pattern.}
+\item{filter}{[\code{character(1)}]\cr
+Filter tests (on a file name basis) using this pattern.
+Default is \dQuote{NULL}, which means no filter is applied.}
 }
 \value{
 Invisibly returns \code{TRUE} on success.
