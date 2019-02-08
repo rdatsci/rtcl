@@ -4,12 +4,15 @@
 \alias{rmake}
 \title{Make and install a package}
 \usage{
-rmake(path = getwd())
+rmake(path = getwd(), ...)
 }
 \arguments{
 \item{path}{[\code{character}]\cr
 If no path to a DESCRIPTION is given, the package looks for a DESCRIPTION in
 the current directory and up to two parent directories.}
+
+\item{...}{[\code{any}]\cr
+Passed to \code{link[remotes]{install_local}}.}
 }
 \value{
 Invisibly returns \code{TRUE} on success.

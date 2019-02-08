@@ -9,9 +9,9 @@ cli.call = function(fun, doc, args = commandArgs(TRUE)) {
   })
 
   x = x[!vlapply(x, is.null)]
-  names(x) = stri_replace_first_fixed(names(x), "--", "")
-  names(x) = stri_replace_all_fixed(names(x), "-", ".")
-  names(x) = stri_replace_all_regex(names(x), "[()<>\\[\\]]", "")
+  names(x) = sub(x = names(x), pattern = "--", replacement = "", fixed = TRUE)
+  names(x) = gsub(x = names(x), pattern = "-", replacement = ".", fixed = TRUE)
+  names(x) = gsub(x = names(x), pattern = "[()<>\\[\\]]", replacement = "", perl = TRUE)
 
   tryCatch({
     do.call(fun, x)

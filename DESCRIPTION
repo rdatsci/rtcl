@@ -29,7 +29,6 @@ Imports:
     rcmdcheck,
     remotes,
     roxygen2 (>= 5.0.1),
-    stringi,
     tools,
     utils
 Suggests:

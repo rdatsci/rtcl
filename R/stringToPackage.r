@@ -3,10 +3,29 @@
 #' @description
 #' This function converts the string to one of the following objects:
 #' \itemize{
-#'   \item{LocalPackage: }{\code{pkg} points to an existing directory.}
-#'   \item{GitPackage: }{\code{pkg} starts with \dQuote{https://} or \dQuote{git} and ends with \dQuote{.git}.}
-#'   \item{GitHubPackage: }{\code{pkg} matches the pattern \dQuote{[user]/[repo]}.}
-#'   \item{CranPackage: }{\code{pkg} is a single string without any special characters except dots ([a-zA-Z0-9.]).}
+#'   \item{PackageCran: }{
+#'     \code{pkg} is a single string without any special characters except dots.
+#'   }
+#'   \item{PackageLocal: }{
+#'     \code{pkg} points to an existing directory.
+#'     Has to start with \dQuote{./}, \dQuote{../}, \dQuote{~/}, \dQuote{/} or \dQuote{X:/}.
+#'   }
+#'   \item{PackageGit: }{
+#'     \code{pkg} starts with \dQuote{http(s)://} or \dQuote{git@} and ends with \dQuote{.git}.
+#'     Additionally a reference (branch, tag or SHA reference) can be specivied with the prefix \dQuote{@}.
+#'     If the package resides in a subdirectory it can be specified with the prefix \dQuote{/}.
+#'     Example: \dQuote{http://gitserver.domain/repo.git@branch/subfolder}
+#'   }
+#'   \item{PackageGitHub: }{
+#'     \code{pkg} matches the pattern \dQuote{[user]/[repo]}.
+#'     Additional prefixes can be given as for GitPackage (see above).
+#'     Example: \dQuote{user/repo@branch/subfolder}
+#'   }
+#'   \item{PackageGitLab: }{
+#'     \code{pkg} matches the pattern \dQuote{gitlab:[user]/[repo]}.
+#'     Additional prefixes can be given as for GitPackage (see above).
+#'     Example: \dQuote{gitlab:user/repo@branch/subfolder}
+#'   }
 #' }
 #' @param pkg [\code{character(1)} | \code{NULL}]\cr
 #'   String to convert to an object of class Package.
@@ -16,52 +35,85 @@ stringToPackage = function(pkg) {
     return(pkg)
   assertString(pkg)
 
-  parts = stri_split_fixed(pkg, "::", n = 2L, tokens_only = TRUE)[[1L]]
-  if (length(parts) == 1L)
-    parts = c(detectPackageType(parts), parts)
+  funs = list(
+    Cran = isPackageCran,
+    Local = isPackageLocal,
+    Git = isPackageGit,
+    GitHub = isPackageGitHub,
+    GitLab = isPackageGitLab
+  )
 
+  check_res = vapply(funs, function(x) x(pkg), logical(1))
 
-  switch(parts[1L],
-    "local" = asLocalPackage(parts[2L]),
-    "cran" = asCranPackage(parts[2L]),
-    "git"  = asGitPackage(parts[2L]),
-    "gh"  = asGitHubPackage(parts[2L]),
-    stop("Unknown package type: ", parts[1L])
+  if (sum(check_res) > 1L) {
+    stop(sprintf("Package String '%s' is ambigous!", pkg))
+  } else if (sum(check_res) == 0L) {
+    stop(sprintf("Type for Package String '%s' is unknown!", pkg))
+  }
+
+  switch(names(which(check_res)),
+    "Local" = asPackageLocal(pkg),
+    "Cran" = asPackageCran(pkg),
+    "Git"  = asPackageGit(pkg),
+    "GitHub"  = asPackageGitHub(pkg),
+    "GitLab"  = asPackageGitLab(pkg),
+    stop("Unknown package type: ", which(check_res))
   )
 }
 
-detectPackageType = function(xs) {
-  if (dir.exists(xs))
-    return("local")
-  if (any(startsWith(xs, c("https://", "git@"))) && endsWith(xs, ".git"))
-    return("git")
-  if (grepl("^[[:alnum:]_-]+/[[:alnum:]_.-]+(@[[:alnum:]._-]+)?[[:alnum:]/]*?$", xs))
-    return("gh")
-  if (grepl("^[[:alnum:].]+$", xs))
-    return("cran")
-  stop("Unknown package type: ", xs)
+# functions have to work vectorized
+isPackageCran = function(xs) {
+  grepl(pattern = "^[[:alnum:].]+$", x = xs)
 }
 
-asLocalPackage = function(xs) {
+isPackageLocal = function(xs) {
+  # FIXME: Windows?
+  grepl(pattern = "^(\\/|\\.{1,2}\\/|~\\/|[A-Z]:/).+$", x = xs) & dir.exists(xs)
+}
+
+isPackageGit = function(xs) {
+  grepl(pattern = "^(git@|http(s)?://).+\\.git[[:alnum:]/]*(@[[:alnum:]._-]+)?$", x = xs)
+}
+
+isPackageGitHub = function(xs) {
+  grepl(pattern = "^(github:)?[[:alnum:]_-]+/[[:alnum:]_.-]+[[:alnum:]/]*(@[[:alnum:]._-]+)?$", x = xs)
+}
+
+isPackageGitLab = function(xs) {
+  grepl(pattern = "^gitlab:(\\([[:alnum:]_.-/]+\\):)?[[:alnum:]_-]+/[[:alnum:]_.-]+[[:alnum:]/]*(@[[:alnum:]._-]+)?$", x = xs)
+}
+
+asPackageCran = function(xs) {
+  PackageCran(xs)
+}
+
+asPackageLocal = function(xs) {
   if (!dir.exists(xs))
     stop(sprintf("'%s' must point to an existing directory for a local package", xs))
-  LocalPackage(name = readPackageName(xs), uri = xs)
+  PackageLocal(name = readPackageName(xs), file_path = xs)
 }
 
-asGitPackage = function(xs) {
-  matches = tail(drop(stri_match_last_regex(xs, "([[:alnum:]_]+)/([[:alnum:]_]+)\\.git")), -1L)
-  if (anyNA(matches) || length(matches) == 0L)
-    stop("Malformed Git URI")
-  GitPackage(name = matches[2L], repo = sprintf("%s/%s", matches[1L], matches[2L]), uri = xs)
+asPackageGit = function(xs) {
+  matches = matchRegexGroups(xs, "^(.+\\.git)/?([[:alnum:]/]+)?@?([[:alnum:]._-]+)?$")[[1]]
+  PackageGit(
+    name =  matchRegex(matches[2], "[[:alnum:]._-]+(?=\\.git$)")[[1]],
+    repo =  matches[2],
+    subdir = matches[3],
+    ref = matches[4]
+  )
 }
 
-asGitHubPackage = function(xs) {
-  parts = stri_split_fixed(xs, pattern = "/", n = 3L)[[1L]]
-  repotag = stri_split_fixed(parts[2], pattern = "@", n = 2)[[1L]]
-  parts[2L] = repotag[1L]
-  GitHubPackage(name = parts[2L], repo = stri_join(parts[1:2], collapse = "/"), subdir = parts[3L], tag = repotag[2L])
+asPackageGitHub = function(xs) {
+  xs = gsub("^github:", "", x = xs)
+  matches = matchRegex(xs, "(?<=/)[[:alnum:]._-]+")[[1]]
+  PackageGitHub(name = matches[1], handle = xs)
 }
 
-asCranPackage = function(xs) {
-  CranPackage(xs)
+asPackageGitLab = function(xs) {
+  xs = gsub("^gitlab:", "", x = xs)
+  host = matchRegexGroups(xs, "(?<=\\()[[:alnum:]_.-/]+(?=\\):)")[[1]]
+  matches =  matchRegexGroups(xs, "([[:alnum:]_-]+/([[:alnum:]_.-]+))([[:alnum:]/]*)(@[[:alnum:]._-]+)?$")[[1]]
+  PackageGitLab(name = matches[3], handle = matches[1], host = host)
 }
+
+

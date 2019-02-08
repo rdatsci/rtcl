@@ -17,16 +17,16 @@ rknit = function(file, output_format = NULL) {
 
   assertString(output_format, null.ok = TRUE)
   supported_formats = c("pdf_document", "html_document", "word_document")
-  if (!is.null(output_format)) {
-    output_format = stringi::stri_trans_tolower(output_format)
-    output_format = supported_formats[stringi::stri_startswith_fixed(output_format, supported_formats)]
+  if (!is.null(output)) {
+    output = tolower(output)
+    output_format = supported_formats[pmatch(output, supported_formats)]
     if (length(output_format)!=1) {
-      stop(sprintf("Output format %s ambiguous. Supported are the following: %s", output_format, stringi::stri_join(supported_formats, collapse = ", ")))
+      stop(sprintf("Output format %s ambiguous. Supported are the following: %s", output_format, paste(supported_formats, collapse = ", ")))
     }
   }
   requireNamespace("knitr")
 
-  file_type = stringi::stri_trans_tolower(file_ext(file))
+  file_type = tolower(file_ext(file))
 
   if (file_type == "rnw") {
     knitr_file = knitr::knit2pdf(file)

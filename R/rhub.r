@@ -11,11 +11,10 @@
 #' @template return-itrue
 #' @export
 rhub = function(platform = NULL, checkforcran = FALSE, path = getwd()) {
-  if (!requireNamespace("rhub"))
-    stop("Install 'rhub' to use rhub")
+  requireNamespace("rhub")
   assertFlag(checkforcran)
   assertSubset(platform, rhub::platforms()$name)
-  
+
   pkgpath = pkgload::pkg_path(path = path)
   if (checkforcran) {
     rhub::check_for_cran(pkgpath, platform = platform)

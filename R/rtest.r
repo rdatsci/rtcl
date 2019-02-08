@@ -6,23 +6,20 @@
 #'  \code{\link[testthat]{test_dir}}.
 #'
 #' @template path
-#' @param filter [\code{FALSE} || \code{character(1)}]\cr
+#' @param filter [\code{character(1)}]\cr
 #'  Filter tests (on a file name basis) using this pattern.
+#'  Default is \dQuote{NULL}, which means no filter is applied.
 #' @template return-itrue
 #' @export
-rtest = function(path = getwd(), filter = FALSE) {
+rtest = function(path = getwd(), filter = NULL) {
   path = pkgload::pkg_path(path)
   pkgname = pkgload::pkg_name(path)
   updatePackageAttributes(path = path)
 
   messagef("Testing package '%s'", pkgname)
-  if (identical(filter, FALSE)) {
-    filter = NULL
-  } else {
-    assertString(filter)
-  }
+  assertString(filter, null.ok = TRUE)
   testpath = file.path(path, "tests", "testthat")
-  res = as.data.frame(testthat::test_dir(path = testpath, filter = filter))
+  res = as.data.frame(testthat::test_dir(path = testpath, filter = nanz2null(filter)))
   if (sum(res$failed) > 0) {
     return(invisible(FALSE))
   } else {

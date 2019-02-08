@@ -53,3 +53,21 @@ updatePackageAttributes = function(path = ".") {
     Rcpp::compileAttributes(path = path, verbose = TRUE)
   }
 }
+
+nanz2null = function(x) {
+  if (is.null(x) || is.na(x) || all(!nzchar(x))) {
+    NULL
+  } else {
+    x
+  }
+}
+
+matchRegex = function(str, pattern, ...) {
+  reg_match = gregexpr(pattern =  pattern, text = str, perl = TRUE, ...)
+  regmatches(x = str, m = reg_match)
+}
+
+matchRegexGroups = function(str, pattern, ...) {
+  reg_match = regexec(pattern =  pattern, text = str, perl = TRUE, ...)
+  regmatches(x = str, m = reg_match)
+}

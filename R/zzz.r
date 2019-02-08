@@ -1,5 +1,4 @@
 #' @import checkmate
-#' @import stringi
 #' @import utils
 #' @importFrom tools file_ext
 NULL

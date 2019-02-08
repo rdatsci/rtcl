@@ -8,23 +8,25 @@
 #' @param add [\code{logical(1)}]\cr
 #'  Append packages to your \code{~/.rt/packages} file?
 #'  Default is \code{FALSE}.
+#' @param ... [\code{any}]\cr
+#'   Passed to \code{remotes::install_*()}.
 #' @template return-itrue
 #' @export
-rinstall = function(pkgs = character(0L), add = FALSE) {
+rinstall = function(pkgs = character(0L), add = FALSE, ...) {
   pkgs = lapply(pkgs, stringToPackage)
   assertFlag(add)
-  lib = getLibraryPath()
 
-  # TODO: cleanup code here
+  # FIXME: Do we need to specify the lib_path?
+
   pn = extract(pkgs, "name")
-  is.cran = extract(pkgs, "type") == "cran"
+  is.cran = vlapply(pkgs, inherits, "PackageCran")
   if (any(is.cran)) {
     messagef("Installing %i packages from CRAN: %s", sum(is.cran), collapse(pn[is.cran]))
-    remotes::install_cran(pn[is.cran], lib = lib)
+    remotes::install_cran(pn[is.cran], ...)
   }
 
   for (pkg in pkgs[!is.cran])
-    installPackage(pkg)
+    installPackage(pkg, ...)
 
   if (add)
     addPackagesToCollection(pkgs)
