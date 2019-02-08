@@ -7,41 +7,43 @@
 #' @template path
 #' @param devel [\code{logical(1)}]\cr
 #'  Upload to check against the R-devel branch instead of the stable branch.
-#' @param oldrelease [\code{logical(1)}]\cr
+#' @param oldrel [\code{logical(1)}]\cr
 #'  Upload to check against the R-oldrelease branch instead of the stable branch.
 #' @template return-itrue
 #' @export
-rwinbuild = function(path = getwd(), devel = FALSE, oldrelease = FALSE) {
-  pkg = devtools::as.package(path, create = FALSE)
+rwinbuild = function(path = getwd(), devel = FALSE, oldrel = FALSE) {
+  path = normalizePath(path)
   assertFlag(devel)
-  assertFlag(oldrelease)
-  if (devel && oldrelease) {
-    stop("Just enable devel OR oldrelease at the same time.")
+  assertFlag(oldrel)
+  if (devel && oldrel) {
+    stop("Just enable devel OR oldrel at the same time.")
   }
 
+  # change maintainer temporarily
   maintainer = getOption("rt.maintainer", NULL)
   if (!is.null(maintainer)) {
-    desc = read.dcf(file.path(pkg$path, "DESCRIPTION"))
+    desc = read.dcf(file.path(path, "DESCRIPTION"))
     if ("Maintainer" %in% colnames(desc)) {
       desc[1L, "Maintainer"] = maintainer
     } else {
       desc = cbind(desc, Maintainer = maintainer)
     }
 
-    path = tempfile("tmp-package")
-    if (!dir.create(path, recursive = TRUE) || !file.copy(pkg$path, path, recursive = TRUE))
+    new_path = file.path(tempfile("tmp-package"), basename(path))
+    if (!dir.create(dirname(new_path), recursive = TRUE) || !file.copy(path, dirname(new_path), recursive = TRUE)) {
       stop(sprintf("Unable to copy package to %s", path))
-    pkg = devtools::as.package(file.path(path, basename(pkg$path)), create = FALSE)
-    write.dcf(desc, file = file.path(pkg$path, "DESCRIPTION"))
+    }
+    write.dcf(desc, file = file.path(new_path, "DESCRIPTION"))
+    path = new_path
   }
 
-  messagef("Building package '%s' in '%s' and uploading to the winbuilder", pkg$package, pkg$path)
-  updatePackageAttributes(pkg)
+  messagef("Building package in '%s' and uploading to winbuilder", path)
+
   if (devel) {
-    devtools::check_win_devel(pkg)
-  } else if (oldrelease) {
-    devtools::check_win_oldrelease(pkg)
+    devtools::check_win_devel(path)
+  } else if (oldrel) {
+    devtools::check_win_oldrelease(path)
   } else {
-    devtools::check_win_release(pkg)
+    devtools::check_win_release(path)
   }
 }
