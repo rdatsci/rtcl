@@ -33,6 +33,6 @@ packageToString.PackageGitHub = function(pkg) {
 
 #' @export
 packageToString.PackageGitLab = function(pkg) {
-  host = ifelse(is.na(pkg$host), "", sprintf("(%s):", pgk$host))
+  host = ifelse(is.na(pkg$host), "", sprintf("(%s):", pkg$host))
   paste0("gitlab:", host, pkg$handle)
 }

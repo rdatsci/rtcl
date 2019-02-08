@@ -57,7 +57,7 @@ stringToPackage = function(pkg) {
     "Git"  = asPackageGit(pkg),
     "GitHub"  = asPackageGitHub(pkg),
     "GitLab"  = asPackageGitLab(pkg),
-    stop("Unknown package type: ", parts[1L])
+    stop("Unknown package type: ", which(check_res))
   )
 }
 
@@ -113,7 +113,7 @@ asPackageGitLab = function(xs) {
   xs = gsub("^gitlab:", "", x = xs)
   host = matchRegex(xs, "(?<=\\()[[:alnum:]_.-]+(?=\\):)")[[1]]
   matches = matchRegex(xs, "(?<=/)[[:alnum:]._-]+")[[1]]
-  PackageGitHub(name = matches[1], handle = xs, host = host)
+  PackageGitLab(name = matches[1], handle = xs, host = host)
 }
 
 

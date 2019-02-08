@@ -40,6 +40,15 @@ test_that("packageToString and vice versa", {
   expect_equal(p$name, "checkmate")
   expect_equal(packageToString(p), s)
 
+  s = "gitlab:(sub.domain.com/dir):mllg/checkmate/somewhere/deep@v1.8.4"
+  p = stringToPackage(s)
+  expect_is(p, "Package")
+  expect_is(p, "PackageGitLab")
+  expect_equal(p$handle, "mllg/checkmate/somewhere/deep@v1.8.4")
+  expect_equal(p$name, "checkmate")
+  expect_equal(p$host, "sub.domain.com/dir")
+  expect_equal(packageToString(p), s)
+
   s = "https://github.com/mllg/checkmate.git"
   p = stringToPackage(s)
   expect_is(p, "Package")
