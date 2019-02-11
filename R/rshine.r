@@ -8,13 +8,12 @@
 #'   Port for \code{\link[shiny]{runApp}}.
 #' @template return-itrue
 #' @export
-rshine = function(path = ".", port = 0L) {
+rshine = function(path = ".", port = NULL) {
   requireNamespace("shiny")
 
-  if (!is.integer(port))
-    port = as.integer(port)
+  port = assertInt(port, null.ok = TRUE)
 
-  if (port == 0L) {
+  if (is.null(port)) {
     shiny::runApp(path)
   } else {
     shiny::runApp(path, port = port)

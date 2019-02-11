@@ -4,7 +4,7 @@
 \alias{rshine}
 \title{Run a shiny app}
 \usage{
-rshine(path = ".", port = 0L)
+rshine(path = ".", port = NULL)
 }
 \arguments{
 \item{path}{[\code{character}]\cr

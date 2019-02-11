@@ -3,7 +3,7 @@ context("rknit")
 test_that("rknit works for various files", {
   skip_on_cran()
 
-  files_path = file.path("..", "testknit")
+  files_path = file.path("assets", "knitr")
 
   for (knit_file in dir(files_path, full.names = TRUE)) {
     expect_true(rknit(knit_file, clean = TRUE))
