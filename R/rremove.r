@@ -12,7 +12,7 @@ rremove = function(pkgs = character(0L)) {
 
   for (pkg in pkgs) {
     if (length(find.package(pkg, lib.loc = lib, quiet = TRUE)) == 0L) {
-      messagef("Package '%s' not found")
+      messagef("Package '%s' not found", pkg)
     } else {
       messagef("Removing package '%s' from '%s' ...", pkg, lib)
       remove.packages(pkg, lib = lib)
