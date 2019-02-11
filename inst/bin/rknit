@@ -5,7 +5,6 @@ library("rt")
 doc = "
 Usage:
   rknit [--output_format=<format>] <file>
-
 Options:
   --output_format=<format>  Output format (pdf*, html**, word)
                             * always used for Rnw files

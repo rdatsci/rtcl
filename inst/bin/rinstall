@@ -5,7 +5,6 @@ library("rt")
 doc = "
 Usage:
   rinstall [--add] <pkg>...
-
 Options:
   --add       Add packages to ~/.rt/packages?
 "

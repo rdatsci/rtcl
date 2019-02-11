@@ -18,7 +18,7 @@ test_that("rknit works for various files", {
     # can we diverge from default?
     if (knit_format == "Rmd" && out_format == "pdf") {
       expect_true(rknit(knit_file, clean = TRUE, output_format = "html"))
-      out_file = c(out_file), paste0(out_base,".html")
+      out_file = c(out_file, paste0(out_base,".html"))
     }
 
     # cleanup

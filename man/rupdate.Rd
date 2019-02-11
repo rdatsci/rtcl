@@ -4,11 +4,15 @@
 \alias{rupdate}
 \title{Update packages}
 \usage{
-rupdate(rebuild = FALSE)
+rupdate(rebuild = FALSE, neverupgrade = FALSE)
 }
 \arguments{
 \item{rebuild}{[\code{logical(1)}]\cr
 Rebuild R packages which are built using a different version of R.}
+
+\item{neverupgrade}{[code{logical(1)}]\cr
+Passed to \code{\link[remotes]{update_packages}} as \code{upgrade = ifelse(neverupgrade, "never", "always")}.
+Default is \dQuote{FALSE} so all dependencies are upgraded.}
 }
 \value{
 Invisibly returns \code{TRUE} on success.

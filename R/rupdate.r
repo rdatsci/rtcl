@@ -17,40 +17,54 @@
 #'
 #' @param rebuild [\code{logical(1)}]\cr
 #'  Rebuild R packages which are built using a different version of R.
+#' @param neverupgrade [code{logical(1)}]\cr
+#'  Passed to \code{\link[remotes]{update_packages}} as \code{upgrade = ifelse(neverupgrade, "never", "always")}.
+#'  Default is \dQuote{FALSE} so all dependencies are upgraded.
 #' @template return-itrue
 #' @export
-rupdate = function(rebuild = FALSE) {
+rupdate = function(rebuild = FALSE, neverupgrade = FALSE) {
   assertFlag(rebuild)
+  assertFlag(neverupgrade)
+  upgrade = ifelse(neverupgrade, "never", "always")
 
   messagef("Checking for outdated packages ...")
   lib = getLibraryPath()
   pkgs = getCollectionContents(as.packages = TRUE)
-  pkg.type = factor(extract(pkgs, "type"))
+  pkgs_names = extract(pkgs, "name")
+  pkgs_is_cran = vlapply(pkgs, inherits, "PackageCran")
+
+  pkgs_installed_names = rownames(installed.packages())
 
   messagef("Updating packages ...")
-  remotes::update_packages(dependencies = TRUE, upgrade = "always")
 
+  # update cran packages
+  remotes::update_packages(dependencies = TRUE, upgrade = upgrade)
+
+  # install packages that have not been update by above line
+  # these are a) cran packages from the collection and b) all remote packages
+  rinstall(pkgs[!(pkgs_is_cran & (pkgs_names %in% pkgs_installed_names))], upgrade = upgrade)
+
+  # rebuild packages
   if (rebuild) {
     built = installed.packages()[, "Built"]
-    pn = names(which(built < getRversion()))
-    if (length(pn)) {
-      messagef("Rebuilding %i outdated packages ...", length(pn))
-      remotes::install_cran(pn, lib = lib)
+    names_rebuild = names(which(built < getRversion()))
+    names_no_rebuild = names(which(built >= getRversion()))
+
+    # update all packages except those that are specified as non-cran packages in the collection
+    names_rebuild_cran = setdiff(names_rebuild, pkgs_names[!is.cran])
+    if (length(names_rebuild_cran) > 0) {
+      messagef("Rebuilding %i outdated packages from CRAN: %s", length(names_rebuild_cran), collapse(names_rebuild_cran))
+      remotes::update_packages(names_rebuild_cran, lib = lib, force = TRUE, upgrade = upgrade)
+    }
+
+    # update all non-cran packages in the collection for that we are not sure that they are up to date
+    names_rebuild_remote = setdiff(pkgs_names[!is.cran], names_no_rebuild)
+    if (length(names_rebuild_remote) > 0) {
+      messagef("Rebuilding %i outdated packages from remote: %s", length(names_rebuild_remote), collapse(names_rebuild_remote))
+      rinstall(pkgs[pkgs_names %in% names_rebuild_remote], force = TRUE, upgrade = upgrade)
     }
   }
 
-  if ("cran" %in% levels(pkg.type)) {
-    pn = extract(pkgs, "name")
-    w = which(pkg.type == "cran" & pn %nin% rownames(installed.packages()))
-    if (length(w)) {
-      messagef("Installing %i missing cran packages ...", length(w))
-      remotes::install_cran(pn[w], lib = lib)
-    }
-  }
-
-  if ("git" %in% levels(pkg.type)) {
-    lapply(pkgs[pkg.type == "git"], installPackage)
-  }
 
   invisible(TRUE)
 }

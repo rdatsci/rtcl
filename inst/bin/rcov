@@ -5,7 +5,6 @@ library("rt")
 doc = "
 Usage:
   rcov [--report] [<path>]
-
 Options:
   --report   Show report in browser?
 "
