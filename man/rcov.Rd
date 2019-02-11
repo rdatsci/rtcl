@@ -12,7 +12,7 @@ If no path to a DESCRIPTION is given, the package looks for a DESCRIPTION in
 the current directory and up to two parent directories.}
 
 \item{report}{[\code{logical(1)}]\cr
-Use the function \code{link[covr]{report}} to display the coverage information in a browser.}
+Use the function \code{\link[covr]{report}} to display the coverage information in a browser.}
 }
 \value{
 Invisibly returns \code{TRUE} on success.

@@ -1,7 +1,7 @@
 #' Remove temporary files from a package
 #'
 #' @description
-#' Cleanup temporary files for a package located in \code{path} using \code{link[pkgbuild]{clean_dll}}.
+#' Cleanup temporary files for a package located in \code{path} using \code{\link[pkgbuild]{clean_dll}}.
 #'
 #' @template path
 #' @template return-itrue

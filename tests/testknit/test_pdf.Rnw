@@ -1,0 +1,15 @@
+\documentclass{article}
+
+\begin{document}
+
+<<>>=
+summary(mtcars)
+@
+
+You can also embed plots, for example:
+
+<<>>=
+plot(pressure)
+@
+
+\end{document}

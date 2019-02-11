@@ -1,7 +1,7 @@
 #' Check variable usage
 #'
 #' @description
-#' Checks the package using \code{link[codetools]{checkUsagePackage}}
+#' Checks the package using \code{\link[codetools]{checkUsagePackage}}
 #'
 #' @template path
 #' @template return-itrue

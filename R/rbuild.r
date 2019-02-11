@@ -1,7 +1,7 @@
 #' Build a package
 #'
 #' @description
-#' Build a package located in \code{path} using \code{link[pkgbuild]{build}}.
+#' Build a package located in \code{path} using \code{\link[pkgbuild]{build}}.
 #'
 #' @template path
 #' @template return-itrue

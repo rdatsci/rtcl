@@ -12,12 +12,12 @@ If no path to a DESCRIPTION is given, the package looks for a DESCRIPTION in
 the current directory and up to two parent directories.}
 
 \item{...}{[\code{any}]\cr
-Passed to \code{link[remotes]{install_local}}.}
+Passed to \code{\link[remotes]{install_local}}.}
 }
 \value{
 Invisibly returns \code{TRUE} on success.
 }
 \description{
 Updates the documentation and then installs the package located at \code{path}, using
-\code{link[roxygen2]{roxygenize}}, \code{link[remotes]{install_deps}} and \code{link[remotes]{install_local}}.
+\code{\link[roxygen2]{roxygenize}}, \code{\link[remotes]{install_deps}} and \code{\link[remotes]{install_local}}.
 }

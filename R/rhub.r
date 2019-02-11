@@ -1,12 +1,12 @@
 #' Upload package to rhub
 #'
 #' @description
-#' Uploads a package located in \code{path} to the rhub service via \code{link[rhub]{check}}.
+#' Uploads a package located in \code{path} to the rhub service via \code{\link[rhub]{check}}.
 #'
 #' @param platform [\code{character(1)}]\cr
 #'   Check on the platform specified here.
 #' @param checkforcran [\code{logical(1L)}]\cr
-#'   Use \code{link[rhub]{check_for_cran}} instead.
+#'   Use \code{\link[rhub]{check_for_cran}} instead.
 #' @template path
 #' @template return-itrue
 #' @export

@@ -1,7 +1,7 @@
 #' Check a package
 #'
 #' @description
-#' Check a package located in \code{path} using \code{link[rcmdcheck]{rcmdcheck}}.
+#' Check a package located in \code{path} using \code{\link[rcmdcheck]{rcmdcheck}}.
 #'
 #' @template path
 #' @param cleanup [\code{logical(1L)}]\cr

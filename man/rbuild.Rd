@@ -15,5 +15,5 @@ the current directory and up to two parent directories.}
 Invisibly returns \code{TRUE} on success.
 }
 \description{
-Build a package located in \code{path} using \code{link[pkgbuild]{build}}.
+Build a package located in \code{path} using \code{\link[pkgbuild]{build}}.
 }

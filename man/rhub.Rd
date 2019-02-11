@@ -11,7 +11,7 @@ rhub(platform = NULL, checkforcran = FALSE, path = getwd())
 Check on the platform specified here.}
 
 \item{checkforcran}{[\code{logical(1L)}]\cr
-Use \code{link[rhub]{check_for_cran}} instead.}
+Use \code{\link[rhub]{check_for_cran}} instead.}
 
 \item{path}{[\code{character}]\cr
 If no path to a DESCRIPTION is given, the package looks for a DESCRIPTION in
@@ -21,5 +21,5 @@ the current directory and up to two parent directories.}
 Invisibly returns \code{TRUE} on success.
 }
 \description{
-Uploads a package located in \code{path} to the rhub service via \code{link[rhub]{check}}.
+Uploads a package located in \code{path} to the rhub service via \code{\link[rhub]{check}}.
 }

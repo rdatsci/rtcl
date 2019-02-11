@@ -6,7 +6,7 @@
 #'
 #' @template path
 #' @param report [\code{logical(1)}]\cr
-#'  Use the function \code{link[covr]{report}} to display the coverage information in a browser.
+#'  Use the function \code{\link[covr]{report}} to display the coverage information in a browser.
 #' @template return-itrue
 #' @export
 rcov = function(path = getwd(), report = FALSE) {
