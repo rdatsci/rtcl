@@ -6,7 +6,7 @@ doc = "
 Usage:
   rshine [--port=<number>] [<path>]
 Options:
-  --port=<number> Port for shiny::runApp().
+  --port=<number>   Port for shiny::runApp().
 "
 rt:::cli.call("rshine", doc, commandArgs(TRUE))
 
