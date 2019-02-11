@@ -4,7 +4,7 @@
 \alias{rshine}
 \title{Run a shiny app}
 \usage{
-rshine(path = ".", port = NULL)
+rshine(path = ".", port = NULL, ...)
 }
 \arguments{
 \item{path}{[\code{character}]\cr
@@ -13,6 +13,9 @@ the current directory and up to two parent directories.}
 
 \item{port}{[\code{integer(1)}]\cr
 Port for \code{\link[shiny]{runApp}}.}
+
+\item{...}{[\code{any}]\cr
+Passed to \code{\link[shiny]{runApp}}.}
 }
 \value{
 Invisibly returns \code{TRUE} on success.

@@ -4,9 +4,10 @@ library("methods")
 library("rt")
 doc = "
 Usage:
-  rshine [--port] [<path>]
+  rshine [--port=<number>] [<path>]
+
 Options:
-  --port=0  Port for shiny::runApp().
+  --port=<number> Port for shiny::runApp().
 "
 rt:::cli.call("rshine", doc, commandArgs(TRUE))
 
