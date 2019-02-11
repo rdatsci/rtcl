@@ -4,7 +4,7 @@ library("methods")
 library("rt")
 doc = "
 Usage:
-  rupdate [--neverupgrade] [--rebuild]
+  rupdate [--neverupgrade --rebuild] <path>
 Options:
   --neverupgrade Does not update dependencies.
   --rebuild      Rebuild packages which are built against an older version of R.
