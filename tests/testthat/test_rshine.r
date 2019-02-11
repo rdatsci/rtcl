@@ -2,6 +2,7 @@ context("rshine")
 
 test_that("rshine", {
   skip_on_cran()
+  skip_on_travis()
 
   shiny_path = file.path("assets", "shiny")
 
