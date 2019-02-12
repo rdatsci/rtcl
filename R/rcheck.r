@@ -24,5 +24,9 @@ rcheck = function(path = getwd(), cleanup = FALSE) {
     if (file.exists(log.path)) unlink(log.path, recursive = TRUE)
     messagef("You ran 'rcheck --cleanup'. Logfiles are deleted.")
   }
-  invisible(res)
+  if (length(res$test_fail) > 0) {
+    return(invisible(FALSE))
+  } else {
+    return(invisible(TRUE))
+  }
 }

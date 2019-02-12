@@ -51,14 +51,14 @@ rupdate = function(rebuild = FALSE, neverupgrade = FALSE) {
     names_no_rebuild = names(which(built >= getRversion()))
 
     # update all packages except those that are specified as non-cran packages in the collection
-    names_rebuild_cran = setdiff(names_rebuild, pkgs_names[!is.cran])
+    names_rebuild_cran = setdiff(names_rebuild, pkgs_names[!pkgs_is_cran])
     if (length(names_rebuild_cran) > 0) {
       messagef("Rebuilding %i outdated packages from CRAN: %s", length(names_rebuild_cran), collapse(names_rebuild_cran))
       remotes::update_packages(names_rebuild_cran, lib = lib, force = TRUE, upgrade = upgrade)
     }
 
     # update all non-cran packages in the collection for that we are not sure that they are up to date
-    names_rebuild_remote = setdiff(pkgs_names[!is.cran], names_no_rebuild)
+    names_rebuild_remote = setdiff(pkgs_names[!pkgs_is_cran], names_no_rebuild)
     if (length(names_rebuild_remote) > 0) {
       messagef("Rebuilding %i outdated packages from remote: %s", length(names_rebuild_remote), collapse(names_rebuild_remote))
       rinstall(pkgs[pkgs_names %in% names_rebuild_remote], force = TRUE, upgrade = upgrade)

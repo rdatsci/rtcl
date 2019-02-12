@@ -10,7 +10,7 @@ getCollectionContents = function(as.packages = FALSE, fn = getConfigPath("packag
   pkgs = pkgs[nzchar(pkgs) & !startsWith(pkgs, "#")]
   if (as.packages) {
     pkgs = lapply(pkgs, stringToPackage)
-    setNames(pkgs, extract(pkgs, "name"))
+    names(pkgs) = extract(pkgs, "name")
   }
   return(pkgs)
 }
