@@ -6,7 +6,7 @@
 #' @param pkgs [\code{character}]\cr
 #'  Strings convertible by \code{\link{stringToPackage}}.
 #' @param add [\code{logical(1)}]\cr
-#'  Append packages to your \code{~/.rt/packages} file?
+#'  Append packages to your config file in \code{\link{getConfigPath}}.?
 #'  Default is \code{FALSE}.
 #' @param ... [\code{any}]\cr
 #'   Passed to \code{remotes::install_*()}.

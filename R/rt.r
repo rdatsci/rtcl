@@ -1,15 +1,14 @@
 #' Maintainace operations for rt
 #'
 #' @param init [\code{logical(1)}]\cr
-#'  Initialize for first use: create directory \code{~/.rt} and
-#'  create an empty package collection file \code{~/.rt/packages}.
-#' @param cleanup [\code{logical(1)}]\cr
-#'  Remove git repositories in \code{~/.rt/git} which are not
-#'  referenced in the collection file.
+#'  Initialize for first use: create directory \code{\link{getConfigPath}} and
+#'  create an empty package collection file \code{getConfigPath("packages")}.
+#' @param edit [\code{logical(1)}]\cr
+#'  Edit the \dQuote{packages} file?
 #' @template return-itrue
-rt = function(init = FALSE, cleanup = FALSE) {
+rt = function(init = FALSE, edit = FALSE) {
   assertFlag(init)
-  assertFlag(cleanup)
+  assertFlag(edit)
 
   if (init) {
     fn = getConfigPath("packages")
@@ -24,16 +23,9 @@ rt = function(init = FALSE, cleanup = FALSE) {
     }
   }
 
-  if (cleanup) {
-    pkgs = getCollectionContents(as.packages = TRUE)
-    pkgs = extract(pkgs[extract(pkgs, "type") == "git"], "name")
-    cached = list.dirs(getConfigPath("git"), recursive = FALSE)
-    obsolete = cached[basename(cached) %nin% pkgs]
-
-    if (length(obsolete) > 0L) {
-      messagef("Removing %i obsolete git repos from disc: %s", length(obsolete), collapse(basename(obsolete)))
-      unlink(obsolete, recursive = TRUE)
-    }
+  if (edit) {
+    utils::file.edit(getConfigPath("packages"))
   }
+
   invisible(TRUE)
 }

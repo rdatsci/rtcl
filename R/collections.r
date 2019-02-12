@@ -1,5 +1,16 @@
+#' Path to rt configuration
+#'
+#' @description
+#' Returns the path to the rt configuration files
+#'
+#' @param element [\code{character(1)}]\cr
+#'   Which file whithin the config dir to acess.
+#'   Use \dQuote{.} for the directory itself.
+#'   Uses \code{\link[rappdirs]{user_config_dir}} to determine the path.
+#' @return Returns the path as character.
+#' @export
 getConfigPath = function(element = ".") {
-  normalizePath(file.path("~", ".rt", element), mustWork = FALSE)
+  file.path(rappdirs::user_config_dir("rt", "rdatsci"), element)
 }
 
 getCollectionContents = function(as.packages = FALSE, fn = getConfigPath("packages")) {

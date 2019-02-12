@@ -21,14 +21,12 @@ Invisibly returns \code{TRUE} on success.
 Update packages. This includes multiple steps:
 \itemize{
   \item{1.}{All outdated CRAN packages will be updated.}
-  \item{2.}{If \code{rebuild} is set to \code{TRUE}, all packages which
+  \item{2.}{New packages from \code{\link{getConfigPath}("packages")} will be installed.}
+  \item{3.}{Non-CRAN packages will be updated.}
+  \item{4.}{If \code{rebuild} is set to \code{TRUE}, all packages which
      are built under a different R version will be rebuilt with the current.}
-  \item{3.}{CRAN packages which are listed in \code{~/.rt/packages} but are not
-    found on the system will be installed.}
-  \item{4.}{All packages with a git source listed in \code{~/.rt/packages} will be updated and
-    re-installed if necessary.}
 }
-The collection file \code{~/.rt/packages} expects one package per line specified in a format
+The collection file \code{\link{getConfigPath}("packages")} expects one package per line specified in a format
 which is parseable by \code{\link{stringToPackage}}. Leading and trailing whitespace characters
 will automatically be trimmed. Empty lines and lines starting with a \dQuote{#} will be ignored.
 }

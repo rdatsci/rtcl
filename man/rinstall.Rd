@@ -11,7 +11,7 @@ rinstall(pkgs = character(0L), add = FALSE, ...)
 Strings convertible by \code{\link{stringToPackage}}.}
 
 \item{add}{[\code{logical(1)}]\cr
-Append packages to your \code{~/.rt/packages} file?
+Append packages to your config file in \code{\link{getConfigPath}}.?
 Default is \code{FALSE}.}
 
 \item{...}{[\code{any}]\cr

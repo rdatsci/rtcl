@@ -6,7 +6,9 @@ Authors@R: c(
     person("Michel", "Lang", NULL, "michellang@gmail.com",
       role = c("cre", "aut"), comment = c(ORCID = "0000-0001-9754-0393")),
     person("Dirk", "Surmann", NULL, "surmann@statistik.tu-dortmund.de",
-      role = "ctb", comment = c(ORCID = "0000-0003-0873-137X"))
+      role = "ctb", comment = c(ORCID = "0000-0003-0873-137X")),
+    person("Jakob", "Richter", NULL, "code@jakob-r.de",
+      role = "aut", comment = c(ORCID = "0000-0003-4481-5554"))
     )
 Description: Shipping some command line utilities which
     simplify working with R packages from the command line. Many commands rt
@@ -30,7 +32,8 @@ Imports:
     remotes,
     roxygen2 (>= 5.0.1),
     tools,
-    utils
+    utils,
+    rappdirs
 Suggests:
     codetools,
     covr,

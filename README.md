@@ -89,3 +89,4 @@ rt init
 and then uncomment the respective line with your favorite text editor.
 To add more packages to your collection, see `?rupdate` for a format description of this file.
 Note that packages with a git source will be kept in `~/.rt/git` and only reinstalled if the remote repository has been updated.
+

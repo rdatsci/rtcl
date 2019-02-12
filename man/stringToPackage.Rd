@@ -24,17 +24,17 @@ This function converts the string to one of the following objects:
     \code{pkg} starts with \dQuote{http(s)://} or \dQuote{git@} and ends with \dQuote{.git}.
     Additionally a reference (branch, tag or SHA reference) can be specivied with the prefix \dQuote{@}.
     If the package resides in a subdirectory it can be specified with the prefix \dQuote{/}.
-    Example: \dQuote{http://gitserver.domain/repo.git@branch/subfolder}
+    Example: \dQuote{http://gitserver.domain/repo.git/subfolder@branch}
   }
   \item{PackageGitHub: }{
     \code{pkg} matches the pattern \dQuote{[user]/[repo]}.
     Additional prefixes can be given as for GitPackage (see above).
-    Example: \dQuote{user/repo@branch/subfolder}
+    Example: \dQuote{user/repo/subfolder@branch}
   }
   \item{PackageGitLab: }{
-    \code{pkg} matches the pattern \dQuote{gitlab:[user]/[repo]}.
+    \code{pkg} matches the pattern \dQuote{gitlab:[user]/[repo]} or \dQuote{gitlab:(host):[user]/[repo]}.
     Additional prefixes can be given as for GitPackage (see above).
-    Example: \dQuote{gitlab:user/repo@branch/subfolder}
+    Example: \dQuote{gitlab:(mygitlab.com):user/repo/subfolder@branch}
   }
 }
 }
