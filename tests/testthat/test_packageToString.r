@@ -16,7 +16,7 @@ test_that("packageToString and vice versa", {
   expect_equal(p$name, "checkmate")
   expect_equal(packageToString(p), paste0("github:", s))
 
-  s = "github:mllg/checkmate@v1.8.4"
+  s = "github::mllg/checkmate@v1.8.4"
   p = stringToPackage(s)
   expect_is(p, "Package")
   expect_is(p, "PackageGitHub")
@@ -24,7 +24,7 @@ test_that("packageToString and vice versa", {
   expect_equal(p$name, "checkmate")
   expect_equal(packageToString(p), s)
 
-  s = "github:mllg/checkmate/somewhere/deep@v1.8.4"
+  s = "github::mllg/checkmate/somewhere/deep@v1.8.4"
   p = stringToPackage(s)
   expect_is(p, "Package")
   expect_is(p, "PackageGitHub")
@@ -32,7 +32,7 @@ test_that("packageToString and vice versa", {
   expect_equal(p$name, "checkmate")
   expect_equal(packageToString(p), s)
 
-  s = "github:mllg/checkmate/somewhere/deep"
+  s = "github::mllg/checkmate/somewhere/deep"
   p = stringToPackage(s)
   expect_is(p, "Package")
   expect_is(p, "PackageGitHub")
@@ -40,7 +40,7 @@ test_that("packageToString and vice versa", {
   expect_equal(p$name, "checkmate")
   expect_equal(packageToString(p), s)
 
-  s = "gitlab:(sub.domain.com/dir):mllg/checkmate/somewhere/deep@v1.8.4"
+  s = "gitlab::(sub.domain.com/dir):mllg/checkmate/somewhere/deep@v1.8.4"
   p = stringToPackage(s)
   expect_is(p, "Package")
   expect_is(p, "PackageGitLab")

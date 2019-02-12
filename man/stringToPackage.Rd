@@ -32,9 +32,9 @@ This function converts the string to one of the following objects:
     Example: \dQuote{user/repo/subfolder@branch}
   }
   \item{PackageGitLab: }{
-    \code{pkg} matches the pattern \dQuote{gitlab:[user]/[repo]} or \dQuote{gitlab:(host):[user]/[repo]}.
+    \code{pkg} matches the pattern \dQuote{gitlab::[user]/[repo]} or \dQuote{gitlab::(host):[user]/[repo]}.
     Additional prefixes can be given as for GitPackage (see above).
-    Example: \dQuote{gitlab:(mygitlab.com):user/repo/subfolder@branch}
+    Example: \dQuote{gitlab::(mygitlab.com):user/repo/subfolder@branch}
   }
 }
 }

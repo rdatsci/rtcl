@@ -28,11 +28,11 @@ packageToString.PackageGit = function(pkg) {
 
 #' @export
 packageToString.PackageGitHub = function(pkg) {
-  paste0("github:", pkg$handle)
+  paste0("github::", pkg$handle)
 }
 
 #' @export
 packageToString.PackageGitLab = function(pkg) {
   host = ifelse(is.na(pkg$host), "", sprintf("(%s):", pkg$host))
-  paste0("gitlab:", host, pkg$handle)
+  paste0("gitlab::", host, pkg$handle)
 }
