@@ -9,12 +9,12 @@ test_that("packageToString and vice versa", {
   expect_equal(p$name, "checkmate")
   expect_equal(packageToString(p), s)
 
-  s = "~/checkmate"
+  s = "./assets/package"
   p = stringToPackage(s)
   expect_is(p, "Package")
   expect_is(p, "PackageLocal")
   expect_output(print(p), "PackageLocal")
-  expect_equal(p$name, "checkmate")
+  expect_equal(p$name, "testpkg")
   expect_equal(p$file_path, normalizePath(s))
 
   s = "mllg/checkmate"
