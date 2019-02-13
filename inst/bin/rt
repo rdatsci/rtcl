@@ -4,7 +4,7 @@ library("methods")
 library("rt")
 doc = "
 Usage:
-  rt (init|cleanup)
+  rt [--init --edit]
 Available Commands:
   - 'rbuild' to bundle a local package.
   - 'rcheck' to check a local package.

@@ -8,11 +8,7 @@ for (r_fun in r_functions) {
   test_that(r_fun, {
     fun = get(r_fun)
     # execute
-    if (r_fun == "rcheck") {
-      expect_class(suppressMessages(fun(pkg_path)), "rcmdcheck")
-    } else {
-      expect_true(suppressMessages(fun(pkg_path)))
-    }
+    expect_true(suppressMessages(fun(pkg_path)))
     # cleanup
     if (r_fun %in% c("rmake", "rinstall")) {
       pkg = stringToPackage(pkg_path)

@@ -14,17 +14,17 @@
 #'     \code{pkg} starts with \dQuote{http(s)://} or \dQuote{git@} and ends with \dQuote{.git}.
 #'     Additionally a reference (branch, tag or SHA reference) can be specivied with the prefix \dQuote{@}.
 #'     If the package resides in a subdirectory it can be specified with the prefix \dQuote{/}.
-#'     Example: \dQuote{http://gitserver.domain/repo.git@branch/subfolder}
+#'     Example: \dQuote{http://gitserver.domain/repo.git/subfolder@branch}
 #'   }
 #'   \item{PackageGitHub: }{
 #'     \code{pkg} matches the pattern \dQuote{[user]/[repo]}.
 #'     Additional prefixes can be given as for GitPackage (see above).
-#'     Example: \dQuote{user/repo@branch/subfolder}
+#'     Example: \dQuote{user/repo/subfolder@branch}
 #'   }
 #'   \item{PackageGitLab: }{
-#'     \code{pkg} matches the pattern \dQuote{gitlab:[user]/[repo]}.
+#'     \code{pkg} matches the pattern \dQuote{gitlab::[user]/[repo]} or \dQuote{gitlab::(host):[user]/[repo]}.
 #'     Additional prefixes can be given as for GitPackage (see above).
-#'     Example: \dQuote{gitlab:user/repo@branch/subfolder}
+#'     Example: \dQuote{gitlab::(mygitlab.com):user/repo/subfolder@branch}
 #'   }
 #' }
 #' @param pkg [\code{character(1)} | \code{NULL}]\cr
@@ -76,11 +76,11 @@ isPackageGit = function(xs) {
 }
 
 isPackageGitHub = function(xs) {
-  grepl(pattern = "^(github:)?[[:alnum:]_-]+/[[:alnum:]_.-]+[[:alnum:]/]*(@[[:alnum:]._-]+)?$", x = xs)
+  grepl(pattern = "^(github::)?[[:alnum:]_-]+/[[:alnum:]_.-]+[[:alnum:]/]*(@[[:alnum:]._-]+)?$", x = xs)
 }
 
 isPackageGitLab = function(xs) {
-  grepl(pattern = "^gitlab:(\\([[:alnum:]_.-/]+\\):)?[[:alnum:]_-]+/[[:alnum:]_.-]+[[:alnum:]/]*(@[[:alnum:]._-]+)?$", x = xs)
+  grepl(pattern = "^gitlab::(\\([[:alnum:]_.-/]+\\):)?[[:alnum:]_-]+/[[:alnum:]_.-]+[[:alnum:]/]*(@[[:alnum:]._-]+)?$", x = xs)
 }
 
 asPackageCran = function(xs) {
@@ -104,13 +104,13 @@ asPackageGit = function(xs) {
 }
 
 asPackageGitHub = function(xs) {
-  xs = gsub("^github:", "", x = xs)
+  xs = gsub("^github::", "", x = xs)
   matches = matchRegex(xs, "(?<=/)[[:alnum:]._-]+")[[1]]
   PackageGitHub(name = matches[1], handle = xs)
 }
 
 asPackageGitLab = function(xs) {
-  xs = gsub("^gitlab:", "", x = xs)
+  xs = gsub("^gitlab::", "", x = xs)
   host = matchRegexGroups(xs, "(?<=\\()[[:alnum:]_.-/]+(?=\\):)")[[1]]
   matches =  matchRegexGroups(xs, "([[:alnum:]_-]+/([[:alnum:]_.-]+))([[:alnum:]/]*)(@[[:alnum:]._-]+)?$")[[1]]
   PackageGitLab(name = matches[3], handle = matches[1], host = host)

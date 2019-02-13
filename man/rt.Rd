@@ -4,16 +4,15 @@
 \alias{rt}
 \title{Maintainace operations for rt}
 \usage{
-rt(init = FALSE, cleanup = FALSE)
+rt(init = FALSE, edit = FALSE)
 }
 \arguments{
 \item{init}{[\code{logical(1)}]\cr
-Initialize for first use: create directory \code{~/.rt} and
-create an empty package collection file \code{~/.rt/packages}.}
+Initialize for first use: create directory \code{\link{getConfigPath}} and
+create an empty package collection file \code{getConfigPath("packages")}.}
 
-\item{cleanup}{[\code{logical(1)}]\cr
-Remove git repositories in \code{~/.rt/git} which are not
-referenced in the collection file.}
+\item{edit}{[\code{logical(1)}]\cr
+Edit the \dQuote{packages} file?}
 }
 \value{
 Invisibly returns \code{TRUE} on success.
