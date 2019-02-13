@@ -28,8 +28,8 @@ rupdate = function(rebuild = FALSE, neverupgrade = FALSE) {
   messagef("Checking for outdated packages ...")
   lib = getLibraryPath()
   pkgs = getCollectionContents(as.packages = TRUE)
-  pkgs_df = data.table(
-    rt_pkg = list(pkgs),
+  pkgs_df = data.frame(
+    rt_pkg = I(pkgs),
     rt_name = extract(pkgs, "name"),
     rt_class = vapply(pkgs, function(x) head(class(x), 1), character(1L))
   )
