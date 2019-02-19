@@ -4,7 +4,7 @@
 \alias{rupdate}
 \title{Update packages}
 \usage{
-rupdate(rebuild = FALSE, neverupgrade = FALSE)
+rupdate(rebuild = FALSE, neverupgrade = FALSE, savemode = FALSE)
 }
 \arguments{
 \item{rebuild}{[\code{logical(1)}]\cr
@@ -13,6 +13,10 @@ Rebuild R packages which are built using a different version of R.}
 \item{neverupgrade}{[code{logical(1)}]\cr
 Passed to \code{\link[remotes]{update_packages}} as \code{upgrade = ifelse(neverupgrade, "never", "always")}.
 Default is \dQuote{FALSE} so all dependencies are upgraded.}
+
+\item{savemode}{[code{logical(1)}]\cr
+Works slower but shuld handle most conflicts.
+Might be helpfull after R-Version update or if packages are removed from CRAN.}
 }
 \value{
 Invisibly returns \code{TRUE} on success.

@@ -18,11 +18,15 @@
 #' @param neverupgrade [code{logical(1)}]\cr
 #'  Passed to \code{\link[remotes]{update_packages}} as \code{upgrade = ifelse(neverupgrade, "never", "always")}.
 #'  Default is \dQuote{FALSE} so all dependencies are upgraded.
+#' @param savemode [code{logical(1)}]\cr
+#'  Works slower but shuld handle most conflicts.
+#'  Might be helpfull after R-Version update or if packages are removed from CRAN.
 #' @template return-itrue
 #' @export
-rupdate = function(rebuild = FALSE, neverupgrade = FALSE) {
+rupdate = function(rebuild = FALSE, neverupgrade = FALSE, savemode = FALSE) {
   assertFlag(rebuild)
   assertFlag(neverupgrade)
+  assertFlag(savemode)
   upgrade = ifelse(neverupgrade, "never", "always")
 
   messagef("Checking for outdated packages ...")
@@ -37,7 +41,7 @@ rupdate = function(rebuild = FALSE, neverupgrade = FALSE) {
   pkgs_df$installed = pkgs_df$rt_name %in% pkgs_installed_names
   pkgs_df$meta = Map(getMeta, pkgs_df$rt_name, pkgs_df$installed)
   pkgs_df$meta_class = vapply(pkgs_df$meta, getMetaType, character(1L))
-  pkgs_df$rebuild = FALSE
+  pkgs_df$rebuild = logical(nrow(pkgs_df)) # FALSE for all with support of nrow = 0
 
   # first we do the rebuild because we might not be able to update with broken packages
   if (rebuild) {
@@ -67,10 +71,35 @@ rupdate = function(rebuild = FALSE, neverupgrade = FALSE) {
     rinstall(pkgs_df[pkgs_df$force_install == TRUE,]$rt_pkg, upgrade = upgrade, force = TRUE)
   }
 
+
   messagef("Auto update packages...")
   pkgs_df$exclude_from_auto_update = pkgs_df$force_install == TRUE | pkgs_df$rt_class != "PackageCran"
   pkgs_to_auto_update = setdiff(pkgs_installed_names, pkgs_df[pkgs_df$exclude_from_auto_update == TRUE, ]$rt_name)
-  remotes::update_packages(packages = pkgs_to_auto_update, dependencies = TRUE, upgrade = upgrade)
+  if (!savemode) {
+    tryCatch({
+      remotes::update_packages(packages = pkgs_to_auto_update, upgrade = upgrade)
+    }, error = function(e) {
+      stop("remotes::update_packages failed with error:", "\n", as.character(e), "\n", "You can try to call rupdate with savemode.")
+    })
+  } else {
+    messagef("Update each package step by step in safemode...")
+    error_stack = list()
+    for (pkg_this in pkgs_to_auto_update) {
+      message("Package: ", pkg_this, appendLF = FALSE)
+      tryCatch({
+        remotes::update_packages(pkg_this, upgrade = upgrade)
+      }, error = function(e) {
+        er = as.character(e)
+        message(substr(er, 0, 25), "...", matchRegex(er, ".{1,25}$")[[1]], appendLF = FALSE)
+        error_stack <<- c(error_stack, list(list(package = pkg_this, error = er)))
+      })
+      message("")
+    }
+    if (length(error_stack)>0) {
+      stop("Failed with the following errors:", "\n", paste0(extract(error_stack, "package"), ": ", extract(error_stack, "error"), collapse = "\n"))
+    }
+  }
+
 
   # install packages that have not been update by above line
   # these are a) cran packages from the collection and b) all remote packages
