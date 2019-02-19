@@ -50,7 +50,7 @@ updatePackageAttributes = function(path = ".") {
   if (!is.na(desc$get("LinkingTo")) && "Rcpp" %in% desc$get_deps()$package) {
     messagef("Updating Rcpp compile attributes")
     requireNamespace("Rcpp")
-    Rcpp::compileAttributes(path = path, verbose = TRUE)
+    Rcpp::compileAttributes(path, verbose = TRUE)
   }
 }
 
