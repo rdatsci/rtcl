@@ -11,15 +11,16 @@
 #' @export
 rmake = function(path = getwd(), ...) {
   pkgname = pkgload::pkg_name(path = path)
+  pkgdir = pkgload::pkg_path(path = path)
 
   updatePackageAttributes(path = path)
 
-  messagef("Checking dependencies for '%s' in '%s'", pkgname, pkgload::pkg_path(path = path))
-  remotes::install_deps(pkgdir = path, dependencies = TRUE, lib = getLibraryPath())
+  messagef("Checking dependencies for '%s' in '%s'", pkgname, pkgdir)
+  remotes::install_deps(pkgdir = pkgdir, dependencies = TRUE, lib = getLibraryPath())
 
 
   messagef("Installing package '%s'", pkgname)
-  remotes::install_local(path = path, force = TRUE, ...)
+  remotes::install_local(path = pkgdir, force = TRUE, ...)
   messagef("Package '%s' has been installed to '%s'", pkgname, getLibraryPath())
   invisible(TRUE)
 }
