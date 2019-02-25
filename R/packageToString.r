@@ -36,3 +36,13 @@ packageToString.PackageGitLab = function(pkg) {
   host = ifelse(is.na(pkg$host), "", sprintf("(%s):", pkg$host))
   paste0("gitlab::", host, pkg$handle)
 }
+
+#' @export
+packageToString.PackageBitbucket = function(pkg) {
+  paste0("bitbucket::", pkg$handle)
+}
+
+#' @export
+packageToString.PackageBioc = function(pkg) {
+  paste0("bioc::", pkg$handle)
+}

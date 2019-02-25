@@ -72,3 +72,28 @@ print.PackageGitLab = function(x, ...) {
   cat("Host:", x$host, "\n")
   cat("Handle:", x$handle, "\n")
 }
+
+## Bitbucket Package
+PackageBitbucket = function(name, handle) {
+  pkg = Package(name)
+  pkg$handle = handle #orga/repo/subdir@ref
+  addClasses(pkg, "PackageBitbucket")
+}
+
+print.PackageBitbucket = function(x, ...) {
+  NextMethod()
+  cat("Handle:", x$handle, "\n")
+}
+
+## Bioc Package
+PackageBioc = function(name, handle) {
+  pkg = Package(name)
+  pkg$handle = handle #[username:password@][release/]repo[#commit]
+  addClasses(pkg, "PackageBioc")
+}
+
+print.PackageBioc = function(x, ...) {
+  NextMethod()
+  cat("Handle:", x$handle, "\n")
+}
+

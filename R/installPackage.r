@@ -31,3 +31,13 @@ installPackage.PackageGitHub = function(pkg, ...) {
 installPackage.PackageGitLab = function(pkg, ...) {
   remotes::install_gitlab(repo = pkg$handle, host = pkg$host, ...)
 }
+
+#' @export
+installPackage.PackageBitbucket = function(pkg, ...) {
+  remotes::install_bitbucket(repo = pkg$handle, ...)
+}
+
+#' @export
+installPackage.PackageBioc = function(pkg, ...) {
+  remotes::install_bioc(repo = pkg$handle, ...)
+}

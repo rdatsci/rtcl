@@ -34,28 +34,28 @@ test_that("packageToString and vice versa", {
   expect_equal(p$name, "checkmate")
   expect_equal(packageToString(p), s)
 
-  s = "github::mllg/checkmate/somewhere/deep@v1.8.4"
+  s = "github::mllg/checkmate/some_where/deep@v1.8.4"
   p = stringToPackage(s)
   expect_is(p, "Package")
   expect_is(p, "PackageGitHub")
-  expect_equal(p$handle, "mllg/checkmate/somewhere/deep@v1.8.4")
+  expect_equal(p$handle, "mllg/checkmate/some_where/deep@v1.8.4")
   expect_equal(p$name, "checkmate")
   expect_equal(packageToString(p), s)
 
-  s = "github::mllg/checkmate/somewhere/deep"
+  s = "github::mllg/checkmate/some_where/deep"
   p = stringToPackage(s)
   expect_is(p, "Package")
   expect_is(p, "PackageGitHub")
-  expect_equal(p$handle, "mllg/checkmate/somewhere/deep")
+  expect_equal(p$handle, "mllg/checkmate/some_where/deep")
   expect_equal(p$name, "checkmate")
   expect_equal(packageToString(p), s)
 
-  s = "gitlab::(sub.domain.com/dir):mllg/checkmate/somewhere/deep@v1.8.4"
+  s = "gitlab::(sub.domain.com/dir):mllg/checkmate/some_where/deep@v1.8.4"
   p = stringToPackage(s)
   expect_is(p, "Package")
   expect_is(p, "PackageGitLab")
   expect_output(print(p), "PackageGitLab")
-  expect_equal(p$handle, "mllg/checkmate/somewhere/deep@v1.8.4")
+  expect_equal(p$handle, "mllg/checkmate/some_where/deep@v1.8.4")
   expect_equal(p$name, "checkmate")
   expect_equal(p$host, "sub.domain.com/dir")
   expect_equal(packageToString(p), s)
@@ -72,24 +72,40 @@ test_that("packageToString and vice versa", {
   expect_equal(p$subdir, "")
   expect_equal(packageToString(p), s)
 
-  s = "https://github.com/mllg/checkmate.git/somewhere/deep@v1.8.4"
+  s = "https://github.com/mllg/checkmate.git/some_where/deep@v1.8.4"
   p = stringToPackage(s)
   expect_is(p, "Package")
   expect_is(p, "PackageGit")
   expect_equal(p$repo, "https://github.com/mllg/checkmate.git")
   expect_equal(p$name, "checkmate")
   expect_equal(p$ref, "v1.8.4")
-  expect_equal(p$subdir, "somewhere/deep")
+  expect_equal(p$subdir, "some_where/deep")
   expect_equal(packageToString(p), s)
 
-  s = "https://github.com/mllg/checkmate.git/somewhere/deep"
+  s = "https://github.com/mllg/checkmate.git/some_where/deep"
   p = stringToPackage(s)
   expect_is(p, "Package")
   expect_is(p, "PackageGit")
   expect_equal(p$repo, "https://github.com/mllg/checkmate.git")
   expect_equal(p$name, "checkmate")
   expect_equal(p$ref, "")
-  expect_equal(p$subdir, "somewhere/deep")
+  expect_equal(p$subdir, "some_where/deep")
+  expect_equal(packageToString(p), s)
+
+  s = "bitbucket::mllg/checkmate/some_where/deep@v1.8.4"
+  p = stringToPackage(s)
+  expect_is(p, "Package")
+  expect_is(p, "PackageBitbucket")
+  expect_equal(p$handle, "mllg/checkmate/some_where/deep@v1.8.4")
+  expect_equal(p$name, "checkmate")
+  expect_equal(packageToString(p), s)
+
+  s = "bioc::admin:admin@v1.8.4/checkmate#commit123"
+  p = stringToPackage(s)
+  expect_is(p, "Package")
+  expect_is(p, "PackageBioc")
+  expect_equal(p$handle, "admin:admin@v1.8.4/checkmate#commit123")
+  expect_equal(p$name, "checkmate")
   expect_equal(packageToString(p), s)
 
   expect_error(stringToPackage("http://checkmate.de"), "unknown")

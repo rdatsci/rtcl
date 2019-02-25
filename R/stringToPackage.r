@@ -40,7 +40,9 @@ stringToPackage = function(pkg) {
     Local = isPackageLocal,
     Git = isPackageGit,
     GitHub = isPackageGitHub,
-    GitLab = isPackageGitLab
+    GitLab = isPackageGitLab,
+    Bitbucket = isPackageBitbucket,
+    Bioc = isPackageBioc
   )
 
   check_res = vapply(funs, function(x) x(pkg), logical(1))
@@ -57,6 +59,8 @@ stringToPackage = function(pkg) {
     "Git"  = asPackageGit(pkg),
     "GitHub"  = asPackageGitHub(pkg),
     "GitLab"  = asPackageGitLab(pkg),
+    "Bitbucket"  = asPackageBitbucket(pkg),
+    "Bioc" = asPackageBioc(pkg),
     stop("Unknown package type: ", which(check_res))
   )
 }
@@ -72,15 +76,23 @@ isPackageLocal = function(xs) {
 }
 
 isPackageGit = function(xs) {
-  grepl(pattern = "^(git@|http(s)?://).+\\.git[[:alnum:]/]*(@[[:alnum:]._-]+)?$", x = xs)
+  grepl(pattern = "^(git@|http(s)?://).+\\.git[[:alnum:]_/-]*(@[[:alnum:]._-]+)?$", x = xs)
 }
 
 isPackageGitHub = function(xs) {
-  grepl(pattern = "^(github::)?[[:alnum:]_-]+/[[:alnum:]_.-]+[[:alnum:]/]*(@[[:alnum:]._-]+)?$", x = xs)
+  grepl(pattern = "^(github::)?[[:alnum:]_-]+/[[:alnum:]_.-]+[[:alnum:]_/-]*(@[[:alnum:]._-]+)?$", x = xs)
 }
 
 isPackageGitLab = function(xs) {
-  grepl(pattern = "^gitlab::(\\([[:alnum:]_.-/]+\\):)?[[:alnum:]_-]+/[[:alnum:]_.-]+[[:alnum:]/]*(@[[:alnum:]._-]+)?$", x = xs)
+  grepl(pattern = "^gitlab::(\\([[:alnum:]_.-/]+\\):)?[[:alnum:]_-]+/[[:alnum:]_.-]+[[:alnum:]_/-]*(@[[:alnum:]._-]+)?$", x = xs)
+}
+
+isPackageBitbucket = function(xs) {
+  grepl(pattern = "^bitbucket::?[[:alnum:]_-]+/[[:alnum:]_.-]+[[:alnum:]_/-]*(@[[:alnum:]._-]+)?$", x = xs)
+}
+
+isPackageBioc = function(xs) {
+  grepl(pattern = "^bioc::(.+@)?([[:alnum:]._-]+/)?[[:alnum:]_-]+(#[[:alnum:]._-]+)?$", x = xs)
 }
 
 asPackageCran = function(xs) {
@@ -94,7 +106,7 @@ asPackageLocal = function(xs) {
 }
 
 asPackageGit = function(xs) {
-  matches = matchRegexGroups(xs, "^(.+\\.git)/?([[:alnum:]/]+)?@?([[:alnum:]._-]+)?$")[[1]]
+  matches = matchRegexGroups(xs, "^(.+\\.git)/?([[:alnum:]_/-]+)?@?([[:alnum:]._-]+)?$")[[1]]
   PackageGit(
     name =  matchRegex(matches[2], "[[:alnum:]._-]+(?=\\.git$)")[[1]],
     repo =  matches[2],
@@ -112,8 +124,20 @@ asPackageGitHub = function(xs) {
 asPackageGitLab = function(xs) {
   xs = gsub("^gitlab::", "", x = xs)
   host = matchRegexGroups(xs, "(?<=\\()[[:alnum:]_.-/]+(?=\\):)")[[1]]
-  matches =  matchRegexGroups(xs, "([[:alnum:]_-]+/([[:alnum:]_.-]+))([[:alnum:]/]*)(@[[:alnum:]._-]+)?$")[[1]]
+  matches =  matchRegexGroups(xs, "([[:alnum:]_-]+/([[:alnum:]_.-]+))([[:alnum:]_/-]*)(@[[:alnum:]._-]+)?$")[[1]]
   PackageGitLab(name = matches[3], handle = matches[1], host = host)
+}
+
+asPackageBitbucket = function(xs) {
+  xs = gsub("^bitbucket::", "", x = xs)
+  matches = matchRegex(xs, "(?<=/)[[:alnum:]._-]+")[[1]]
+  PackageBitbucket(name = matches[1], handle = xs)
+}
+
+asPackageBioc = function(xs) {
+  xs = gsub("^bioc::", "", x = xs)
+  matches = matchRegexGroups(xs, "^(.+@)?([[:alnum:]._-]+/)?([[:alnum:]_-]+)(#[[:alnum:]._-]+)?$")[[1]]
+  PackageBioc(name = matches[4], handle = xs)
 }
 
 
