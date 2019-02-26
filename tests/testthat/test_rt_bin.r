@@ -1,7 +1,7 @@
 context("rt bin")
 
 test_that("rt bin executables make sense", {
-  files = list.files(file.path("..", "..", "inst", "bin"), full.names = TRUE)
+  files = list.files(system.file("bin", package = "rt"), full.names = TRUE)
   expect_true(length(files) > 1)
   for (file in files) {
     lines = readLines(file)
