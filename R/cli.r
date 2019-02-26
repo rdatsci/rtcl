@@ -1,15 +1,11 @@
-cli.call = function(fun, doc, args = commandArgs(TRUE), quit = !interactive()) {
+cli.call = function(fun, doc, args = commandArgs(TRUE)) {
   fun = get(fun, mode = "function", envir = getNamespace("rt"))
 
   tryCatch({
     x = docopt::docopt(doc, args = args, strict = TRUE, quoted_args = TRUE)
   }, error = function(e) {
-    if (quit) {
-      cat(e$message, "\n", file = stderr())
-      quit(save = "no", status = 1L)
-    } else {
-      stop(e)
-    }
+    cat(e$message, "\n", file = stderr())
+    quit(save = "no", status = 1L)
   })
 
   x = x[!vlapply(x, is.null)]
@@ -20,15 +16,9 @@ cli.call = function(fun, doc, args = commandArgs(TRUE), quit = !interactive()) {
   tryCatch({
     do.call(fun, x)
   }, error = function(e) {
-    if (quit) {
-      cat(crayon::red(sprintf("Error: %s\n", e$message)), file = stderr())
-      quit(save = "no", status = 2L)
-    } else {
-      stop(e)
-    }
+    cat(crayon::red(sprintf("Error: %s\n", e$message)), file = stderr())
+    quit(save = "no", status = 2L)
   })
 
-  if (quit) { #for testing we do not want to quit
-    quit(save = "no", status = 0L)
-  }
+  quit(save = "no", status = 0L)
 }
