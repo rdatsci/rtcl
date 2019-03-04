@@ -39,7 +39,7 @@ updatePackageAttributes = function(path = ".") {
   assertDirectoryExists(path)
   path = pkgload::pkg_path(path)
 
-  pkgload::load_all(path) #FIXME What is the purpose of this?
+  pkgload::load_all(path) #recompiles, generates o files
   desc = pkgload::pkg_desc(path = path)
 
   if (!is.na(desc$get("RoxygenNote"))) {
