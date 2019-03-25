@@ -26,14 +26,13 @@ rknit = function(file, output_format = NULL, ...) {
       stop(sprintf("Output format %s ambiguous. Supported are the following: %s", output_format, paste(supported_formats, collapse = ", ")))
     }
   }
-  requireNamespace("knitr")
 
   file_type = tolower(file_ext(file))
 
   if (file_type == "rnw") {
-    knitr_file = knitr::knit2pdf(file, ...)
+    knitr_file = knitr::knit2pdf(file, envir = globalenv(), ...)
   } else if (file_type == "rmd") {
-    rmarkdown::render(file, output_format = output_format, output_dir = getwd(),...)
+    rmarkdown::render(file, output_format = output_format, output_dir = getwd(), envir = globalenv(), ...)
   } else {
     stop(sprintf("File type %s is not supported", file_type))
   }
