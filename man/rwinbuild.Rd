@@ -21,6 +21,5 @@ Upload to check against the R-oldrelease branch instead of the stable branch.}
 Invisibly returns \code{TRUE} on success.
 }
 \description{
-Uploads a package located in \code{path} to the winbuilder service. Uses
-\code{\link[devtools]{build_win}} internally.
+Upload package to winbuilder
 }
