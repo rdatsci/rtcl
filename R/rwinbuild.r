@@ -2,7 +2,7 @@
 #'
 #' @description
 #' Uploads a package located in \code{path} to the winbuilder service.
-#' Uses \code{\link[devtools]{check_win_release}}, \code{\link[devtools]{check_win_devel}} or \code{\link[devtools]{check_win_oldrelease} internally.
+#' Uses \code{\link[devtools]{check_win_release}}, \code{\link[devtools]{check_win_devel}} or \code{\link[devtools]{check_win_oldrelease}} internally.
 #'
 #' @template path
 #' @param devel [\code{logical(1)}]\cr
@@ -19,23 +19,7 @@ rwinbuild = function(path = getwd(), devel = FALSE, oldrel = FALSE) {
     stop("Just enable devel OR oldrel at the same time.")
   }
 
-  # change maintainer temporarily
-  maintainer = getOption("rt.maintainer", NULL)
-  if (!is.null(maintainer)) {
-    desc = read.dcf(file.path(path, "DESCRIPTION"))
-    if ("Maintainer" %in% colnames(desc)) {
-      desc[1L, "Maintainer"] = maintainer
-    } else {
-      desc = cbind(desc, Maintainer = maintainer)
-    }
-
-    new_path = file.path(tempfile("tmp-package"), basename(path))
-    if (!dir.create(dirname(new_path), recursive = TRUE) || !file.copy(path, dirname(new_path), recursive = TRUE)) {
-      stop(sprintf("Unable to copy package to %s", path))
-    }
-    write.dcf(desc, file = file.path(new_path, "DESCRIPTION"))
-    path = new_path
-  }
+  path = changeMaintainer(path)
 
   messagef("Building package in '%s' and uploading to winbuilder", path)
 

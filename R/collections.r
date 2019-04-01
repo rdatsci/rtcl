@@ -15,10 +15,9 @@ getConfigPath = function(element = ".") {
 
 getCollectionContents = function(as.packages = FALSE, fn = getConfigPath("packages")) {
   assertFlag(as.packages)
-  if (!file.exists(fn))
+  pkgs = readConfigLines(fn)
+  if (is.null(pkgs))
     return(character(0L))
-  pkgs = trimws(readLines(fn))
-  pkgs = pkgs[nzchar(pkgs) & !startsWith(pkgs, "#")]
   if (as.packages) {
     pkgs = lapply(pkgs, stringToPackage)
     names(pkgs) = extract(pkgs, "name")

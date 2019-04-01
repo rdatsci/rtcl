@@ -5,8 +5,11 @@
 #'  create an empty package collection file \code{getConfigPath("packages")}.
 #' @param edit [\code{logical(1)}]\cr
 #'  Edit the \dQuote{packages} file?
+#' @param maintainer [\code{logical(1)}]\cr
+#'  Set a default maintainer to be used with \code{\link{rwinbuild}} and \code{\link{rhub}} e.g. \dQuote{Joe Developer <Joe.Developer@some.domain.net>}.
+#'  Opens an editor.
 #' @template return-itrue
-rt = function(init = FALSE, edit = FALSE) {
+rt = function(init = FALSE, edit = FALSE, maintainer = FALSE) {
   assertFlag(init)
   assertFlag(edit)
 
@@ -25,6 +28,15 @@ rt = function(init = FALSE, edit = FALSE) {
 
   if (edit) {
     utils::file.edit(getConfigPath("packages"))
+  }
+
+  if (maintainer) {
+    fn = getConfigPath("maintainer")
+    if (!file.exists(fn)) {
+      assertString(maintainer, pattern = ".* <.*@.*>")
+      writeLines(c("## Maintainer", "# Joe Developer <Joe.Developer@some.domain.net>"), con = fn)
+    }
+    utils::file.edit(fn)
   }
 
   invisible(TRUE)

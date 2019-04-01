@@ -4,7 +4,7 @@
 \alias{rt}
 \title{Maintainace operations for rt}
 \usage{
-rt(init = FALSE, edit = FALSE)
+rt(init = FALSE, edit = FALSE, maintainer = FALSE)
 }
 \arguments{
 \item{init}{[\code{logical(1)}]\cr
@@ -13,6 +13,10 @@ create an empty package collection file \code{getConfigPath("packages")}.}
 
 \item{edit}{[\code{logical(1)}]\cr
 Edit the \dQuote{packages} file?}
+
+\item{maintainer}{[\code{logical(1)}]\cr
+Set a default maintainer to be used with \code{\link{rwinbuild}} and \code{\link{rhub}} e.g. \dQuote{Joe Developer <Joe.Developer@some.domain.net>}.
+Opens an editor.}
 }
 \value{
 Invisibly returns \code{TRUE} on success.

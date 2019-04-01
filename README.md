@@ -84,9 +84,14 @@ After sourcing this file (or after a re-login) you should be all set to use *rt*
 To keep *rt* updated, you can let it maintain itself via `rupdate` by adding it to your collection file `~/.rt/packages`.
 To do this, first initialize an empty collection with
 ```sh
-rt init
+rt --init
 ```
 and then uncomment the respective line with your favorite text editor.
 To add more packages to your collection, see `?rupdate` for a format description of this file.
-Note that packages with a git source will be kept in `~/.rt/git` and only reinstalled if the remote repository has been updated.
+
+#### rwinbuild and rhub: maintainer
+If you want to check packages on rhub or with the winbuilder that are not yours, you have to change the maintainer temporarily.
+`rt` does that for you if you configure your maintainer details in `~/.rt/maintainer`.
+You can do so by calling `rt --maintainer`
+
 

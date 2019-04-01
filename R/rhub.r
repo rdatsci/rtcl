@@ -16,6 +16,8 @@ rhub = function(platform = NULL, checkforcran = FALSE, path = getwd()) {
   assertSubset(platform, rhub::platforms()$name)
 
   pkgpath = pkgload::pkg_path(path = path)
+  pkgpath = changeMaintainer(pkgpath)
+
   if (checkforcran) {
     rhub::check_for_cran(pkgpath, platform = platform)
   } else {

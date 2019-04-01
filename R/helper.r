@@ -71,3 +71,33 @@ matchRegexGroups = function(str, pattern, ...) {
   reg_match = regexec(pattern =  pattern, text = str, perl = TRUE, ...)
   regmatches(x = str, m = reg_match)
 }
+
+changeMaintainer = function(path) {
+  # change maintainer temporarily
+  maintainer_opt = getOption("rt.maintainer", NULL)
+  maintainer_conf = readConfigLines(getConfigPath("maintainer"))
+  maintainer = maintainer_conf %??% maintainer_opt
+  if (!is.null(maintainer)) {
+    desc = read.dcf(file.path(path, "DESCRIPTION"))
+    if ("Maintainer" %in% colnames(desc)) {
+      desc[1L, "Maintainer"] = maintainer
+    } else {
+      desc = cbind(desc, Maintainer = maintainer)
+    }
+
+    new_path = file.path(tempfile("tmp-package"), basename(path))
+    if (!dir.create(dirname(new_path), recursive = TRUE) || !file.copy(path, dirname(new_path), recursive = TRUE)) {
+      stop(sprintf("Unable to copy package to %s", path))
+    }
+    write.dcf(desc, file = file.path(new_path, "DESCRIPTION"))
+    path = new_path
+  }
+  return(path)
+}
+
+readConfigLines = function(path) {
+  if (!file.exists(path))
+    return(NULL)
+  res = trimws(readLines(path))
+  res[nzchar(res) & !startsWith(res, "#")]
+}
