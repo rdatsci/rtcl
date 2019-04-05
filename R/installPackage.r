@@ -29,7 +29,7 @@ installPackage.PackageGitHub = function(pkg, ...) {
 
 #' @export
 installPackage.PackageGitLab = function(pkg, ...) {
-  remotes::install_gitlab(repo = pkg$handle, host = pkg$host, ...)
+  remotes::install_gitlab(repo = pkg$handle, host = nanz2null(pkg$host), ...)
 }
 
 #' @export
