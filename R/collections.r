@@ -4,7 +4,7 @@
 #' Returns the path to the rt configuration files
 #'
 #' @param element [\code{character(1)}]\cr
-#'   Which file whithin the config dir to acess.
+#'   Which file within the configuration directory to access.
 #'   Use \dQuote{.} for the directory itself.
 #'   Uses \code{\link[rappdirs]{user_config_dir}} to determine the path.
 #' @return Returns the path as character.

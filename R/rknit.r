@@ -30,7 +30,7 @@ rknit = function(file, output_format = NULL, ...) {
   file_type = tolower(file_ext(file))
 
   if (file_type == "rnw") {
-    knitr_file = knitr::knit2pdf(file, envir = globalenv(), ...)
+    knitr::knit2pdf(file, envir = globalenv(), ...)
   } else if (file_type == "rmd") {
     rmarkdown::render(file, output_format = output_format, output_dir = getwd(), envir = globalenv(), ...)
   } else {

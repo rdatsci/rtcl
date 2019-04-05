@@ -22,7 +22,7 @@ This function converts the string to one of the following objects:
   }
   \item{PackageGit: }{
     \code{pkg} starts with \dQuote{http(s)://} or \dQuote{git@} and ends with \dQuote{.git}.
-    Additionally a reference (branch, tag or SHA reference) can be specivied with the prefix \dQuote{@}.
+    Additionally a reference (branch, tag or SHA reference) can be specified with the prefix \dQuote{@}.
     If the package resides in a subdirectory it can be specified with the prefix \dQuote{/}.
     Example: \dQuote{http://gitserver.domain/repo.git/subfolder@branch}
   }

@@ -15,8 +15,8 @@ Passed to \code{\link[remotes]{update_packages}} as \code{upgrade = ifelse(never
 Default is \dQuote{FALSE} so all dependencies are upgraded.}
 
 \item{savemode}{[code{logical(1)}]\cr
-Works slower but shuld handle most conflicts.
-Might be helpfull after R-Version update or if packages are removed from CRAN.}
+Works slower but should handle most conflicts.
+Might be helpful after R-Version update or if packages are removed from CRAN.}
 }
 \value{
 Invisibly returns \code{TRUE} on success.
