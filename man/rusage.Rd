@@ -15,5 +15,5 @@ the current directory and up to two parent directories.}
 Invisibly returns \code{TRUE} on success.
 }
 \description{
-Checks the package using \code{\link[codetools]{checkUsagePackage}}
+Checks the package using \code{\link[codetools:checkUsage]{checkUsagePackage}}
 }
