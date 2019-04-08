@@ -14,9 +14,9 @@ rmake = function(path = getwd(), ...) {
   pkgdir = pkgload::pkg_path(path = path)
 
   messagef("Checking dependencies for '%s' in '%s'", pkgname, pkgdir)
-  remotes::install_deps(pkgdir = path, dependencies = TRUE, lib = getLibraryPath())
+  remotes::install_deps(pkgdir = pkgdir, dependencies = TRUE, lib = getLibraryPath())
 
-  updatePackageAttributes(path = path)
+  updatePackageAttributes(path = pkgdir)
 
   messagef("Installing package '%s'", pkgname)
   remotes::install_local(path = pkgdir, force = TRUE, ...)
