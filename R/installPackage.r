@@ -19,7 +19,7 @@ installPackage.PackageCran = function(pkg, ...) {
 
 #' @export
 installPackage.PackageGit = function(pkg, ...) {
-  remotes::install_git(url = pkg$repo, ref = nanz2null(pkg$ref), subdir = nanz2null(pkg$subdir), ...)
+  remotes::install_git(url = pkg$repo, ref = coalesceString(pkg$ref), subdir = coalesceString(pkg$subdir), ...)
 }
 
 #' @export
@@ -29,7 +29,7 @@ installPackage.PackageGitHub = function(pkg, ...) {
 
 #' @export
 installPackage.PackageGitLab = function(pkg, ...) {
-  remotes::install_gitlab(repo = pkg$handle, host = nanz2null(pkg$host), ...)
+  remotes::install_gitlab(repo = pkg$handle, host = coalesceString(pkg$host, "gitlab.com"), ...)
 }
 
 #' @export

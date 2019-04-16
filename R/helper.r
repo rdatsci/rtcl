@@ -54,9 +54,9 @@ updatePackageAttributes = function(path = ".") {
   }
 }
 
-nanz2null = function(x) {
+coalesceString = function(x, to = NULL) {
   if (is.null(x) || is.na(x) || all(!nzchar(x))) {
-    NULL
+    to
   } else {
     x
   }

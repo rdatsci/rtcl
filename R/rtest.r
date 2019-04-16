@@ -19,7 +19,7 @@ rtest = function(path = getwd(), filter = NULL) {
   messagef("Testing package '%s'", pkgname)
   assertString(filter, null.ok = TRUE)
   testpath = file.path(path, "tests", "testthat")
-  res = as.data.frame(testthat::test_dir(path = testpath, filter = nanz2null(filter)))
+  res = as.data.frame(testthat::test_dir(path = testpath, filter = coalesceString(filter)))
   if (sum(res$failed) > 0) {
     return(invisible(FALSE))
   } else {
