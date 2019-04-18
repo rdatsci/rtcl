@@ -8,7 +8,8 @@
 #'   }
 #'   \item{PackageLocal: }{
 #'     \code{pkg} points to an existing directory.
-#'     Has to start with \dQuote{./}, \dQuote{../}, \dQuote{~/}, \dQuote{/} or \dQuote{X:/}.
+#'     Path to local directory and starts with \dQuote{./}, \dQuote{../}, \dQuote{~/}, \dQuote{/} or \dQuote{X:/}.
+#'     Or path to a compressed file (tar, zip, tar.gz, tar.bz2, tgz or tbz)
 #'   }
 #'   \item{PackageGit: }{
 #'     \code{pkg} starts with \dQuote{http(s)://} or \dQuote{git@} and ends with \dQuote{.git}.
@@ -72,7 +73,12 @@ isPackageCran = function(xs) {
 
 isPackageLocal = function(xs) {
   # FIXME: Windows?
-  grepl(pattern = "^(\\/|\\.{1,2}\\/|~\\/|[A-Z]:/).+$", x = xs) & dir.exists(xs)
+  is.path = grepl(pattern = "^(\\/|\\.{1,2}\\/|~\\/|[A-Z]:/).+$", x = xs)
+  is.file = grepl(pattern = ".*\\.(tar|zip|tar.gz|tar.bz2|tgz|tbz)$", x = xs)
+  if ((is.file || is.path) && !(file.exists(xs) || dir.exists(xs))) {
+    warning("Local package detected, but location at path does not exist!")
+  }
+  (is.path && dir.exists(xs)) || (is.file && file.exists(xs))
 }
 
 isPackageGit = function(xs) {
@@ -100,9 +106,14 @@ asPackageCran = function(xs) {
 }
 
 asPackageLocal = function(xs) {
-  if (!dir.exists(xs))
-    stop(sprintf("'%s' must point to an existing directory for a local package", xs))
-  PackageLocal(name = readPackageName(xs), file_path = xs)
+  if (!dir.exists(xs) && !file.exists(xs))
+    stop(sprintf("'%s' must point to an existing directory or file for a local package", xs))
+  if (dir.exists(xs)) {
+    name = readPackageName(xs)
+  } else {
+    name = matchRegex(xs, "(?<=/)[[:alnum:]._-]+(?=_[0-9])")[[1]]
+  }
+  PackageLocal(name = name, file_path = xs)
 }
 
 asPackageGit = function(xs) {

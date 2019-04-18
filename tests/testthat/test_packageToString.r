@@ -17,6 +17,17 @@ test_that("packageToString and vice versa", {
   expect_equal(p$name, "testpkg")
   expect_equal(p$file_path, normalizePath(s))
 
+  rbuild(s)
+  s = "./assets/testpkg_1.0.tar.gz"
+  on.exit(unlink(s))
+  p = stringToPackage(s)
+  expect_is(p, "Package")
+  expect_is(p, "PackageLocal")
+  expect_output(print(p), "PackageLocal")
+  expect_equal(p$name, "testpkg")
+  expect_equal(p$file_path, normalizePath(s))
+  unlink(s)
+
   s = "mllg/checkmate"
   p = stringToPackage(s)
   expect_is(p, "Package")
