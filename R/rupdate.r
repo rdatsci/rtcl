@@ -29,7 +29,6 @@ rupdate = function(rebuild = FALSE, neverupgrade = FALSE, savemode = FALSE) {
   assertFlag(savemode)
   upgrade = ifelse(neverupgrade, "never", "always")
 
-  lib = getLibraryPath()
   pkgs = getCollectionContents(as.packages = TRUE)
   pkgs_df = data.frame(
     rt_pkg = I(pkgs),
@@ -100,6 +99,7 @@ rupdate2 = function(x) {
   # Collect information about r packages in rt config
   messagef("Checking for outdated packages ...")
 
+  lib = getLibraryPath()
   pkgs_df = x$pkgs_df
 
   # ... and about installed r packages
