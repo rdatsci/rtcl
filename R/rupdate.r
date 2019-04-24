@@ -37,11 +37,14 @@ rupdate = function(rebuild = FALSE, neverupgrade = FALSE, savemode = FALSE) {
     status = rep(NA_character_, length(pkgs)),
     stringsAsFactors = FALSE
   )
+  pkgs_df$Package = pkgs_df$rt_name
 
   x = list(done = FALSE, rebuild = rebuild, upgrade = upgrade, savemode = savemode, pkgs_df = pkgs_df, step = 0)
-  while (!x$done | x$step < 100) {
+  messagef("Checking for outdated packages ...")
+  while (!x$done & x$step < 100) {
     x = rupdate2(x)
   }
+  messagef("Everything up to date!")
   invisible(x$done)
 }
 
@@ -87,7 +90,7 @@ rupdate_result = function(x, pkgs_df, done = FALSE) {
 merge_left_overwrites = function(x, y, by = "Package" , protect = "status") {
   update_columns = setdiff(colnames(y), protect)
   constant_columns = c(by, setdiff(colnames(x), update_columns))
-  merge(x = x[, constant_columns, drop = FALSE], y = y[, update_columns, drop = FALSE], all.x = TRUE, all.y = TRUE, by = by)
+  z = merge(x = x[, constant_columns, drop = FALSE], y = y[, update_columns, drop = FALSE], all.x = TRUE, all.y = TRUE, by = by)
 }
 
 built_compare = function(x) {
@@ -97,8 +100,6 @@ built_compare = function(x) {
 
 rupdate2 = function(x) {
   # Collect information about r packages in rt config
-  messagef("Checking for outdated packages ...")
-
   lib = getLibraryPath()
   pkgs_df = x$pkgs_df
 
@@ -106,8 +107,7 @@ rupdate2 = function(x) {
   pkgs_installed = as.data.frame(installed.packages(), stringsAsFactors = FALSE)
   pkgs_installed$meta = lapply(pkgs_installed$Package, getMeta)
   pkgs_installed$meta_class = vapply(pkgs_installed$meta, getMetaType, character(1L))
-  pkgs_df$Package = pkgs_df$rt_name
-  pkgs_df = merge_left_overwrites(pkgs_df, pkgs_installed)
+  pkgs_df = merge_left_overwrites(x = pkgs_df, y = pkgs_installed)
 
   selector = with(pkgs_df, !is.na(rt_class) & !is.na(meta_class) & meta_class != rt_class)
   if (any(selector)) {
@@ -205,5 +205,5 @@ rupdate2 = function(x) {
     }
   }
 
-  return(return(rupdate_result(x, pkgs_df, TRUE)))
+  return(rupdate_result(x, pkgs_df, TRUE))
 }
