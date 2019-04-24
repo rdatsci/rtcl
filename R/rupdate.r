@@ -37,31 +37,42 @@ rupdate = function(rebuild = FALSE, neverupgrade = FALSE, savemode = FALSE) {
     rt_name = extract(pkgs, "name"),
     rt_class = vapply(pkgs, function(x) head(class(x), 1), character(1L))
   )
-  pkgs_installed_names = rownames(installed.packages())
-  pkgs_df$installed = pkgs_df$rt_name %in% pkgs_installed_names
-  pkgs_df$meta = Map(getMeta, pkgs_df$rt_name, pkgs_df$installed)
-  pkgs_df$meta_class = vapply(pkgs_df$meta, getMetaType, character(1L))
-  pkgs_df$rebuild = logical(nrow(pkgs_df)) # FALSE for all with support of nrow = 0
+  pkgs_installed = as.data.table(installed.packages())
+  pkgs_installed$meta = lapply(pkgs_installed$Package, getMeta)
+  pkgs_installed$meta_class = vapply(pkgs_installed$meta, getMetaType, character(1L))
+  pkgs_installed$status = "installed_local"
+  pkgs_df$Package = pkgs_df$rt_name
+  pkgs_df = merge(pkgs_df, pkgs_installed, all.x = TRUE, all.y = TRUE)
+  pkgs_df$status[is.na(pkgs_df$status)] = "requested_rt"
 
-  # first we do the rebuild because we might not be able to update with broken packages
-  if (rebuild) {
-    built = installed.packages()[, "Built"]
-    names_rebuild = names(which(built < getRversion()))
-    names_no_rebuild = names(which(built >= getRversion()))
+  # Obtain package remote information
+  pkgs_deps = remotes::package_deps(as.character(pkgs_df$Package))
 
-    # update all packages except those that are specified as non-cran packages in the collection
-    names_rebuild_cran = setdiff(names_rebuild, pkgs_df[pkgs_df$rt_class != "PackageCran",]$rt_name)
-    if (length(names_rebuild_cran) > 0) {
-      messagef("Rebuilding %i outdated packages from CRAN: %s", length(names_rebuild_cran), collapse(names_rebuild_cran))
-      remotes::update_packages(names_rebuild_cran, lib = lib, force = TRUE, upgrade = upgrade)
-    }
 
-    # update all non-cran packages in the collection for that we are not sure that they are up to date
-    pkgs_df$rebuild = !(pkgs_df$rt_name %in% names_no_rebuild) & pkgs_df$rt_class != "PackageCran"
-    if (length(pkgs_df$rebuild) > 0) {
-      messagef("Adding %i packages to rebuild: %s", length(pkgs_df$rebuild),  collapse(pkgs_df[pkgs_df$rebuild == TRUE,]$rt_name))
-    }
+  # Packages we want to install from CRAN:
+  # 1) New CRAN packages in rt file
+  # 2) If rebuilt: Packages that are build with an old R version
+  # 3) CRAN Packages with a new version available
+
+  # STEP: Rebuild cran packages, because we might not be able to update with broken packages
+
+  selector = !is.na(pkgs_df$meta_class) & pkgs_df$meta_class == "PackageCran" & pkgs_df$rebuild == TRUE & (pkgs_df$rt_class = "PackageCran" | is.na(pkgs_df$rt_class))
+
+  names_rebuild_cran = pkgs_df[selector, ]$Package
+  pkgs_df$status[selector] = "rebuilt_cran"
+  if (length(names_rebuild_cran) > 0) {
+    messagef("Rebuilding %i outdated packages from CRAN: %s", length(names_rebuild_cran), collapse(names_rebuild_cran))
+    # Do not use update because it does not rebuild (even with force)!
+    remotes::install_cran(as.character(names_rebuild_cran), lib = lib, force = TRUE, upgrade = upgrade)
   }
+
+  # STEP: update all non-cran packages in the collection for that we are not sure that they are up to date
+  selector = is.na(pkgs_df$meta_class) | pkgs_df$meta_class != "PackageCran" & pkgs_df$rebuild == TRUE
+  pkgs_df$rebuild = !(pkgs_df$rt_name %in% names_no_rebuild) & pkgs_df$rt_class != "PackageCran"
+  if (length(pkgs_df$rebuild) > 0) {
+    messagef("Adding %i packages to rebuild: %s", length(pkgs_df$rebuild),  collapse(pkgs_df[pkgs_df$rebuild == TRUE,]$rt_name))
+  }
+
 
   # force installation for new packages and those that changed their type (eg. CRAN->GitHub)
   pkgs_df$force_install = is.na(pkgs_df$meta_class) | (pkgs_df$meta_class != pkgs_df$rt_class) | pkgs_df$rebuild
@@ -133,7 +144,8 @@ getMetaType = function(meta) {
         xgit = "PackageGit",
         git2r = "PackageGit",
         bitbucket = "PackageBitbucket",
-        local = "PackageLocal"
+        local = "PackageLocal",
+        bioc_git2r = "PackageBioc"
       )
     } else if (isTRUE(meta$Repository == "CRAN")) {
       return("PackageCran")
