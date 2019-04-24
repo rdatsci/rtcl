@@ -35,14 +35,15 @@ rupdate = function(rebuild = FALSE, neverupgrade = FALSE, savemode = FALSE) {
     rt_pkg = I(pkgs),
     rt_name = extract(pkgs, "name"),
     rt_class = vapply(pkgs, function(x) head(class(x), 1), character(1L)),
-    status = rep(NA_character_, length(pkgs))
+    status = rep(NA_character_, length(pkgs)),
+    stringsAsFactors = FALSE
   )
 
   x = list(done = FALSE, rebuild = rebuild, upgrade = upgrade, savemode = savemode, pkgs_df = pkgs_df, step = 0)
-  while (!res$done & x$step < 100) {
+  while (!x$done | x$step < 100) {
     x = rupdate2(x)
   }
-  invisible(TRUE)
+  invisible(x$done)
 }
 
 # helpers
@@ -90,6 +91,11 @@ merge_left_overwrites = function(x, y, by = "Package" , protect = "status") {
   merge(x = x[, constant_columns, drop = FALSE], y = y[, update_columns, drop = FALSE], all.x = TRUE, all.y = TRUE, by = by)
 }
 
+built_compare = function(x) {
+  r_version = getRversion()
+  vapply(x, function(x) !is.na(x) && x < r_version, logical(1))
+}
+
 rupdate2 = function(x) {
   # Collect information about r packages in rt config
   messagef("Checking for outdated packages ...")
@@ -97,7 +103,7 @@ rupdate2 = function(x) {
   pkgs_df = x$pkgs_df
 
   # ... and about installed r packages
-  pkgs_installed = as.data.table(installed.packages())
+  pkgs_installed = as.data.frame(installed.packages(), stringsAsFactors = FALSE)
   pkgs_installed$meta = lapply(pkgs_installed$Package, getMeta)
   pkgs_installed$meta_class = vapply(pkgs_installed$meta, getMetaType, character(1L))
   pkgs_df$Package = pkgs_df$rt_name
@@ -105,8 +111,8 @@ rupdate2 = function(x) {
 
   selector = with(pkgs_df, !is.na(rt_class) & !is.na(meta_class) & meta_class != rt_class)
   if (any(selector)) {
-    messagef("These %i packages: %s are installed in a different version then specified in the rt collection an will be removed (before they will be installed accordingly).", sum(selector), collapse(pkgs_df[selector]$Package))
-    remove.packages(pkgs = pkgs_df[selector]$Package)
+    messagef("These %i packages: %s are installed in a different version then specified in the rt collection an will be removed (before they will be installed accordingly).", sum(selector), collapse(pkgs_df$Package[selector]))
+    remove.packages(pkgs = pkgs_df$Package[selector])
     pkgs_df$status[selector] = "removed_for_rt_update"
     return(rupdate_result(x, pkgs_df))
   }
@@ -114,7 +120,7 @@ rupdate2 = function(x) {
   # Obtain package remote information (cached because slow)
   if (is.null(x$pkgs_deps) || !identical(x$pkgs_df$Package, pkgs_df$Package)) {
     messagef("Obtaining remote version information for %i packages", nrow(pkgs_df))
-    pkgs_deps = as.data.frame(remotes::package_deps(as.character(pkgs_df$Package)))
+    pkgs_deps = as.data.frame(remotes::package_deps(pkgs_df$Package))
     colnames(pkgs_deps)[colnames(pkgs_deps) == "package"] = "Package"
     x$pkgs_deps = pkgs_deps
   }
@@ -130,14 +136,14 @@ rupdate2 = function(x) {
 
   selector = with(pkgs_df, {
     (is.na(meta_class) & !is.na(rt_class) & rt_class == "PackageCran") | #(1)
-    (x$rebuild & !is.na(meta_class) & meta_class == "PackageCran" & is.na(built) & built < getRversion()) | #(2)
+    (x$rebuild & !is.na(meta_class) & meta_class == "PackageCran" & built_compare(Built)) | #(2)
     (!is.na(meta_class) & meta_class == "PackageCran" & !is.na(status) & status != "updated" & !is.na(diff) & diff < 0) #(3)
   })
 
   if (any(selector)) {
     messagef("Updating, re-/installing %i Packages from CRAN: %s", sum(selector), collapse(pkgs_df$Package[selector]))
     # Do not use update because it does not rebuild (even with force)!
-    remotes::install_cran(as.character(pkgs_df[selector]$Package), lib = lib, force = TRUE, upgrade = x$upgrade)
+    remotes::install_cran(pkgs_df$Package[selector], lib = lib, force = TRUE, upgrade = x$upgrade)
     pkgs_df$status[selector] = "updated"
     return(rupdate_result(x, pkgs_df))
   }
@@ -158,7 +164,7 @@ rupdate2 = function(x) {
   # Packages that we want to install from remotes
   # 2) If rebuild == TRUE: Packages with no version change that are build with an old R version but exist remotely
   selector = with(pkgs_df, {
-    (x$rebuild & !is.na(meta_class) & meta_class != "PackageCran" & !is.na(status) & status != "updated" & is.na(built) & built < getRversion() & !is.na(diff) & diff == 0) #(2)
+    (x$rebuild & !is.na(meta_class) & meta_class != "PackageCran" & !is.na(status) & status != "updated" & built_compare(Built) & !is.na(diff) & diff == 0) #(2)
   })
 
   if (any(selector)) {
@@ -175,14 +181,14 @@ rupdate2 = function(x) {
     messagef("The following %i packages will be automatically updated: %s", sum(selector), collapse(pkgs_df$Package[selector]))
     if (!x$savemode) {
       tryCatch({
-        remotes::update_packages(packages = as.character(pkgs_df$Package[selector]), upgrade = x$upgrade)
+        remotes::update_packages(packages = pkgs_df$Package[selector], upgrade = x$upgrade)
       }, error = function(e) {
         stop("remotes::update_packages failed with error:", "\n", as.character(e), "\n", "You can try to call rupdate with savemode.")
       })
     } else {
       messagef("Update each package step by step in safemode...")
       error_stack = list()
-      for (pkg_this in as.character(pkgs_df$Package[selector])) {
+      for (pkg_this in pkgs_df$Package[selector]) {
         message("Package: ", pkg_this, appendLF = FALSE)
         tryCatch({
           remotes::update_packages(pkg_this, upgrade = x$upgrade)
