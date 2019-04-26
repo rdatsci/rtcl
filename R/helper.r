@@ -74,9 +74,7 @@ matchRegexGroups = function(str, pattern, ...) {
 
 changeMaintainer = function(path) {
   # change maintainer temporarily
-  maintainer_opt = getOption("rt.maintainer", NULL)
-  maintainer_conf = readConfigLines(getConfigPath("maintainer"))
-  maintainer = maintainer_conf %??% maintainer_opt
+  maintainer_conf = readConfig()$maintainer
   if (!is.null(maintainer)) {
     desc = read.dcf(file.path(path, "DESCRIPTION"))
     if ("Maintainer" %in% colnames(desc)) {
@@ -95,9 +93,17 @@ changeMaintainer = function(path) {
   return(path)
 }
 
-readConfigLines = function(path) {
-  if (!file.exists(path))
-    return(NULL)
-  res = trimws(readLines(path))
-  res[nzchar(res) & !startsWith(res, "#")]
+readConfig = function() {
+  env = new.env()
+  source(getConfigPath("config"), local = env)
+  config = as.list(env)
+  # compatibility
+  config$maintainer = getOption("rt.maintainer", NULL) %??% config$maintainer
+  # check config
+  assert_string(config$maintainer, null.ok = TRUE, pattern = ".*<[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+>")
+  assert_character(config$build_opts, null.ok = TRUE, pattern = "^--.*+", any.missing = FALSE)
+  assert_character(config$build_opts_cran, null.ok = TRUE, pattern = "^--.*+", any.missing = FALSE)
+  assert_character(config$build_opts_remotes, null.ok = TRUE, pattern = "^--.*+", any.missing = FALSE)
+  assert_character(config$build_opts_make, null.ok = TRUE, pattern = "^--.*+", any.missing = FALSE)
+  return(config)
 }

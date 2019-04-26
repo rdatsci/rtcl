@@ -143,13 +143,13 @@ rupdate2 = function(x) {
   if (any(selector)) {
     messagef("Updating, re-/installing %i Packages from CRAN: %s", sum(selector), collapse(pkgs_df$Package[selector]))
     # Do not use update because it does not rebuild (even with force)!
-    remotes::install_cran(pkgs_df$Package[selector], lib = lib, force = TRUE, upgrade = x$upgrade)
+    remotes::install_cran(pkgs_df$Package[selector], lib = lib, force = TRUE, upgrade = x$upgrade, build_opts = getConfig()$build_opts_cran %??% formals(remotes::install_cran)$build_opts)
     pkgs_df$status[selector] = "updated"
     return(rupdate_result(x, pkgs_df))
   }
 
   # Packages that we want to install from remotes
-  # 1) New remote packages in rt file
+  # 1) New not cran packages in rt file
   selector = with(pkgs_df, {
     (is.na(meta_class) & !is.na(rt_class) & rt_class != "PackageCran") #(1)
   })
@@ -181,7 +181,7 @@ rupdate2 = function(x) {
     messagef("The following %i packages will be automatically updated: %s", sum(selector), collapse(pkgs_df$Package[selector]))
     if (!x$savemode) {
       tryCatch({
-        remotes::update_packages(packages = pkgs_df$Package[selector], upgrade = x$upgrade)
+        remotes::update_packages(packages = pkgs_df$Package[selector], upgrade = x$upgrade, build_opts = getConfig()$build_opts_remotes %??% formals(remotes::update_packages)$build_opts)
       }, error = function(e) {
         stop("remotes::update_packages failed with error:", "\n", as.character(e), "\n", "You can try to call rupdate with savemode.")
       })
@@ -191,7 +191,7 @@ rupdate2 = function(x) {
       for (pkg_this in pkgs_df$Package[selector]) {
         message("Package: ", pkg_this, appendLF = FALSE)
         tryCatch({
-          remotes::update_packages(pkg_this, upgrade = x$upgrade)
+          remotes::update_packages(pkg_this, upgrade = x$upgrade, build_opts = getConfig()$build_opts_remotes %??% formals(remotes::update_packages)$build_opts)
         }, error = function(e) {
           er = as.character(e)
           message(substr(er, 0, 25), "...", matchRegex(er, ".{1,25}$")[[1]], appendLF = FALSE)
