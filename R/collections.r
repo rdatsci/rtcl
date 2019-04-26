@@ -13,9 +13,9 @@ getConfigPath = function(element = ".") {
   file.path(rappdirs::user_config_dir("rt", "rdatsci"), element)
 }
 
-getCollectionContents = function(as.packages = FALSE, fn = getConfigPath("packages")) {
+getCollectionContents = function(as.packages = FALSE) {
   assertFlag(as.packages)
-  pkgs = readConfigLines(fn)
+  pkgs = readPackages()
   if (is.null(pkgs))
     return(character(0L))
   if (as.packages) {

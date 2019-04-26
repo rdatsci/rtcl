@@ -107,3 +107,11 @@ readConfig = function() {
   assert_character(config$build_opts_make, null.ok = TRUE, pattern = "^--.*+", any.missing = FALSE)
   return(config)
 }
+
+readPackages = function() {
+  path = getConfigPath("packages")
+  if (!file.exists(path))
+    return(NULL)
+  res = trimws(readLines(path))
+  res[nzchar(res) & !startsWith(res, "#")]
+}
