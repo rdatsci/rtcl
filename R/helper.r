@@ -95,16 +95,17 @@ changeMaintainer = function(path) {
 
 readConfig = function() {
   env = new.env()
+  env$build_opts = list()
   source(getConfigPath("config"), local = env)
   config = as.list(env)
   # compatibility
   config$maintainer = getOption("rt.maintainer", NULL) %??% config$maintainer
   # check config
-  assert_string(config$maintainer, null.ok = TRUE, pattern = ".*<[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+>")
-  assert_character(config$build_opts, null.ok = TRUE, pattern = "^--.*+", any.missing = FALSE)
-  assert_character(config$build_opts_cran, null.ok = TRUE, pattern = "^--.*+", any.missing = FALSE)
-  assert_character(config$build_opts_remotes, null.ok = TRUE, pattern = "^--.*+", any.missing = FALSE)
-  assert_character(config$build_opts_make, null.ok = TRUE, pattern = "^--.*+", any.missing = FALSE)
+  assert_string(config$maintainer, null.ok = TRUE, pattern = ".*<.+@.+\\..+>")
+  assert_character(config$build_opts$default, null.ok = TRUE, pattern = "^--.+", any.missing = FALSE)
+  assert_character(config$build_opts$cran, null.ok = TRUE, pattern = "^--.+", any.missing = FALSE)
+  assert_character(config$build_opts$remotes, null.ok = TRUE, pattern = "^--.+", any.missing = FALSE)
+  assert_character(config$build_opts$make, null.ok = TRUE, pattern = "^--.+", any.missing = FALSE)
   return(config)
 }
 
@@ -115,3 +116,10 @@ readPackages = function() {
   res = trimws(readLines(path))
   res[nzchar(res) & !startsWith(res, "#")]
 }
+
+getDefaultBuildOpts = function(fun, default = "cran") {
+  readConfig()$build_opts[[default]] %??% eval(formals(fun)$build_opts)
+}
+
+
+grepl(pattern = ".*<.+@.+\\..+>", x = "Joe Developer")

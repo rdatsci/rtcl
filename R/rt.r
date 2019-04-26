@@ -39,11 +39,11 @@ rt = function(init = FALSE, packages = FALSE, config = FALSE) {
       writeLines(c(
         '# maintainer = "Joe Developer <Joe.Developer@some.domain.net>"',
         'maintainer = NULL',
-        '# build_opts = c("--no-resave-data", "--no-manual", "--no-build-vignettes")',
-        'build_opts = NULL',
-        'build_opts_cran = build_opts # cran sources' ,
-        'build_opts_local = build_opts # local sources (rmake etc.)',
-        'build_opts_remotes = build_opts # remote sources (github etc.)'
+        '# build_opts$default = c("--no-resave-data", "--no-manual", "--no-build-vignettes")',
+        'build_opts$default = NULL',
+        'build_opts$cran = build_opts$default # cran sources' ,
+        'build_opts$local = build_opts$default # local sources (rmake etc.)',
+        'build_opts$remotes = build_opts$default # remote sources (github etc.)'
         ), con = file_config)
       messagef("Written initial config file '%s'", file_config)
     }
