@@ -1,6 +1,7 @@
 # rt: R Tools for the Command Line
 
 [![Travis build status](https://travis-ci.org/rdatsci/rt.svg?branch=master)](https://travis-ci.org/rdatsci/rt)
+[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/rdatsci/rt?branch=master&svg=true)](https://ci.appveyor.com/project/rdatsci/rt)
 [![Coverage status](https://coveralls.io/repos/github/rdatsci/rt/badge.svg)](https://coveralls.io/r/rdatsci/rt?branch=master)
 
 This package ships some command line utilities which simplify working with R packages from the command line.
