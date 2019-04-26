@@ -96,7 +96,10 @@ changeMaintainer = function(path) {
 readConfig = function() {
   env = new.env()
   env$build_opts = list()
-  source(getConfigPath("config"), local = env)
+  config_file = getConfigPath("config")
+  if (file.exists(config_file)) {
+    source(config_file, local = env)
+  }
   config = as.list(env)
   # compatibility
   config$maintainer = getOption("rt.maintainer", NULL) %??% config$maintainer
