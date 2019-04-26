@@ -25,9 +25,10 @@ getCollectionContents = function(as.packages = FALSE) {
   return(pkgs)
 }
 
-addPackagesToCollection = function(pkgs, fn = getConfigPath("packages")) {
+addPackagesToCollection = function(pkgs) {
   assertList(pkgs, types = "Package")
-  w = which(extract(pkgs, "name") %nin% extract(getCollectionContents(as.packages = TRUE, fn = fn), "name"))
+  fn = getConfigPath("packages")
+  w = which(extract(pkgs, "name") %nin% extract(getCollectionContents(as.packages = TRUE), "name"))
   messagef("Adding %i new package%s to '%s'", length(w), ifelse(length(w) > 1L, "s", ""), fn)
 
   if (length(w)) {

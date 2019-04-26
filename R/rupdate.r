@@ -191,7 +191,7 @@ rupdate2 = function(x) {
       for (pkg_this in pkgs_df$Package[selector]) {
         message("Package: ", pkg_this, appendLF = FALSE)
         tryCatch({
-          remotes::update_packages(pkg_this, upgrade = x$upgrade, build_opts = readConfig()$getDefaultBuildOpts(remotes::install_remotes, "remotes"))
+          remotes::update_packages(pkg_this, upgrade = x$upgrade, build_opts = getDefaultBuildOpts(remotes::install_git, "remotes"))
         }, error = function(e) {
           er = as.character(e)
           message(substr(er, 0, 25), "...", matchRegex(er, ".{1,25}$")[[1]], appendLF = FALSE)
