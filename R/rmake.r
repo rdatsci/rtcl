@@ -14,12 +14,12 @@ rmake = function(path = getwd(), ...) {
   pkgdir = pkgload::pkg_path(path = path)
 
   messagef("Checking dependencies for '%s' in '%s'", pkgname, pkgdir)
-  remotes::install_deps(pkgdir = pkgdir, dependencies = TRUE, lib = getLibraryPath())
+  remotes::install_deps(pkgdir = pkgdir, dependencies = TRUE, lib = getLibraryPath(), build_opts = getDefaultBuildOpts(remotes::install_deps, "cran"))
 
   updatePackageAttributes(path = pkgdir)
 
   messagef("Installing package '%s'", pkgname)
-  remotes::install_local(path = pkgdir, force = TRUE, ...)
+  remotes::install_local(path = pkgdir, force = TRUE, build_opts = getDefaultBuildOpts(remotes::install_local, "local"), ...)
   messagef("Package '%s' has been installed to '%s'", pkgname, getLibraryPath())
   invisible(TRUE)
 }
