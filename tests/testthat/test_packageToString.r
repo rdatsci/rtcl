@@ -38,14 +38,15 @@ test_that("Local Pacakges Unix", {
       p = test_basic_package(set$pkg, "PackageLocal", "testpkg", NA, info = set$pkg)
       expect_equal(p$file_path, normalizePath(set$pkg), info = set$pkg)
 
-      rbuild(set$pkg)
       s = file.path(set$pkg, "..", "testpkg_1.0.tar.gz")
-      on.exit(unlink(s))
+      if (!file.exists(s)) {
+        rbuild(set$pkg)
+      }
       p = test_basic_package(s, "PackageLocal", "testpkg", NA, info = set$pkg)
       expect_equal(p$file_path, normalizePath(s), info = set$pkg)
-      unlink(s)
     })
   }
+  unlink("assets/testpkg_1.0.tar.gz")
 
 })
 
