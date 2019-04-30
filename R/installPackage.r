@@ -9,7 +9,6 @@ installPackage.default = function(pkg, ...) {
 
 #' @export
 installPackage.PackageLocal = function(pkg, ...) {
-  browser()
   remotes::install_local(path = pkg$file_path, ...)
 }
 
