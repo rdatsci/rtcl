@@ -5,6 +5,7 @@
 #'
 #' @param pkgs [\code{character}]\cr
 #'  Strings convertible by \code{\link{stringToPackage}}.
+#'  Default is the current directory: \dQuote{.}
 #' @param add [\code{logical(1)}]\cr
 #'  Append packages to your config file in \code{\link{getConfigPath}}.?
 #'  Default is \code{FALSE}.
@@ -12,7 +13,7 @@
 #'   Passed to \code{remotes::install_*()}.
 #' @template return-itrue
 #' @export
-rinstall = function(pkgs = character(0L), add = FALSE, ...) {
+rinstall = function(pkgs = ".", add = FALSE, ...) {
   pkgs = lapply(pkgs, stringToPackage)
   assertFlag(add)
 

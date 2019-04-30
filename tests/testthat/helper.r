@@ -4,3 +4,10 @@ if (FALSE && !exists("SET_TEMP_LIB")) {
   dir.create(lib)
   .libPaths(c(lib, .libPaths()))
 }
+
+with_wd = function(dir, expr) {
+    old_wd = getwd()
+    on.exit(setwd(old_wd))
+    setwd(dir)
+    evalq(expr)
+}

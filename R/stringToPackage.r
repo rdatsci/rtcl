@@ -8,8 +8,8 @@
 #'   }
 #'   \item{PackageLocal: }{
 #'     \code{pkg} points to an existing directory.
-#'     Path to local directory and starts with \dQuote{./}, \dQuote{../}, \dQuote{~/}, \dQuote{.\}, dQuote{.\file.zip}, dQuote{file.zip}, \dQuote{} or \dQuote{X:/}.
-#'     Or path to a compressed file (tar, zip, tar.gz, tar.bz2, tgz or tbz)
+#'     Path to local directory starting with \dQuote{./}, \dQuote{../}, \dQuote{~/}, \dQuote{/} or specifically under windows \dQuote{.\}, \dQuote{..\}, \dQuote{X:\}.
+#'     The path can also point to a file of the type \qQuote{tar}, \qQuote{zip}, \qQuote{tar.gz}, \qQuote{tar.bz2}, \qQuote{tgz} or \qQuote{tbz}.
 #'   }
 #'   \item{PackageGit: }{
 #'     \code{pkg} starts with \dQuote{http(s)://} or \dQuote{git@} and ends with \dQuote{.git}.
@@ -68,7 +68,7 @@ stringToPackage = function(pkg) {
 
 # functions have to work vectorized
 isPackageCran = function(xs) {
-  grepl(pattern = "^[[:alnum:].]+$", x = xs)
+  grepl(pattern = "^[[:alnum:]]{1}[[:alnum:].]+$", x = xs)
 }
 
 isPackageLocal = function(xs) {
