@@ -9,6 +9,10 @@ test_that("packageToString and vice versa", {
   expect_equal(p$name, "checkmate")
   expect_equal(packageToString(p), s)
 
+  # "."
+  # "./"
+  # ".\"
+  # "\"
   s = "./assets/package"
   p = stringToPackage(s)
   expect_is(p, "Package")

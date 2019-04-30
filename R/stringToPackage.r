@@ -36,6 +36,9 @@ stringToPackage = function(pkg) {
     return(pkg)
   assertString(pkg)
 
+  # replace all \\ with / to convert windows to unix paths
+  pkg = gsub("\\\\", "/", x)
+
   funs = list(
     Cran = isPackageCran,
     Local = isPackageLocal,
@@ -106,6 +109,7 @@ asPackageCran = function(xs) {
 }
 
 asPackageLocal = function(xs) {
+  xs = ".\\bla.zip"
   if (!dir.exists(xs) && !file.exists(xs))
     stop(sprintf("'%s' must point to an existing directory or file for a local package", xs))
   if (dir.exists(xs)) {
