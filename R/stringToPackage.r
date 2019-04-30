@@ -8,7 +8,7 @@
 #'   }
 #'   \item{PackageLocal: }{
 #'     \code{pkg} points to an existing directory.
-#'     Path to local directory and starts with \dQuote{./}, \dQuote{../}, \dQuote{~/}, \dQuote{/} or \dQuote{X:/}.
+#'     Path to local directory and starts with \dQuote{./}, \dQuote{../}, \dQuote{~/}, \dQuote{.\}, dQuote{.\file.zip}, dQuote{file.zip}, \dQuote{} or \dQuote{X:/}.
 #'     Or path to a compressed file (tar, zip, tar.gz, tar.bz2, tgz or tbz)
 #'   }
 #'   \item{PackageGit: }{
@@ -35,9 +35,6 @@ stringToPackage = function(pkg) {
   if (inherits(pkg, "Package"))
     return(pkg)
   assertString(pkg)
-
-  # replace all \\ with / to convert windows to unix paths
-  pkg = gsub("\\\\", "/", pkg)
 
   funs = list(
     Cran = isPackageCran,
@@ -76,6 +73,7 @@ isPackageCran = function(xs) {
 
 isPackageLocal = function(xs) {
   # FIXME: Windows?
+  xs = normalizePath(xs, winslash = "/", mustWork = FALSE)
   is.path = grepl(pattern = "^(\\/|\\.{1,2}\\/|~\\/|[A-Z]:/).+$", x = xs)
   is.file = grepl(pattern = ".*\\.(tar|zip|tar.gz|tar.bz2|tgz|tbz)$", x = xs)
   if ((is.file || is.path) && !(file.exists(xs) || dir.exists(xs))) {

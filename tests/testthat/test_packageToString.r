@@ -11,8 +11,9 @@ test_that("packageToString and vice versa", {
 
   # "."
   # "./"
-  # ".\"
-  # "\"
+  # ".\\"
+  # ".\\bla.zip"
+  # ".\\bla"
   s = "./assets/package"
   p = stringToPackage(s)
   expect_is(p, "Package")
