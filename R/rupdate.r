@@ -123,8 +123,8 @@ rupdate2 = function(x) {
     pkgs_deps = as.data.frame(remotes::package_deps(pkgs_df$Package))
     colnames(pkgs_deps)[colnames(pkgs_deps) == "package"] = "Package"
     x$pkgs_deps = pkgs_deps
+    pkgs_df = merge_left_overwrites(pkgs_df, pkgs_deps)
   }
-  pkgs_df = merge_left_overwrites(pkgs_df, pkgs_deps)
 
 
   # Packages we want to install from CRAN:
