@@ -74,7 +74,9 @@ matchRegexGroups = function(str, pattern, ...) {
 
 changeMaintainer = function(path) {
   # change maintainer temporarily
+  maintainer_opt = getOption("rt.maintainer", NULL)
   maintainer_conf = readConfig()$maintainer
+  maintainer = maintainer_conf %??% maintainer_opt
   if (!is.null(maintainer)) {
     desc = read.dcf(file.path(path, "DESCRIPTION"))
     if ("Maintainer" %in% colnames(desc)) {
