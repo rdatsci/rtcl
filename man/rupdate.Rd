@@ -4,7 +4,8 @@
 \alias{rupdate}
 \title{Update packages}
 \usage{
-rupdate(rebuild = FALSE, neverupgrade = FALSE, savemode = FALSE)
+rupdate(rebuild = FALSE, neverupgrade = FALSE, savemode = FALSE,
+  dryrun = FALSE)
 }
 \arguments{
 \item{rebuild}{[\code{logical(1)}]\cr
@@ -17,6 +18,9 @@ Default is \dQuote{FALSE} so all dependencies are upgraded.}
 \item{savemode}{[code{logical(1)}]\cr
 Works slower but should handle most conflicts.
 Might be helpful after R-Version update or if packages are removed from CRAN.}
+
+\item{dryrun}{[code{logical(1)}]\cr
+Only calls the function but does not update anything.}
 }
 \value{
 Invisibly returns \code{TRUE} on success.
