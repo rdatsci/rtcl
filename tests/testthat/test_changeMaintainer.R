@@ -18,7 +18,7 @@ test_that("changeMaintainer works with config", {
   if (!file.exists(config_path) && !dir.exists(dirname(config_path))) {
     temp_maintainer = "Joanna Developer <Joanna.Developer@some.domain.net>"
     dir.create(path = dirname(config_path), recursive = TRUE)
-    writeLines(text = paste0('maintainer = ', temp_maintainer), con = config_path)
+    writeLines(text = paste0('maintainer = "', temp_maintainer, '"'), con = config_path)
     new_path = changeMaintainer(path)
     desc = read.dcf(file.path(new_path, "DESCRIPTION"))
     expect_setequal(desc[1, "Maintainer"], temp_maintainer) # setequal to avoid name error
