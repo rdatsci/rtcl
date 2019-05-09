@@ -21,12 +21,15 @@
 #' @param savemode [code{logical(1)}]\cr
 #'  Works slower but should handle most conflicts.
 #'  Might be helpful after R-Version update or if packages are removed from CRAN.
+#' @param dryrun [code{logical(1)}]\cr
+#'  Only calls the function but does not update anything.
 #' @template return-itrue
 #' @export
-rupdate = function(rebuild = FALSE, neverupgrade = FALSE, savemode = FALSE) {
+rupdate = function(rebuild = FALSE, neverupgrade = FALSE, savemode = FALSE, dryrun = FALSE) {
   assertFlag(rebuild)
   assertFlag(neverupgrade)
   assertFlag(savemode)
+  assertFlag(dryrun)
   upgrade = ifelse(neverupgrade, "never", "always")
 
   pkgs = getCollectionContents(as.packages = TRUE)
@@ -39,7 +42,7 @@ rupdate = function(rebuild = FALSE, neverupgrade = FALSE, savemode = FALSE) {
   )
   pkgs_df$Package = pkgs_df$rt_name
 
-  x = list(done = FALSE, rebuild = rebuild, upgrade = upgrade, savemode = savemode, pkgs_df = pkgs_df, step = 0)
+  x = list(done = FALSE, rebuild = rebuild, upgrade = upgrade, savemode = savemode, pkgs_df = pkgs_df, step = 0, dryrun = dryrun)
   messagef("Checking for outdated packages ...")
   while (!x$done & x$step < 100) {
     x = rupdate2(x)
@@ -112,9 +115,11 @@ rupdate2 = function(x) {
   selector = with(pkgs_df, !is.na(rt_class) & !is.na(meta_class) & meta_class != rt_class)
   if (any(selector)) {
     messagef("These %i packages: %s are installed in a different version then specified in the rt collection an will be removed (before they will be installed accordingly).", sum(selector), collapse(pkgs_df$Package[selector]))
-    remove.packages(pkgs = pkgs_df$Package[selector])
+    if (!x$dryrun) {
+      remove.packages(pkgs = pkgs_df$Package[selector])
+    }
     pkgs_df$status[selector] = "removed_for_rt_update"
-    return(rupdate_result(x, pkgs_df))
+    return(rupdate_result(x, pkgs_df, done = x$dryrun))
   }
 
   # Obtain package remote information (cached because slow)
@@ -143,9 +148,11 @@ rupdate2 = function(x) {
   if (any(selector)) {
     messagef("Updating, re-/installing %i Packages from CRAN: %s", sum(selector), collapse(pkgs_df$Package[selector]))
     # Do not use update because it does not rebuild (even with force)!
-    remotes::install_cran(pkgs_df$Package[selector], lib = lib, force = TRUE, upgrade = x$upgrade, build_opts = getDefaultBuildOpts(remotes::install_cran, "cran"))
+    if (!x$dryrun) {
+      remotes::install_cran(pkgs_df$Package[selector], lib = lib, force = TRUE, upgrade = x$upgrade, build_opts = getDefaultBuildOpts(remotes::install_cran, "cran"))
+    }
     pkgs_df$status[selector] = "updated"
-    return(rupdate_result(x, pkgs_df))
+    return(rupdate_result(x, pkgs_df, done = x$dryrun))
   }
 
   # Packages that we want to install from remotes
@@ -156,9 +163,11 @@ rupdate2 = function(x) {
 
   if (any(selector)) {
     messagef("Installing %i new packages from remotes: %s", sum(selector), collapse(pkgs_df$Package[selector]))
-    rinstall(pkgs_df$rt_pkg[selector], upgrade = x$upgrade, force = TRUE)
+    if (!x$dryrun) {
+      rinstall(pkgs_df$rt_pkg[selector], upgrade = x$upgrade, force = TRUE)
+    }
     pkgs_df$status[selector] = "updated"
-    return(rupdate_result(x, pkgs_df))
+    return(rupdate_result(x, pkgs_df, done = x$dryrun))
   }
 
   # Packages that we want to install from remotes
@@ -180,24 +189,28 @@ rupdate2 = function(x) {
   if (any(selector)) {
     messagef("The following %i packages will be automatically updated: %s", sum(selector), collapse(pkgs_df$Package[selector]))
     if (!x$savemode) {
-      tryCatch({
-        remotes::update_packages(packages = pkgs_df$Package[selector], upgrade = x$upgrade, build_opts = getDefaultBuildOpts(remotes::install_remotes, "remotes"))
-      }, error = function(e) {
-        stop("remotes::update_packages failed with error:", "\n", as.character(e), "\n", "You can try to call rupdate with savemode.")
-      })
+      if (!x$dryrun) {
+        tryCatch({
+          remotes::update_packages(packages = pkgs_df$Package[selector], upgrade = x$upgrade, build_opts = getDefaultBuildOpts(remotes::install_remotes, "remotes"))
+        }, error = function(e) {
+          stop("remotes::update_packages failed with error:", "\n", as.character(e), "\n", "You can try to call rupdate with savemode.")
+        })
+      }
     } else {
       messagef("Update each package step by step in safemode...")
       error_stack = list()
       for (pkg_this in pkgs_df$Package[selector]) {
         message("Package: ", pkg_this, appendLF = FALSE)
-        tryCatch({
-          remotes::update_packages(pkg_this, upgrade = x$upgrade, build_opts = getDefaultBuildOpts(remotes::install_git, "remotes"))
-        }, error = function(e) {
-          er = as.character(e)
-          message(substr(er, 0, 25), "...", matchRegex(er, ".{1,25}$")[[1]], appendLF = FALSE)
-          error_stack <<- c(error_stack, list(list(package = pkg_this, error = er)))
-        })
-        message("")
+        if (!x$dryrun) {
+          tryCatch({
+            remotes::update_packages(pkg_this, upgrade = x$upgrade, build_opts = getDefaultBuildOpts(remotes::install_git, "remotes"))
+          }, error = function(e) {
+            er = as.character(e)
+            message(substr(er, 0, 25), "...", matchRegex(er, ".{1,25}$")[[1]], appendLF = FALSE)
+            error_stack <<- c(error_stack, list(list(package = pkg_this, error = er)))
+          })
+          message("")
+        }
       }
       if (length(error_stack)>0) {
         stop("Failed with the following errors:", "\n", paste0(extract(error_stack, "package"), ": ", extract(error_stack, "error"), collapse = "\n"))

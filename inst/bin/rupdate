@@ -4,10 +4,11 @@ library("methods")
 library("rt")
 doc = "
 Usage:
-  rupdate [--neverupgrade --rebuild]
+  rupdate [--neverupgrade --rebuild --dryrun]
 Options:
   --neverupgrade  Does not update dependencies.
   --rebuild       Rebuild packages which are built against an older version of R.
+  --dryrun        Does not update/install any packages and only shows messages.
 "
 rt:::cli.call("rupdate", doc, commandArgs(TRUE))
 
