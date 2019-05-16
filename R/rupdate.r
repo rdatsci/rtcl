@@ -181,7 +181,7 @@ rupdate2 = function(x) {
     messagef("The following %i packages will be automatically updated: %s", sum(selector), collapse(pkgs_df$Package[selector]))
     if (!x$savemode) {
       tryCatch({
-        remotes::update_packages(packages = pkgs_df$Package[selector], upgrade = x$upgrade, build_opts = getDefaultBuildOpts(remotes::install_remotes, "remotes"))
+        remotes::update_packages(packages = pkgs_df$Package[selector], upgrade = x$upgrade, build_opts = getDefaultBuildOpts(remotes::update_packages, "remotes"))
       }, error = function(e) {
         stop("remotes::update_packages failed with error:", "\n", as.character(e), "\n", "You can try to call rupdate with savemode.")
       })
