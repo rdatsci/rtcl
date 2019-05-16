@@ -13,9 +13,9 @@ getConfigPath = function(element = ".") {
   file.path(rappdirs::user_config_dir("rt", "rdatsci"), element)
 }
 
-getCollectionContents = function(as.packages = FALSE, fn = getConfigPath("packages")) {
+getCollectionContents = function(as.packages = FALSE) {
   assertFlag(as.packages)
-  pkgs = readConfigLines(fn)
+  pkgs = readPackages()
   if (is.null(pkgs))
     return(character(0L))
   if (as.packages) {
@@ -25,9 +25,10 @@ getCollectionContents = function(as.packages = FALSE, fn = getConfigPath("packag
   return(pkgs)
 }
 
-addPackagesToCollection = function(pkgs, fn = getConfigPath("packages")) {
+addPackagesToCollection = function(pkgs) {
   assertList(pkgs, types = "Package")
-  w = which(extract(pkgs, "name") %nin% extract(getCollectionContents(as.packages = TRUE, fn = fn), "name"))
+  fn = getConfigPath("packages")
+  w = which(extract(pkgs, "name") %nin% extract(getCollectionContents(as.packages = TRUE), "name"))
   messagef("Adding %i new package%s to '%s'", length(w), ifelse(length(w) > 1L, "s", ""), fn)
 
   if (length(w)) {

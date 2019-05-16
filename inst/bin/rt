@@ -4,7 +4,11 @@ library("methods")
 library("rt")
 doc = "
 Usage:
-  rt [--init --edit --maintainer]
+  rt [--init --packages --config]
+Options:
+  --init      Initialize the config files.
+  --packages  Edit the package collection file.
+  --config    Edit the config file.
 Available Commands:
   - 'rbuild' to bundle a local package.
   - 'rcheck' to check a local package.

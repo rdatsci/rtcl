@@ -18,10 +18,18 @@ environment:
   NOT_CRAN: true
   # env vars that may need to be set, at least temporarily, from time to time
   # see https://github.com/krlmlr/r-appveyor#readme for details
-  # USE_RTOOLS: true
+  USE_RTOOLS: true
   # R_REMOTES_STANDALONE: true
 
 # Adapt as necessary starting from here
+
+before_test:
+  - ps: >-
+      if (-Not (Test-Path "C:\Program Files (x86)\Pandoc\")) {
+        cinst pandoc
+      }
+  - ps: $env:Path += ";C:\Program Files (x86)\Pandoc\"
+  - pandoc -v
 
 build_script:
   - travis-tool.sh install_deps

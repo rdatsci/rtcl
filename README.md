@@ -1,7 +1,7 @@
 # rt: R Tools for the Command Line
 
 [![Travis build status](https://travis-ci.org/rdatsci/rt.svg?branch=master)](https://travis-ci.org/rdatsci/rt)
-[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/rdatsci/rt?branch=master&svg=true)](https://ci.appveyor.com/project/rdatsci/rt)
+[![Appveyor Build status](https://ci.appveyor.com/api/projects/status/ar7vr5539eir7rgm/branch/master?svg=true)](https://ci.appveyor.com/project/jakob-r/rt-a6dyg/branch/master)
 [![Coverage status](https://coveralls.io/repos/github/rdatsci/rt/badge.svg)](https://coveralls.io/r/rdatsci/rt?branch=master)
 
 This package ships some command line utilities which simplify working with R packages from the command line.
@@ -82,17 +82,24 @@ In any case you need to open a new windows prompt or terminal windows in order t
 ### Continue for both Systems
 After sourcing this file (or after a re-login) you should be all set to use *rt*.
 
-To keep *rt* updated, you can let it maintain itself via `rupdate` by adding it to your collection file `~/.rt/packages`.
+To keep *rt* updated, you can let it maintain itself via `rupdate` by adding it to your collection file `~/.config/rt/packages`.
 To do this, first initialize an empty collection with
 ```sh
 rt --init
 ```
-and then uncomment the respective line with your favorite text editor.
+and then edit the file with your favorite text editor.
 To add more packages to your collection, see `?rupdate` for a format description of this file.
+You can also edit the package collection file by calling:
+```sh
+rt --packages
+```
 
 #### rwinbuild and rhub: maintainer
 If you want to check packages on rhub or with the winbuilder that are not yours, you have to change the maintainer temporarily.
-`rt` does that for you if you configure your maintainer details in `~/.rt/maintainer`.
-You can do so by calling `rt --maintainer`
+`rt` does that for you if you configure your maintainer details in `~/.config/rt/config`.
+You can edit this file with any text editor or by calling:
+```sh
+rt --config
+```
 
 

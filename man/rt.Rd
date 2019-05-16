@@ -4,19 +4,24 @@
 \alias{rt}
 \title{Maintainace operations for rt}
 \usage{
-rt(init = FALSE, edit = FALSE, maintainer = FALSE)
+rt(init = FALSE, packages = FALSE, config = FALSE)
 }
 \arguments{
 \item{init}{[\code{logical(1)}]\cr
 Initialize for first use: create directory \code{\link{getConfigPath}} and
 create an empty package collection file \code{getConfigPath("packages")}.}
 
-\item{edit}{[\code{logical(1)}]\cr
-Edit the \dQuote{packages} file?}
+\item{packages}{[\code{logical(1)}]\cr
+Edit the \dQuote{packages} file to define the packages rt should manage?}
 
-\item{maintainer}{[\code{logical(1)}]\cr
-Set a default maintainer to be used with \code{\link{rwinbuild}} and \code{\link{rhub}} e.g. \dQuote{Joe Developer <Joe.Developer@some.domain.net>}.
-Opens an editor.}
+\item{config}{[\code{logical(1)}]\cr
+Edit the \dQuote{config} file to:
+ \itemize{
+   \item set a default maintainer to be used with \code{\link{rwinbuild}} and \code{\link{rhub}} e.g. \dQuote{Joe Developer <Joe.Developer@some.domain.net>}
+   \item set default \code{build_opts} to be used when packages are built.
+ }
+ Edit the \dQuote{config} file toset a default maintainer to be used with \code{\link{rwinbuild}} and \code{\link{rhub}} e.g. \dQuote{Joe Developer <Joe.Developer@some.domain.net>}.
+ Opens an editor.}
 }
 \value{
 Invisibly returns \code{TRUE} on success.
