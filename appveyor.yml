@@ -34,14 +34,6 @@ before_test:
 build_script:
   - travis-tool.sh install_deps
 
-before_test:
-  - ps: >-
-      if (-Not (Test-Path "C:\Program Files (x86)\Pandoc\")) {
-        cinst pandoc
-      }
-  - ps: $env:Path += ";C:\Program Files (x86)\Pandoc\"
-  - pandoc -v
-
 test_script:
   - travis-tool.sh run_tests
 
