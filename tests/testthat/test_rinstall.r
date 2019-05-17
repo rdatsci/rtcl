@@ -9,9 +9,17 @@ test_that("rinstall works for remote packages", {
     list(str = "https://github.com/rdatsci/rt.git/tests/testthat/assets/package@master", name = "testpkg", type = "Git")
   )
   for (pkg in pkgs) {
-    expect_true(suppressMessages(rinstall(pkg$str, force = TRUE)), info = pkg$str)
-    expect_true(pkg$name %in% rownames(installed.packages()), info = pkg$str)
-    expect_true(suppressMessages(rremove(pkg$name)), info = pkg$str)
-    expect_true(!(pkg$name %in% rownames(installed.packages())), info = pkg$str)
+    test_basic_rinstall(pkg$str, pkg$name, info = pkg$str)
   }
+})
+
+test_that("rinstall works for local packages", {
+  skip_on_cran()
+  test_basic_rinstall("./assets/package/", "testpkg")
+})
+
+test_that("rinstall works for local packages on windows", {
+  skip_on_os(c("mac", "linux", "solaris"))
+  skip_on_cran()
+  test_basic_rinstall(".\\assets\\package\\", "testpkg")
 })

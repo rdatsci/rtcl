@@ -11,3 +11,11 @@ with_wd = function(dir, expr) {
     setwd(dir)
     evalq(expr)
 }
+
+# installs package `s` with name `name` and removes it
+test_basic_rinstall = function(s, name, ...) {
+  expect_true(suppressMessages(rinstall(s, force = TRUE)), ...)
+  expect_true(name %in% rownames(installed.packages()), ...)
+  expect_true(suppressMessages(rremove(name)), ...)
+  expect_true(!(name %in% rownames(installed.packages())), ...)
+}

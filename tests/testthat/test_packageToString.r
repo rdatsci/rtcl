@@ -8,7 +8,8 @@ test_basic_package = function(s, type, name, string_expect = s, ...) {
   expect_output(print(p), type, ...)
   expect_equal(p$name, name, ...)
   if (!is.na(string_expect)) {
-    expect_equal(packageToString(p), string_expect, ...)
+    p_string = packageToString(p)
+    expect_equal(p_string, string_expect, ...)
   }
   invisible(p)
 }
@@ -35,19 +36,9 @@ test_that("Local Pacakges Unix", {
 
   for (set in sets) {
     with_wd(set$wd, {
-      p = test_basic_package(set$pkg, "PackageLocal", "testpkg", NA, info = set$pkg)
-      expect_equal(p$file_path, normalizePath(set$pkg), info = set$pkg)
-
-      s = file.path(set$pkg, "..", "testpkg_1.0.tar.gz")
-      if (!file.exists(s)) {
-        rbuild(set$pkg)
-      }
-      p = test_basic_package(s, "PackageLocal", "testpkg", NA, info = set$pkg)
-      expect_equal(p$file_path, normalizePath(s), info = set$pkg)
+      p = test_basic_package(set$pkg, "PackageLocal", "testpkg", normalizePath(set$pkg), info = set$pkg)
     })
   }
-  unlink("assets/testpkg_1.0.tar.gz")
-
 })
 
 test_that("Local Pacakges Windows", {
@@ -67,15 +58,7 @@ test_that("Local Pacakges Windows", {
 
   for (set in sets) {
     with_wd(set$wd, {
-      test_basic_package(set$pkg, "PackageLocal", "testpkg", NA, info = set$pkg)
-      expect_equal(p$file_path, normalizePath(set$pkg), info = set$pkg)
-
-      rbuild(set$pkg)
-      s = file.path(set$pkg, "testpkg_1.0.tar.gz")
-      on.exit(unlink(s))
-      p = test_basic_package(s, "PackageLocal", "testpkg", NA, info = set$pkg)
-      expect_equal(p$file_path, normalizePath(s), info = set$pkg)
-      unlink(s)
+      p = test_basic_package(set$pkg, "PackageLocal", "testpkg", normalizePath(set$pkg), info = set$pkg)
     })
   }
 })
