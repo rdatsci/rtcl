@@ -2,6 +2,7 @@ context("rbuild")
 
 # build package in location `s`, tries to install it and removes the builed file and the package
 test_basic_rbuild = function(s, name, ...) {
+  message(sprintf("Try to build package from %s", getwd()))
   expect_true(rbuild(s))
   pkg_file = file.path(s, "..", "testpkg_1.0.tar.gz")
   expect_true(file.exists(pkg_file))
