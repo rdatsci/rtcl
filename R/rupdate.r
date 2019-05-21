@@ -87,6 +87,12 @@ rupdate_result = function(x, pkgs_df, done = FALSE) {
   return(x)
 }
 
+# x - left df
+# y - right df
+# by - id column
+# protect - column in x that cannot be overwritten by column in y
+#
+# merges x and y. if columns except "by" exist in both df's we always take the ones from y except it is in "protect"
 merge_left_overwrites = function(x, y, by = "Package" , protect = "status") {
   update_columns = setdiff(colnames(y), protect)
   constant_columns = c(by, setdiff(colnames(x), update_columns))
