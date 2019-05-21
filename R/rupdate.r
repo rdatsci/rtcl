@@ -149,7 +149,7 @@ rupdate2 = function(x) {
   if (any(selector)) {
     messagef("Updating, re-/installing %i Packages from CRAN: %s", sum(selector), collapse(pkgs_df$Package[selector]))
     # Do not use update because it does not rebuild (even with force)!
-    remotes::install_cran(pkgs_df$Package[selector], lib = lib, force = TRUE, upgrade = x$upgrade, build_opts = getDefaultBuildOpts(remotes::install_cran, "cran"))
+    install.packages(pkgs_df$Package[selector], lib = lib)
     pkgs_df$status[selector] = "updated"
     return(rupdate_result(x, pkgs_df))
   }
@@ -209,6 +209,7 @@ rupdate2 = function(x) {
         stop("Failed with the following errors:", "\n", paste0(extract(error_stack, "package"), ": ", extract(error_stack, "error"), collapse = "\n"))
       }
     }
+    pkgs_df$status[selector] = "updated"
   }
 
   return(rupdate_result(x, pkgs_df, TRUE))
