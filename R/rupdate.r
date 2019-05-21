@@ -137,7 +137,7 @@ rupdate2 = function(x) {
   selector = with(pkgs_df, {
     (is.na(meta_class) & !is.na(rt_class) & rt_class == "PackageCran") | #(1)
     (x$rebuild & !is.na(meta_class) & meta_class == "PackageCran" & built_compare(Built)) | #(2)
-    (!is.na(meta_class) & meta_class == "PackageCran" & !is.na(status) & status != "updated" & !is.na(diff) & diff < 0) #(3)
+    ((!is.na(meta_class) & meta_class == "PackageCran") & !(!is.na(status) & status == "updated") & (!is.na(diff) & diff < 0)) #(3)
   })
 
   if (any(selector)) {
