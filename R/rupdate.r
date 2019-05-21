@@ -87,6 +87,12 @@ rupdate_result = function(x, pkgs_df, done = FALSE) {
   return(x)
 }
 
+# x - left df
+# y - right df
+# by - id column
+# protect - column in x that cannot be overwritten by column in y
+#
+# merges x and y. if columns except "by" exist in both df's we always take the ones from y except it is in "protect"
 merge_left_overwrites = function(x, y, by = "Package" , protect = "status") {
   update_columns = setdiff(colnames(y), protect)
   constant_columns = c(by, setdiff(colnames(x), update_columns))
@@ -164,7 +170,7 @@ rupdate2 = function(x) {
   # Packages that we want to install from remotes
   # 2) If rebuild == TRUE: Packages with no version change that are build with an old R version but exist remotely
   selector = with(pkgs_df, {
-    (x$rebuild & !is.na(meta_class) & meta_class != "PackageCran" & !is.na(status) & status != "updated" & built_compare(Built) & !is.na(diff) & diff == 0) #(2)
+    (x$rebuild & !is.na(meta_class) & meta_class != "PackageCran" & !(!is.na(status) & status == "updated") & built_compare(Built) & !is.na(diff) & diff == 0) #(2)
   })
 
   if (any(selector)) {
@@ -174,7 +180,7 @@ rupdate2 = function(x) {
   # Packages that we can auto update
   # 3) Installed remote packages with new version available
   selector = with(pkgs_df, {
-    (!is.na(meta_class) & meta_class != "PackageCran" & !is.na(status) & status != "updated") #(2)
+    (!is.na(meta_class) & meta_class != "PackageCran" & !(!is.na(status) & status == "updated")) #(2)
   })
 
   if (any(selector)) {
