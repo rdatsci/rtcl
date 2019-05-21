@@ -87,6 +87,12 @@ rupdate_result = function(x, pkgs_df, done = FALSE) {
   return(x)
 }
 
+# x - left df
+# y - right df
+# by - id column
+# protect - column in x that cannot be overwritten by column in y
+#
+# merges x and y. if columns except "by" exist in both df's we always take the ones from y except it is in "protect"
 merge_left_overwrites = function(x, y, by = "Package" , protect = "status") {
   update_columns = setdiff(colnames(y), protect)
   constant_columns = c(by, setdiff(colnames(x), update_columns))
@@ -137,7 +143,7 @@ rupdate2 = function(x) {
   selector = with(pkgs_df, {
     (is.na(meta_class) & !is.na(rt_class) & rt_class == "PackageCran") | #(1)
     (x$rebuild & !is.na(meta_class) & meta_class == "PackageCran" & built_compare(Built)) | #(2)
-    (!is.na(meta_class) & meta_class == "PackageCran" & !is.na(status) & status != "updated" & !is.na(diff) & diff < 0) #(3)
+    ((!is.na(meta_class) & meta_class == "PackageCran") & !(!is.na(status) & status == "updated") & (!is.na(diff) & diff < 0)) #(3)
   })
 
   if (any(selector)) {
