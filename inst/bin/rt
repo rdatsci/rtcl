@@ -16,7 +16,7 @@ Available Commands:
   - 'rcov' to test the coverage of a local package.
   - 'rdoc' to document a local package using roxygen.
   - 'rhub' to upload a local package to rhub service.
-  - 'rinstall' to install a remote package, e.g. a package hosted on CRAN or GitHub.
+  - 'rinstall' to install a package, e.g. a package hosted on CRAN or GitHub.
   - 'rknit' to knit a knitr document (.Rnw, .Rrst) to PDF.
   - 'rmake' to make a local package (document and install).
   - 'rpkgdown' to build static HTML documentation with [pkgdown](https://github.com/hadley/pkgdown).
@@ -24,7 +24,7 @@ Available Commands:
   - 'rshine' to run a shiny app.
   - 'rspell' to check spelling in generated .Rd files.
   - 'rtest' to test a local package.
-  - 'rupdate' to update all CRAN packages on your system, install missing CRAN packages listed in your collection '~/.rt/packages' and update all packages with a git source.
+  - 'rupdate' to update all R-packages on your system and install missing packages listed in your collection '~/.rt/packages'.
   - 'rusage' to check variable usage.
   - 'rwinbuild' to upload a local package to the winbuilder service.
 "
