@@ -149,7 +149,7 @@ rupdate2 = function(x) {
   if (any(selector)) {
     messagef("Updating, re-/installing %i Packages from CRAN: %s", sum(selector), collapse(pkgs_df$Package[selector]))
     # Do not use update because it does not rebuild (even with force)!
-    remotes::install_cran(pkgs_df$Package[selector], lib = lib, force = TRUE, upgrade = x$upgrade, build_opts = getDefaultBuildOpts(remotes::install_cran, "cran"))
+    install.packages(pkgs_df$Package[selector], lib = lib)
     pkgs_df$status[selector] = "updated"
     return(rupdate_result(x, pkgs_df))
   }
@@ -170,7 +170,7 @@ rupdate2 = function(x) {
   # Packages that we want to install from remotes
   # 2) If rebuild == TRUE: Packages with no version change that are build with an old R version but exist remotely
   selector = with(pkgs_df, {
-    (x$rebuild & !is.na(meta_class) & meta_class != "PackageCran" & !is.na(status) & status != "updated" & built_compare(Built) & !is.na(diff) & diff == 0) #(2)
+    (x$rebuild & !is.na(meta_class) & meta_class != "PackageCran" & !(!is.na(status) & status == "updated") & built_compare(Built) & !is.na(diff) & diff == 0) #(2)
   })
 
   if (any(selector)) {
@@ -180,7 +180,7 @@ rupdate2 = function(x) {
   # Packages that we can auto update
   # 3) Installed remote packages with new version available
   selector = with(pkgs_df, {
-    (!is.na(meta_class) & meta_class != "PackageCran" & !is.na(status) & status != "updated") #(2)
+    (!is.na(meta_class) & meta_class != "PackageCran" & !(!is.na(status) & status == "updated")) #(2)
   })
 
   if (any(selector)) {
@@ -197,7 +197,7 @@ rupdate2 = function(x) {
       for (pkg_this in pkgs_df$Package[selector]) {
         message("Package: ", pkg_this, appendLF = FALSE)
         tryCatch({
-          remotes::update_packages(pkg_this, upgrade = x$upgrade, build_opts = getDefaultBuildOpts(remotes::install_git, "remotes"))
+          remotes::update_packages(pkg_this, upgrade = x$upgrade, build_opts = getDefaultBuildOpts(remotes::update_packages, "remotes"))
         }, error = function(e) {
           er = as.character(e)
           message(substr(er, 0, 25), "...", matchRegex(er, ".{1,25}$")[[1]], appendLF = FALSE)
@@ -209,6 +209,7 @@ rupdate2 = function(x) {
         stop("Failed with the following errors:", "\n", paste0(extract(error_stack, "package"), ": ", extract(error_stack, "error"), collapse = "\n"))
       }
     }
+    pkgs_df$status[selector] = "updated"
   }
 
   return(rupdate_result(x, pkgs_df, TRUE))
