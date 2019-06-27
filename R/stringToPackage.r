@@ -35,7 +35,7 @@ stringToPackage = function(pkg) {
   if (inherits(pkg, "Package"))
     return(pkg)
   assertString(pkg)
-
+  
   funs = list(
     Cran = isPackageCran,
     Local = isPackageLocal,
@@ -112,7 +112,7 @@ asPackageLocal = function(xs) {
   if (dir.exists(xs)) {
     name = readPackageName(xs)
   } else {
-    name = matchRegex(xs, "(?<=/)[[:alnum:]._-]+(?=_[0-9])")[[1]]
+    name = matchRegex(xs, "(?(?<=/))[[:alnum:]._-]+(?=_[0-9])")[[1]]
   }
   PackageLocal(name = name, file_path = xs)
 }
