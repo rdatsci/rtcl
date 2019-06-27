@@ -4,12 +4,11 @@
 \alias{rinstall}
 \title{Installs R packages}
 \usage{
-rinstall(pkgs = ".", add = FALSE, ...)
+rinstall(pkgs = character(0L), add = FALSE, ...)
 }
 \arguments{
 \item{pkgs}{[\code{character}]\cr
-Strings convertible by \code{\link{stringToPackage}}.
-Default is the current directory: \dQuote{.}}
+Strings convertible by \code{\link{stringToPackage}}.}
 
 \item{add}{[\code{logical(1)}]\cr
 Append packages to your config file in \code{\link{getConfigPath}}.?
