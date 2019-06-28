@@ -45,7 +45,7 @@ stringToPackage = function(pkg) {
     Bitbucket = isPackageBitbucket,
     Bioc = isPackageBioc
   )
-
+  
   check_res = vapply(funs, function(x) x(pkg), logical(1))
 
   if (sum(check_res) > 1L) {
@@ -72,13 +72,10 @@ isPackageCran = function(xs) {
 }
 
 isPackageLocal = function(xs) {
-  # FIXME: Windows?
+  # Windows: 'normalizePath' adds 'getwd()' to 'xs', which usually results in long unexisting path
   xs = normalizePath(xs, winslash = "/", mustWork = FALSE)
   is.path = grepl(pattern = "^(\\/|\\.{1,2}\\/|~\\/|[A-Z]:/).+$", x = xs)
   is.file = grepl(pattern = ".*\\.(tar|zip|tar.gz|tar.bz2|tgz|tbz)$", x = xs)
-  if ((is.file || is.path) && !(file.exists(xs) || dir.exists(xs))) {
-    warning("Local package detected, but location at path does not exist!")
-  }
   (is.path && dir.exists(xs)) || (is.file && file.exists(xs))
 }
 
