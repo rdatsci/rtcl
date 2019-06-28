@@ -35,7 +35,7 @@ stringToPackage = function(pkg) {
   if (inherits(pkg, "Package"))
     return(pkg)
   assertString(pkg)
-  
+
   funs = list(
     Cran = isPackageCran,
     Local = isPackageLocal,
@@ -45,7 +45,7 @@ stringToPackage = function(pkg) {
     Bitbucket = isPackageBitbucket,
     Bioc = isPackageBioc
   )
-  
+
   check_res = vapply(funs, function(x) x(pkg), logical(1))
 
   if (sum(check_res) > 1L) {
@@ -109,7 +109,8 @@ asPackageLocal = function(xs) {
   if (dir.exists(xs)) {
     name = readPackageName(xs)
   } else {
-    name = matchRegex(xs, "(?(?<=/))[[:alnum:]._-]+(?=_[0-9])")[[1]]
+    # it seems to be a file
+    name = matchRegexGroups(xs, "([[:alnum:]._-]+?)(_[0-9.]+)?\\.(zip|tar.gz|tar|tar.bz2|tgz2|tbz)$")[[1]][2]
   }
   PackageLocal(name = name, file_path = xs)
 }

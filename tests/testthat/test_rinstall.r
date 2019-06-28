@@ -1,5 +1,13 @@
 context("rinstall")
 
+# installs package `s` with name `name` and removes it
+test_basic_rinstall = function(s, name, ...) {
+  expect_true(suppressMessages(rinstall(s, force = TRUE)), ...)
+  expect_true(name %in% rownames(installed.packages()), ...)
+  expect_true(suppressMessages(rremove(name)), ...)
+  expect_true(!(name %in% rownames(installed.packages())), ...)
+}
+
 test_that("rinstall works for remote packages", {
   skip_on_cran()
   pkgs = list(

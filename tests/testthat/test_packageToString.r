@@ -31,7 +31,11 @@ test_that("Local Pacakges Unix", {
     list(wd = "assets/package", pkg = "."),
     list(wd = ".", pkg = "../testthat/assets/package/"),
     list(wd = ".", pkg = "../testthat/assets/package"),
-    list(wd = ".", pkg = normalizePath("assets/package", mustWork = TRUE))
+    list(wd = ".", pkg = normalizePath("assets/package", mustWork = TRUE)),
+    list(wd = ".", pkg = "./assets/testpkg_1.0.tar.gz"),
+    list(wd = "assets", pkg = "./testpkg_1.0.tar.gz"),
+    list(wd = ".", pkg = "./assets/testpkg.zip"),
+    list(wd = "assets", pkg = "./testpkg.zip")
   )
 
   for (set in sets) {
