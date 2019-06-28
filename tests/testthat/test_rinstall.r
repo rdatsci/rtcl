@@ -15,11 +15,11 @@ test_that("rinstall works for remote packages", {
 
 test_that("rinstall works for local packages", {
   skip_on_cran()
-  test_basic_rinstall("./assets/package/", "testpkg")
+  test_basic_rinstall("./assets/package", "testpkg")
 })
 
 test_that("rinstall works for local packages on windows", {
   skip_on_os(c("mac", "linux", "solaris"))
   skip_on_cran()
-  test_basic_rinstall(".\\assets\\package\\", "testpkg")
+  test_basic_rinstall(".\\assets\\package", "testpkg")
 })
