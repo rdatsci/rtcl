@@ -12,6 +12,16 @@ with_wd = function(dir, expr) {
     evalq(expr)
 }
 
+# build package in location `s`, tries to install it and removes the builed file and the package
+test_basic_rbuild = function(s, name, ...) {
+  print(sprintf("Try to build package from %s", getwd()))
+  expect_true(rbuild(s))
+  pkg_file = file.path(s, "..", "testpkg_1.0.tar.gz")
+  expect_true(file.exists(pkg_file))
+  test_basic_rinstall(pkg_file, "testpkg")
+  file.remove(pkg_file)
+}
+
 # installs package `s` with name `name` and removes it
 test_basic_rinstall = function(s, name, ...) {
   expect_true(suppressMessages(rinstall(s, force = TRUE)), ...)
