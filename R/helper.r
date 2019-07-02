@@ -120,6 +120,6 @@ readPackages = function() {
   res[nzchar(res) & !startsWith(res, "#")]
 }
 
-getDefaultBuildOpts = function(fun, default = "cran") {
-  readConfig()$build_opts[[default]] %??% eval(formals(fun)$build_opts)
+getDefaultBuildOpts = function(fun, default, what = "build_opts") {
+  readConfig()$build_opts[[default]] %??% eval(formals(fun)[[what]])
 }

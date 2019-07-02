@@ -19,13 +19,13 @@ rinstall = function(pkgs = character(0L), add = FALSE, ...) {
   is.cran = vlapply(pkgs, inherits, "PackageCran")
   if (any(is.cran)) {
     messagef("Installing %i packages from CRAN: %s", sum(is.cran), collapse(pn[is.cran]))
-    remotes::install_cran(pn[is.cran], ...)
+    install.packages(pn[is.cran], INSTALL_opts = getDefaultBuildOpts(install.packages, "cran", "INSTALL_opts"), ...)
   }
-  
+
   for (pkg in pkgs[!is.cran]) {
     installPackage(pkg, ...)
   }
-  
+
   if (add) {
     addPackagesToCollection(pkgs)
   }
