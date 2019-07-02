@@ -16,7 +16,7 @@ test_basic_package = function(s, type, name, string_expect = s, ...) {
 
 test_that("CRAN Packages", {
   s = "checkmate"
-test_basic_package(s, "PackageCran", "checkmate")
+  test_basic_package(s, "PackageCran", "checkmate")
 })
 
 test_that("Local Pacakges Unix", {
@@ -32,8 +32,8 @@ test_that("Local Pacakges Unix", {
     list(wd = ".", pkg = "../testthat/assets/package/"),
     list(wd = ".", pkg = "../testthat/assets/package"),
     list(wd = ".", pkg = normalizePath("assets/package", mustWork = TRUE)),
-    list(wd = ".", pkg = "./assets/testpkg_1.0.tar.gz"),
-    list(wd = "assets", pkg = "./testpkg_1.0.tar.gz"),
+    list(wd = ".", pkg = "./assets/testpkg_0.1.tar.gz"),
+    list(wd = "assets", pkg = "./testpkg_0.1.tar.gz"),
     list(wd = ".", pkg = "./assets/testpkg.zip"),
     list(wd = "assets", pkg = "./testpkg.zip")
   )
