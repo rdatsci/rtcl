@@ -77,9 +77,9 @@ isPackageLocal = function(xs) {
   is.path = grepl(pattern = "^(\\/|\\.{1,2}\\/|~\\/|[A-Z]:/).+$", x = xs)
   is.file = grepl(pattern = ".*\\.(tar|zip|tar.gz|tar.bz2|tgz|tbz)$", x = xs)
   if (is.path && !is.file && !dir.exists(xs)) {
-    stop(sprintf('Directory detected but %s does not exist.', xs))
+    stop(sprintf('Directory detected but %s does not exist within %s.', xs, getwd()))
   } else if (is.file && !file.exists(xs)) {
-    stop(sprintf('File detected but %s does not exist.', xs))
+    stop(sprintf('File detected but %s does not exist within %s.', xs, getwd())
   }
   (is.path && dir.exists(xs)) || (is.file && file.exists(xs))
 }
