@@ -149,7 +149,7 @@ rupdate2 = function(x) {
   if (any(selector)) {
     messagef("Updating, re-/installing %i Packages from CRAN: %s", sum(selector), collapse(pkgs_df$Package[selector]))
     # Do not use update because it does not rebuild (even with force)!
-    install.packages(pkgs_df$Package[selector], lib = lib)
+    install.packages(pkgs_df$Package[selector], lib = lib, INSTALL_opts = getDefaultBuildOpts(install.packages, "cran", "INSTALL_opts"))
     pkgs_df$status[selector] = "updated"
     return(rupdate_result(x, pkgs_df))
   }

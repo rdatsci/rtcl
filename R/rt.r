@@ -41,9 +41,10 @@ rt = function(init = FALSE, packages = FALSE, config = FALSE) {
         'maintainer = NULL',
         '# build_opts$default = c("--no-resave-data", "--no-manual", "--no-build-vignettes")',
         'build_opts$default = NULL',
-        'build_opts$cran = build_opts$default # cran sources' ,
         'build_opts$local = build_opts$default # local sources (rmake etc.)',
-        'build_opts$remotes = build_opts$default # remote sources (github etc.)'
+        'build_opts$git = build_opts$default # git sources (github etc.)',
+        'build_opts$cran = build_opts$default # cran sources',
+        'build_opts$bioc = build_opts$default # bioconductor sources'
         ), con = file_config)
       messagef("Written initial config file '%s'", file_config)
     }

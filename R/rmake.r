@@ -14,7 +14,7 @@ rmake = function(path = getwd(), ...) {
   pkgdir = pkgload::pkg_path(path = path)
 
   messagef("Checking dependencies for '%s' in '%s'", pkgname, pkgdir)
-  remotes::install_deps(pkgdir = pkgdir, dependencies = TRUE, lib = getLibraryPath(), build_opts = getDefaultBuildOpts(remotes::install_deps, "cran"))
+  remotes::install_deps(pkgdir = pkgdir, dependencies = TRUE, lib = getLibraryPath(), build_opts = getDefaultBuildOpts(remotes::install_deps, "remotes"))
 
   updatePackageAttributes(path = pkgdir)
 

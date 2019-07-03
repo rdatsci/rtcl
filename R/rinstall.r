@@ -15,20 +15,15 @@
 rinstall = function(pkgs = character(0L), add = FALSE, ...) {
   pkgs = lapply(pkgs, stringToPackage)
   assertFlag(add)
-
-  # FIXME: Do we need to specify the lib_path?
-
   pn = extract(pkgs, "name")
   is.cran = vlapply(pkgs, inherits, "PackageCran")
   if (any(is.cran)) {
     messagef("Installing %i packages from CRAN: %s", sum(is.cran), collapse(pn[is.cran]))
-    remotes::install_cran(pn[is.cran], build_opts = getDefaultBuildOpts(remotes::install_cran, "cran"), ...)
+    install.packages(pn[is.cran], INSTALL_opts = getDefaultBuildOpts(install.packages, "cran", "INSTALL_opts"), ...)
   }
 
-  dots = list(...)
   for (pkg in pkgs[!is.cran]) {
-    dots$build_opts = readConfig()$build_opts[["remotes"]] #FIXME maybe this should be in the individial installPacakge functions
-    do.call(installPackage, c(list(pkg = pkg), dots))
+    installPackage(pkg, ...)
   }
 
   if (add) {

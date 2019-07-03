@@ -1,5 +1,4 @@
 ^\.travis\.yml$
-\.tar\.gz$
 \.swp$
 ^\.gitignore$
 ^\.ignore$

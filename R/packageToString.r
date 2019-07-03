@@ -15,7 +15,7 @@ packageToString.PackageCran = function(pkg) {
 }
 
 #' @export
-packageToString.PackageLocale = function(pkg) {
+packageToString.PackageLocal = function(pkg) {
   pkg$file_path
 }
 

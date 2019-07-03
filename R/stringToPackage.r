@@ -8,8 +8,8 @@
 #'   }
 #'   \item{PackageLocal: }{
 #'     \code{pkg} points to an existing directory.
-#'     Path to local directory and starts with \dQuote{./}, \dQuote{../}, \dQuote{~/}, \dQuote{/} or \dQuote{X:/}.
-#'     Or path to a compressed file (tar, zip, tar.gz, tar.bz2, tgz or tbz)
+#'     Path to local directory starting with \dQuote{./}, \dQuote{../}, \dQuote{~/}, \dQuote{/} or specifically under windows \dQuote{.\}, \dQuote{..\}, \dQuote{X:\}.
+#'     The path can also point to a file of the type \qQuote{tar}, \qQuote{zip}, \qQuote{tar.gz}, \qQuote{tar.bz2}, \qQuote{tgz} or \qQuote{tbz}.
 #'   }
 #'   \item{PackageGit: }{
 #'     \code{pkg} starts with \dQuote{http(s)://} or \dQuote{git@} and ends with \dQuote{.git}.
@@ -68,16 +68,14 @@ stringToPackage = function(pkg) {
 
 # functions have to work vectorized
 isPackageCran = function(xs) {
-  grepl(pattern = "^[[:alnum:].]+$", x = xs)
+  grepl(pattern = "^[[:alnum:]]{1}[[:alnum:].]+$", x = xs)
 }
 
 isPackageLocal = function(xs) {
-  # FIXME: Windows?
+  # Windows: 'normalizePath' adds 'getwd()' to 'xs', which usually results in long unexisting path
+  xs = normalizePath(xs, winslash = "/", mustWork = FALSE)
   is.path = grepl(pattern = "^(\\/|\\.{1,2}\\/|~\\/|[A-Z]:/).+$", x = xs)
   is.file = grepl(pattern = ".*\\.(tar|zip|tar.gz|tar.bz2|tgz|tbz)$", x = xs)
-  if ((is.file || is.path) && !(file.exists(xs) || dir.exists(xs))) {
-    warning("Local package detected, but location at path does not exist!")
-  }
   (is.path && dir.exists(xs)) || (is.file && file.exists(xs))
 }
 
@@ -111,7 +109,8 @@ asPackageLocal = function(xs) {
   if (dir.exists(xs)) {
     name = readPackageName(xs)
   } else {
-    name = matchRegex(xs, "(?<=/)[[:alnum:]._-]+(?=_[0-9])")[[1]]
+    # it seems to be a file
+    name = matchRegexGroups(xs, "([[:alnum:]._-]+?)(_[0-9.]+)?\\.(zip|tar.gz|tar|tar.bz2|tgz2|tbz)$")[[1]][2]
   }
   PackageLocal(name = name, file_path = xs)
 }
