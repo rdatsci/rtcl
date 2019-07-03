@@ -76,6 +76,12 @@ isPackageLocal = function(xs) {
   xs = normalizePath(xs, winslash = "/", mustWork = FALSE)
   is.path = grepl(pattern = "^(\\/|\\.{1,2}\\/|~\\/|[A-Z]:/).+$", x = xs)
   is.file = grepl(pattern = ".*\\.(tar|zip|tar.gz|tar.bz2|tgz|tbz)$", x = xs)
+  if (is.path && !dir.exists(xs)) {
+    warning(sprintf('Directory detected but %s does not exist.', xs))
+  }
+  if (is.file && !file.exists(xs)) {
+    warning(sprintf('File detected but %s does not exist.', xs))
+  }
   (is.path && dir.exists(xs)) || (is.file && file.exists(xs))
 }
 
