@@ -79,7 +79,7 @@ isPackageLocal = function(xs) {
   if (is.path && !is.file && !dir.exists(xs)) {
     stop(sprintf('Directory detected but %s does not exist within %s.', xs, getwd()))
   } else if (is.file && !file.exists(xs)) {
-    stop(sprintf('File detected but %s does not exist within %s.', xs, getwd())
+    stop(sprintf('File detected but %s does not exist within %s.', xs, getwd()))
   }
   (is.path && dir.exists(xs)) || (is.file && file.exists(xs))
 }
