@@ -44,5 +44,6 @@ Suggests:
     rhub,
     rmarkdown,
     shiny,
-    testthat
+    testthat,
+    tinytest
 RoxygenNote: 6.1.1
