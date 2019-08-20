@@ -26,8 +26,11 @@ rtest = function(path = getwd(), filter = NULL) {
     res = as.data.frame(testthat::test_dir(path = testpath, filter = coalesceString(filter)))
     ret = sum(res$failed) == 0L
   } else {
-    testpath = file.path(path, "inst", "tinytest")
-    res = tinytest::run_test_dir(testpath, pattern = coalesceString(filter, "^test.*\\.[rR]"))
+    testpath =
+    args = list(dir = file.path(path, "inst", "tinytest"))
+    if (!is.null(coalesceString(filter)))
+      args$filter = filter
+    res = do.call(tinytest::run_test_dir, args)
     ret = all(sapply(res, isTRUE))
   }
 
@@ -35,9 +38,8 @@ rtest = function(path = getwd(), filter = NULL) {
 }
 
 getTestFramework = function(path) {
-  suggests = read.dcf(file.path(path, "DESCRIPTION"), fields = "Suggests", keep.white = FALSE)
-  if (is.na(suggests))
-    return("testthat")
-  suggests = trimws(strsplit(suggests, split = ",", fixed = TRUE)[[1L]])
-  if ("tinytest" %in% suggests) "tinytest" else "testthat"
+  pkgs = read.dcf(file.path(path, "DESCRIPTION"), fields = c("Imports", "Suggests"), keep.white = FALSE)
+  pkgs = paste(pkgs[!is.na(pkgs)], collapse = ",")
+  pkgs = trimws(strsplit(pkgs, split = ",", fixed = TRUE)[[1L]])
+  if ("tinytest" %in% pkgs) "tinytest" else "testthat"
 }
