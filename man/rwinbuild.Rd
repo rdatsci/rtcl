@@ -22,6 +22,6 @@ Invisibly returns \code{TRUE} on success.
 }
 \description{
 Uploads a package located in \code{path} to the winbuilder service.
-Uses \code{\link[devtools:check_win]{check_win_release}}, \code{\link[devtools:check_win]{check_win_devel}} 
+Uses \code{\link[devtools:check_win]{check_win_release}}, \code{\link[devtools:check_win]{check_win_devel}}
 or \code{\link[devtools:check_win]{check_win_oldrelease}} internally.
 }
