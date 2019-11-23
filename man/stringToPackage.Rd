@@ -11,5 +11,5 @@ stringToPackage(pkg)
 String to convert to an object of class Package.}
 }
 \description{
-Convert a string to an object of type 'Package'
+
 }
