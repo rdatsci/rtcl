@@ -8,8 +8,8 @@
 #'   }
 #'   \item{PackageLocal: }{
 #'     \code{pkg} points to an existing directory.
-#'     Path to local directory starting with \dQuote{./}, \dQuote{../}, \dQuote{~/}, \dQuote{/} or specifically under windows \dQuote{.\}, \dQuote{..\}, \dQuote{X:\}.
-#'     The path can also point to a file of the type \qQuote{tar}, \qQuote{zip}, \qQuote{tar.gz}, \qQuote{tar.bz2}, \qQuote{tgz} or \qQuote{tbz}.
+#'     Path to local directory starting with \dQuote{./}, \dQuote{../}, \dQuote{~/}, \dQuote{/} or specifically under windows \dQuote{.\\}, \dQuote{..\\}, \dQuote{X:\\}.
+#'     The path can also point to a file of the type \dQuote{tar}, \dQuote{zip}, \dQuote{tar.gz}, \dQuote{tar.bz2}, \dQuote{tgz} or \dQuote{tbz}.
 #'   }
 #'   \item{PackageGit: }{
 #'     \code{pkg} starts with \dQuote{http(s)://} or \dQuote{git@} and ends with \dQuote{.git}.
