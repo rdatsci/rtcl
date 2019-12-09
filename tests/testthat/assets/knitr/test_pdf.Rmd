@@ -1,6 +1,7 @@
 ---
 title: "Test"
 output: pdf_document
+author: Jane Doe
 ---
 
 ```{r setup, include=FALSE}
