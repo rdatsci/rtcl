@@ -26,7 +26,6 @@ rtest = function(path = getwd(), filter = NULL) {
     res = as.data.frame(testthat::test_dir(path = testpath, filter = coalesceString(filter)))
     ret = sum(res$failed) == 0L
   } else {
-    testpath =
     args = list(dir = file.path(path, "inst", "tinytest"))
     if (!is.null(coalesceString(filter)))
       args$filter = filter
@@ -38,8 +37,6 @@ rtest = function(path = getwd(), filter = NULL) {
 }
 
 getTestFramework = function(path) {
-  pkgs = read.dcf(file.path(path, "DESCRIPTION"), fields = c("Imports", "Suggests"), keep.white = FALSE)
-  pkgs = paste(pkgs[!is.na(pkgs)], collapse = ",")
-  pkgs = trimws(strsplit(pkgs, split = ",", fixed = TRUE)[[1L]])
-  if ("tinytest" %in% pkgs) "tinytest" else "testthat"
+  paths = c(file.path(path, "inst", "tinytest"), file.path(path, "tests", "testthat"))
+  c("tinytest", "testthat")[wf(dir.exists(paths))]
 }
