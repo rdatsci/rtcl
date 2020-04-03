@@ -7,13 +7,17 @@
 #'   Check on the platform specified here.
 #' @param checkforcran [\code{logical(1L)}]\cr
 #'   Use \code{\link[rhub]{check_for_cran}} instead.
+#' @param rdevel [\code{logical(1L)}]\cr
+#'   Use \code{\link[rhub]{check_with_rdevel}} instead. This switch is only taken into account 
+#'   with \code{checkforcran = FALSE}.
 #' @template path
 #' @template return-itrue
 #' @export
-rhub = function(platform = NULL, checkforcran = FALSE, path = getwd()) {
+rhub = function(platform = NULL, checkforcran = FALSE, rdevel = FALSE, path = getwd()) {
   requireNamespace("rhub")
-  assertFlag(checkforcran)
   assertSubset(platform, rhub::platforms()$name)
+  assertFlag(checkforcran)
+  assertFlag(rdevel)
 
   pkgpath = pkgload::pkg_path(path = path)
   pkgpath = changeMaintainer(pkgpath)
@@ -21,6 +25,10 @@ rhub = function(platform = NULL, checkforcran = FALSE, path = getwd()) {
   if (checkforcran) {
     rhub::check_for_cran(pkgpath, platform = platform)
   } else {
-    rhub::check(pkgpath, platform = platform)
+    if (rdevel) {
+      rhub::check_with_rdevel(pkgpath, platform = platform)
+    } else {
+      rhub::check(pkgpath, platform = platform)
+    }
   }
 }

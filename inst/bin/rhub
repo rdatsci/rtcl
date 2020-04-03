@@ -8,6 +8,7 @@ Usage:
 Options:
   --platform=<platform>  Name of the platform to check on
   --checkforcran         Use check suggested for CRAN submission
+  --rdevel               Use R devel for checks (only considered without --checkforcran)
 "
 rt:::cli.call("rhub", doc, commandArgs(TRUE))
 
