@@ -9,7 +9,7 @@
 #'   Use \code{\link[rhub]{check_for_cran}} instead.
 #' @param rdevel [\code{logical(1L)}]\cr
 #'   Use \code{\link[rhub]{check_with_rdevel}} instead. This switch is only taken into account 
-#'   with \code{checkforcran = FALSE}.
+#'   with \code{checkforcran = FALSE}. It automatically selects one devel platform.
 #' @template path
 #' @template return-itrue
 #' @export
@@ -26,7 +26,7 @@ rhub = function(platform = NULL, checkforcran = FALSE, rdevel = FALSE, path = ge
     rhub::check_for_cran(pkgpath, platform = platform)
   } else {
     if (rdevel) {
-      rhub::check_with_rdevel(pkgpath, platform = platform)
+      rhub::check_with_rdevel(path = pkgpath)
     } else {
       rhub::check(pkgpath, platform = platform)
     }

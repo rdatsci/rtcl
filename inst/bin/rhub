@@ -4,11 +4,11 @@ library("methods")
 library("rt")
 doc = "
 Usage:
-  rhub [--platform=<platform>] [--checkforcran] [<path>]
+  rhub [--platform=<platform>] [--checkforcran] [--rdevel] [<path>]
 Options:
   --platform=<platform>  Name of the platform to check on
   --checkforcran         Use check suggested for CRAN submission
-  --rdevel               Use R devel for checks (only considered without --checkforcran)
+  --rdevel               Use devel platform for checks (only considered without --checkforcran)
 "
 rt:::cli.call("rhub", doc, commandArgs(TRUE))
 

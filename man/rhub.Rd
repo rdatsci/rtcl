@@ -15,7 +15,7 @@ Use \code{\link[rhub]{check_for_cran}} instead.}
 
 \item{rdevel}{[\code{logical(1L)}]\cr
 Use \code{\link[rhub]{check_with_rdevel}} instead. This switch is only taken into account 
-with \code{checkforcran = FALSE}.}
+with \code{checkforcran = FALSE}. It automatically selects one devel platform.}
 
 \item{path}{[\code{character}]\cr
 If no path to a DESCRIPTION is given, the package looks for a DESCRIPTION in
