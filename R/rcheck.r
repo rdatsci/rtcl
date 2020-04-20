@@ -12,8 +12,6 @@ rcheck = function(path = getwd(), cleanup = FALSE) {
   updatePackageAttributes(path = path)
   pkgname = pkgload::pkg_name(path = path)
 
-  Sys.setenv(R_MAKEVARS_USER = system.file("Makevars-template", package = "rt")) # FIXME: check if this is still working
-  on.exit(Sys.unsetenv("R_MAKEVARS_USER"))
   now = strftime(Sys.time(), format = "%Y%m%d-%H%M%S")
   log.path = file.path(dirname(tempdir()), sprintf("rcheck-%s-%s", pkgname, now))
   dir.create(log.path, recursive = TRUE)

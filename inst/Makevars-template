@@ -1,4 +1,0 @@
-CFLAGS+=-Wall -pedantic
-CXXFLAGS+=-Wall -pedantic
-FFLAGS+=-Wall -pedantic
-FCFLAGS+=-Wall -pedantic
