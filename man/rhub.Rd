@@ -4,7 +4,7 @@
 \alias{rhub}
 \title{Upload package to rhub}
 \usage{
-rhub(platform = NULL, checkforcran = FALSE, path = getwd())
+rhub(platform = NULL, checkforcran = FALSE, rdevel = FALSE, path = getwd())
 }
 \arguments{
 \item{platform}{[\code{character(1)}]\cr
@@ -12,6 +12,10 @@ Check on the platform specified here.}
 
 \item{checkforcran}{[\code{logical(1L)}]\cr
 Use \code{\link[rhub]{check_for_cran}} instead.}
+
+\item{rdevel}{[\code{logical(1L)}]\cr
+Use \code{\link[rhub]{check_with_rdevel}} instead. This switch is only taken into account 
+with \code{checkforcran = FALSE}. It automatically selects one devel platform.}
 
 \item{path}{[\code{character}]\cr
 If no path to a DESCRIPTION is given, the package looks for a DESCRIPTION in
