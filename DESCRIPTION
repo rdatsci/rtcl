@@ -28,12 +28,13 @@ Imports:
     devtools (>= 1.9.1),
     docopt,
     pkgload,
+    rappdirs,
     rcmdcheck,
     remotes,
     roxygen2 (>= 5.0.1),
+    spelling,
     tools,
-    utils,
-    rappdirs
+    utils
 Suggests:
     codetools,
     covr,
