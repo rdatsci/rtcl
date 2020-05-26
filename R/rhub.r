@@ -4,7 +4,7 @@
 #' Uploads a package located in \code{path} to the rhub service via \code{\link[rhub]{check}}.
 #'
 #' @param platform [\code{character(1)}]\cr
-#'   Check on the platform specified here.
+#'   Check on the platform specified here. For details see \code{\link[rhub]{platforms}}
 #' @param checkforcran [\code{logical(1L)}]\cr
 #'   Use \code{\link[rhub]{check_for_cran}} instead.
 #' @param rdevel [\code{logical(1L)}]\cr

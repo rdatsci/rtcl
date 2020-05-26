@@ -8,7 +8,7 @@ rhub(platform = NULL, checkforcran = FALSE, rdevel = FALSE, path = getwd())
 }
 \arguments{
 \item{platform}{[\code{character(1)}]\cr
-Check on the platform specified here.}
+Check on the platform specified here. For details see \code{\link[rhub]{platforms}}}
 
 \item{checkforcran}{[\code{logical(1L)}]\cr
 Use \code{\link[rhub]{check_for_cran}} instead.}
