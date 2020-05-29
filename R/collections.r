@@ -1,7 +1,7 @@
-#' Path to rt configuration
+#' Path to rtcl configuration
 #'
 #' @description
-#' Returns the path to the rt configuration files
+#' Returns the path to the rtcl configuration files
 #'
 #' @param element [\code{character(1)}]\cr
 #'   Which file within the configuration directory to access.
@@ -10,7 +10,7 @@
 #' @return Returns the path as character.
 #' @export
 getConfigPath = function(element = ".") {
-  file.path(rappdirs::user_config_dir("rt", "rdatsci"), element)
+  file.path(rappdirs::user_config_dir("rtcl", "rdatsci"), element)
 }
 
 getCollectionContents = function(as.packages = FALSE) {
@@ -32,7 +32,7 @@ addPackagesToCollection = function(pkgs) {
   messagef("Adding %i new package%s to '%s'", length(w), ifelse(length(w) > 1L, "s", ""), fn)
 
   if (length(w)) {
-    rt(init = TRUE)
+    rtcl(init = TRUE)
     fp = file(fn, open = "at")
     on.exit(close(fp))
     writeLines(vcapply(pkgs[w], packageToString), con = fp)

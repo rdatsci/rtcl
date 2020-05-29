@@ -1,6 +1,6 @@
 if (FALSE && !exists("SET_TEMP_LIB")) {
   SET_TEMP_LIB <<- TRUE
-  lib = tempfile("rtlib")
+  lib = tempfile("rtcllib")
   dir.create(lib)
   .libPaths(c(lib, .libPaths()))
 }

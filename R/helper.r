@@ -102,7 +102,7 @@ readConfig = function() {
   }
   config = as.list(env)
   # compatibility
-  config$maintainer = getOption("rt.maintainer", NULL) %??% config$maintainer
+  config$maintainer = getOption("rtcl.maintainer", NULL) %??% config$maintainer
   # check config
   assert_string(config$maintainer, null.ok = TRUE, pattern = ".*<.+@.+\\..+>")
   assert_character(config$build_opts$default, null.ok = TRUE, pattern = "^--.+", any.missing = FALSE)

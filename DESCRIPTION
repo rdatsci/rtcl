@@ -1,7 +1,7 @@
-Package: rt
+Package: rtcl
 Type: Package
 Title: R Tools for the Command Line
-Version: 0.2
+Version: 0.3
 Authors@R: c(
     person("Michel", "Lang", NULL, "michellang@gmail.com",
       role = c("cre", "aut"), comment = c(ORCID = "0000-0001-9754-0393")),

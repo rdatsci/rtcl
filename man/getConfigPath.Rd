@@ -2,7 +2,7 @@
 % Please edit documentation in R/collections.r
 \name{getConfigPath}
 \alias{getConfigPath}
-\title{Path to rt configuration}
+\title{Path to rtcl configuration}
 \usage{
 getConfigPath(element = ".")
 }
@@ -16,5 +16,5 @@ Uses \code{\link[rappdirs:user_data_dir]{user_config_dir}} to determine the path
 Returns the path as character.
 }
 \description{
-Returns the path to the rt configuration files
+Returns the path to the rtcl configuration files
 }

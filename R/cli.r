@@ -1,5 +1,5 @@
 cli.call = function(fun, doc, args = commandArgs(TRUE)) {
-  fun = get(fun, mode = "function", envir = getNamespace("rt"))
+  fun = get(fun, mode = "function", envir = getNamespace("rtcl"))
 
   tryCatch({
     x = docopt::docopt(doc, args = args, strict = TRUE, quoted_args = TRUE)
