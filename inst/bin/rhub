@@ -1,7 +1,7 @@
 #!/usr/bin/env Rscript
 
 library("methods")
-library("rt")
+library("rtcl")
 doc = "
 Usage:
   rhub [--platform=<platform>] [--checkforcran] [--rdevel] [<path>]
@@ -10,6 +10,6 @@ Options:
   --checkforcran         Use check suggested for CRAN submission
   --rdevel               Use devel platform for checks (only considered without --checkforcran)
 "
-rt:::cli.call("rhub", doc, commandArgs(TRUE))
+rtcl:::cli.call("rhub", doc, commandArgs(TRUE))
 
 # vim: ft=r

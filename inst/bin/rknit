@@ -1,7 +1,7 @@
 #!/usr/bin/env Rscript
 
 library("methods")
-library("rt")
+library("rtcl")
 doc = "
 Usage:
   rknit [--output_format=<format>] <file>
@@ -10,6 +10,6 @@ Options:
                             * always used for Rnw files
                             ** default for Rmd files
 "
-rt:::cli.call("rknit", doc, commandArgs(TRUE))
+rtcl:::cli.call("rknit", doc, commandArgs(TRUE))
 
 # vim: ft=r

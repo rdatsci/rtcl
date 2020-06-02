@@ -1,11 +1,11 @@
 #!/usr/bin/env Rscript
 
 library("methods")
-library("rt")
+library("rtcl")
 doc = "
 Usage:
   rmake [<path>]
 "
-rt:::cli.call("rmake", doc, commandArgs(TRUE))
+rtcl:::cli.call("rmake", doc, commandArgs(TRUE))
 
 # vim: ft=r

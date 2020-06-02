@@ -1,11 +1,11 @@
 #!/usr/bin/env Rscript
 
 library("methods")
-library("rt")
+library("rtcl")
 doc = "
 Usage:
   rbuild [<path>]
 "
-rt:::cli.call("rbuild", doc, commandArgs(TRUE))
+rtcl:::cli.call("rbuild", doc, commandArgs(TRUE))
 
 # vim: ft=r

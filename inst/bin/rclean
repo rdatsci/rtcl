@@ -1,11 +1,11 @@
 #!/usr/bin/env Rscript
 
 library("methods")
-library("rt")
+library("rtcl")
 doc = "
 Usage:
   rclean [<path>]
 "
-rt:::cli.call("rclean", doc, commandArgs(TRUE))
+rtcl:::cli.call("rclean", doc, commandArgs(TRUE))
 
 # vim: ft=r

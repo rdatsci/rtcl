@@ -1,7 +1,7 @@
 #!/usr/bin/env Rscript
 
 library("methods")
-library("rt")
+library("rtcl")
 doc = "
 Usage:
   rupdate [--neverupgrade --rebuild]
@@ -9,6 +9,6 @@ Options:
   --neverupgrade  Does not update dependencies.
   --rebuild       Rebuild packages which are built against an older version of R.
 "
-rt:::cli.call("rupdate", doc, commandArgs(TRUE))
+rtcl:::cli.call("rupdate", doc, commandArgs(TRUE))
 
 # vim: ft=r

@@ -1,11 +1,11 @@
 #!/usr/bin/env Rscript
 
 library("methods")
-library("rt")
+library("rtcl")
 doc = "
 Usage:
   rpkgdown [<path>]
 "
-rt:::cli.call("rpkgdown", doc, commandArgs(TRUE))
+rtcl:::cli.call("rpkgdown", doc, commandArgs(TRUE))
 
 # vim: ft=r

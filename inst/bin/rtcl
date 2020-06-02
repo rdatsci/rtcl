@@ -1,10 +1,10 @@
 #!/usr/bin/env Rscript
 
 library("methods")
-library("rt")
+library("rtcl")
 doc = "
 Usage:
-  rt [--init --packages --config]
+  rtcl [--init --packages --config]
 Options:
   --init      Initialize the config files.
   --packages  Edit the package collection file.
@@ -28,6 +28,6 @@ Available Commands:
   - 'rusage' to check variable usage.
   - 'rwinbuild' to upload a local package to the winbuilder service.
 "
-rt:::cli.call("rt", doc, commandArgs(TRUE))
+rtcl:::cli.call("rtcl", doc, commandArgs(TRUE))
 
 # vim: ft=r

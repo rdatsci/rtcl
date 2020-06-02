@@ -1,7 +1,7 @@
 #!/usr/bin/env Rscript
 
 library("methods")
-library("rt")
+library("rtcl")
 doc = "
 Usage:
   rwinbuild [--devel --oldrel] [<path>]
@@ -9,6 +9,6 @@ Options:
   --devel   Build with R-devel instead of R-release
   --oldrel  Build with R-oldrelease instead of R-release
 "
-rt:::cli.call("rwinbuild", doc, commandArgs(TRUE))
+rtcl:::cli.call("rwinbuild", doc, commandArgs(TRUE))
 
 # vim: ft=r
