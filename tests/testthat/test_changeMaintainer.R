@@ -4,7 +4,7 @@ context("changeMaintainer")
 test_that("changeMaintainer works with options", {
   path = "assets/package"
   temp_maintainer = "Joe Developer <Joe.Developer@some.domain.net>"
-  options(rt.maintainer = temp_maintainer)
+  options(rtcl.maintainer = temp_maintainer)
   new_path = changeMaintainer(path)
   desc = read.dcf(file.path(new_path, "DESCRIPTION"))
   expect_setequal(desc[1, "Maintainer"], temp_maintainer) # setequal to avoid name error
@@ -13,7 +13,7 @@ test_that("changeMaintainer works with options", {
 test_that("changeMaintainer works with config", {
   skip_on_cran()
   path = "assets/package"
-  options(rt.maintainer = NULL)
+  options(rtcl.maintainer = NULL)
   config_path = getConfigPath("config")
   if (!file.exists(config_path) && !dir.exists(dirname(config_path))) {
     temp_maintainer = "Joanna Developer <Joanna.Developer@some.domain.net>"

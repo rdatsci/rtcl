@@ -3,10 +3,10 @@ context("rinstall")
 test_that("rinstall works for remote packages", {
   skip_on_cran()
   pkgs = list(
-    list(str = "rdatsci/rt/tests/testthat/assets/package", name = "testpkg", type = "GitHub"),
-    list(str = "rdatsci/rt/tests/testthat/assets/package@master", name = "testpkg", type = "GitHub"),
-    list(str = "https://github.com/rdatsci/rt.git/tests/testthat/assets/package", name = "testpkg", type = "Git"),
-    list(str = "https://github.com/rdatsci/rt.git/tests/testthat/assets/package@master", name = "testpkg", type = "Git")
+    list(str = "rdatsci/rtcl/tests/testthat/assets/package", name = "testpkg", type = "GitHub"),
+    list(str = "rdatsci/rtcl/tests/testthat/assets/package@master", name = "testpkg", type = "GitHub"),
+    list(str = "https://github.com/rdatsci/rtcl.git/tests/testthat/assets/package", name = "testpkg", type = "Git"),
+    list(str = "https://github.com/rdatsci/rtcl.git/tests/testthat/assets/package@master", name = "testpkg", type = "Git")
   )
   for (pkg in pkgs) {
     test_basic_rinstall(pkg$str, pkg$name, info = pkg$str)

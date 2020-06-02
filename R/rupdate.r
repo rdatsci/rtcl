@@ -31,13 +31,13 @@ rupdate = function(rebuild = FALSE, neverupgrade = FALSE, savemode = FALSE) {
 
   pkgs = getCollectionContents(as.packages = TRUE)
   pkgs_df = data.frame(
-    rt_pkg = I(pkgs),
-    rt_name = extract(pkgs, "name"),
-    rt_class = vapply(pkgs, function(x) head(class(x), 1), character(1L)),
+    rtcl_pkg = I(pkgs),
+    rtcl_name = extract(pkgs, "name"),
+    rtcl_class = vapply(pkgs, function(x) head(class(x), 1), character(1L)),
     status = rep(NA_character_, length(pkgs)),
     stringsAsFactors = FALSE
   )
-  pkgs_df$Package = pkgs_df$rt_name
+  pkgs_df$Package = pkgs_df$rtcl_name
 
   x = list(done = FALSE, rebuild = rebuild, upgrade = upgrade, savemode = savemode, pkgs_df = pkgs_df, step = 0)
   messagef("Checking for outdated packages ...")
@@ -105,7 +105,7 @@ built_compare = function(x) {
 }
 
 rupdate2 = function(x) {
-  # Collect information about r packages in rt config
+  # Collect information about r packages in rtcl config
   lib = getLibraryPath()
   pkgs_df = x$pkgs_df
 
@@ -115,11 +115,14 @@ rupdate2 = function(x) {
   pkgs_installed$meta_class = vapply(pkgs_installed$meta, getMetaType, character(1L))
   pkgs_df = merge_left_overwrites(x = pkgs_df, y = pkgs_installed)
 
-  selector = with(pkgs_df, !is.na(rt_class) & !is.na(meta_class) & meta_class != rt_class)
+  selector = with(pkgs_df, !is.na(rtcl_class) & !is.na(meta_class) & meta_class != rtcl_class)
   if (any(selector)) {
-    messagef("These %i packages: %s are installed in a different version then specified in the rt collection an will be removed (before they will be installed accordingly).", sum(selector), collapse(pkgs_df$Package[selector]))
+    messagef("These %i packages: %s are installed in a different version then specified in the rtcl
+             collection an will be removed (before they will be installed accordingly)."
+             , sum(selector), collapse(pkgs_df$Package[selector])
+             )
     remove.packages(pkgs = pkgs_df$Package[selector])
-    pkgs_df$status[selector] = "removed_for_rt_update"
+    pkgs_df$status[selector] = "removed_for_rtcl_update"
     return(rupdate_result(x, pkgs_df))
   }
 
@@ -134,14 +137,14 @@ rupdate2 = function(x) {
 
 
   # Packages we want to install from CRAN:
-  # 1) New CRAN packages in rt file
+  # 1) New CRAN packages in rtcl file
   # 2) If rebuild == TRUE: Packages that are build with an old R version
   # 3) CRAN Packages with a new version available
 
   # STEP: Rebuild cran packages, because we might not be able to update with broken packages
 
   selector = with(pkgs_df, {
-    (is.na(meta_class) & !is.na(rt_class) & rt_class == "PackageCran") | #(1)
+    (is.na(meta_class) & !is.na(rtcl_class) & rtcl_class == "PackageCran") | #(1)
     (x$rebuild & !is.na(meta_class) & meta_class == "PackageCran" & built_compare(Built)) | #(2)
     ((!is.na(meta_class) & meta_class == "PackageCran") & !(!is.na(status) & status == "updated") & (!is.na(diff) & diff < 0)) #(3)
   })
@@ -155,14 +158,14 @@ rupdate2 = function(x) {
   }
 
   # Packages that we want to install from remotes
-  # 1) New not cran packages in rt file
+  # 1) New not cran packages in rtcl file
   selector = with(pkgs_df, {
-    (is.na(meta_class) & !is.na(rt_class) & rt_class != "PackageCran") #(1)
+    (is.na(meta_class) & !is.na(rtcl_class) & rtcl_class != "PackageCran") #(1)
   })
 
   if (any(selector)) {
     messagef("Installing %i new packages from remotes: %s", sum(selector), collapse(pkgs_df$Package[selector]))
-    rinstall(pkgs_df$rt_pkg[selector], upgrade = x$upgrade, force = TRUE)
+    rinstall(pkgs_df$rtcl_pkg[selector], upgrade = x$upgrade, force = TRUE)
     pkgs_df$status[selector] = "updated"
     return(rupdate_result(x, pkgs_df))
   }
@@ -174,7 +177,10 @@ rupdate2 = function(x) {
   })
 
   if (any(selector)) {
-    messagef("The following %i packages are built with an old R-Version and not from CRAN. They can only be updated if added to the rt collection at the time: %s", sum(selector), collapse(pkgs_df$Package[selector]))
+    messagef("The following %i packages are built with an old R-Version and not from CRAN. They
+             can only be updated if added to the rtcl collection at the time: %s", sum(selector)
+             , collapse(pkgs_df$Package[selector])
+             )
   }
 
   # Packages that we can auto update

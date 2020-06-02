@@ -1,4 +1,4 @@
 library(testthat)
-library(rt)
+library(rtcl)
 
-test_check("rt")
+test_check("rtcl")
