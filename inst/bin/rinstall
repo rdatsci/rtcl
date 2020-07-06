@@ -6,7 +6,7 @@ doc = "
 Usage:
   rinstall [--add] <pkg>...
 Options:
-  --add       Add packages to ~/.rt/packages?
+  --add       Add packages to ~/.rtcl/packages?
 "
 rtcl:::cli.call("rinstall", doc, commandArgs(TRUE))
 

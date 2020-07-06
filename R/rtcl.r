@@ -1,4 +1,4 @@
-#' Maintainace operations for rt
+#' Maintainace operations for rtcl
 #'
 #' @param init [\code{logical(1)}]\cr
 #'  Initialize for first use: create directory \code{\link{getConfigPath}} and

@@ -24,7 +24,7 @@ Available Commands:
   - 'rshine' to run a shiny app.
   - 'rspell' to check spelling in generated .Rd files.
   - 'rtest' to test a local package.
-  - 'rupdate' to update all R-packages on your system and install missing packages listed in your collection '~/.rt/packages'.
+  - 'rupdate' to update all R-packages on your system and install missing packages listed in your collection '~/.rtcl/packages'.
   - 'rusage' to check variable usage.
   - 'rwinbuild' to upload a local package to the winbuilder service.
 "

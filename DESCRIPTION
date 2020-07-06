@@ -11,10 +11,10 @@ Authors@R: c(
       role = "aut", comment = c(ORCID = "0000-0003-4481-5554"))
     )
 Description: Shipping some command line utilities which
-    simplify working with R packages from the command line. Many commands rt
+    simplify working with R packages from the command line. Many commands rtcl
     provides are just wrappers around 'devtools' but ensure a valid exit code
     which is required to use these commands for shell scripting.
-    Furthermore, rt allows you to maintain a collection of you favorite packages
+    Furthermore, rtcl allows you to maintain a collection of you favorite packages
     in a plain text file which you can add to your dot-files and share across
     systems. This file may also contain git sources to keep you up to date with
     packages not yet released on CRAN.
