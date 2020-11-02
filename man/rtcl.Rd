@@ -2,7 +2,7 @@
 % Please edit documentation in R/rtcl.r
 \name{rtcl}
 \alias{rtcl}
-\title{Maintainace operations for rt}
+\title{Maintainace operations for rtcl}
 \usage{
 rtcl(init = FALSE, packages = FALSE, config = FALSE)
 }
@@ -27,5 +27,5 @@ Edit the \dQuote{config} file to:
 Invisibly returns \code{TRUE} on success.
 }
 \description{
-Maintainace operations for rt
+Maintainace operations for rtcl
 }

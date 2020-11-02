@@ -23,7 +23,7 @@ rtest = function(path = getwd(), filter = NULL) {
 
   if (framework == "testthat") {
     testpath = file.path(path, "tests", "testthat")
-    res = as.data.frame(testthat::test_dir(path = testpath, filter = coalesceString(filter)))
+    res = as.data.frame(testthat::test_local(path = testpath, filter = coalesceString(filter)))
     ret = sum(res$failed) == 0L
   } else {
     args = list(dir = file.path(path, "inst", "tinytest"))
