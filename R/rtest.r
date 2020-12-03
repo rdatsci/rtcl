@@ -26,7 +26,7 @@ rtest = function(path = getwd(), filter = NULL) {
     res = as.data.frame(testthat::test_local(path = testpath, filter = coalesceString(filter)))
     ret = sum(res$failed) == 0L
   } else {
-    args = list(dir = file.path(path, "inst", "tinytest"))
+    args = list(dir = file.path(path, "inst", "tinytest"), package = pkgname)
     if (!is.null(coalesceString(filter)))
       args$filter = filter
     res = do.call(tinytest::run_test_dir, args)
